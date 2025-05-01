@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "../styles/ResultsSection.module.css";
 
@@ -94,6 +94,18 @@ const resultsData: Result[] = [
 
 export function ResultsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [transformPercentage, setTransformPercentage] = useState(70); // Default for mobile
+
+  // Set transform percentage based on window width after mount
+  useEffect(() => {
+    const updateTransformPercentage = () => {
+      setTransformPercentage(window.innerWidth >= 768 ? 50 : 70);
+    };
+
+    updateTransformPercentage(); // Initial check
+    window.addEventListener("resize", updateTransformPercentage);
+    return () => window.removeEventListener("resize", updateTransformPercentage);
+  }, []);
 
   const handlePrev = () => {
     setCurrentSlide((prev) => {
@@ -183,9 +195,7 @@ export function ResultsSection() {
                       : "w-0 opacity-0"
                   }`}
                   style={{
-                    transform: `translateX(${
-                      (index - currentSlide) * (window.innerWidth >= 768 ? 50 : 70)
-                    }%)`,
+                    transform: `translateX(${(index - currentSlide) * transformPercentage}%)`,
                   }}
                   onClick={() => handleSlideClick(index)}
                 >
