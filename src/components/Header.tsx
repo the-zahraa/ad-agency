@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
+import styles from "../styles/Header.module.css";
 
 // Custom hook to extract raw string value from MotionValue<string>
 function useMotionValueString(motionValue: MotionValue<string>): string {
@@ -20,14 +21,15 @@ function useMotionValueString(motionValue: MotionValue<string>): string {
 
 export default function Header() {
   const heroRef = useRef(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Track scroll progress within the hero section
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["start start", "end start"], // From top of hero to bottom of hero
+    offset: ["start start", "end start"],
   });
 
-  // Map scroll progress to header properties
+  // Map scroll progress to header properties, adjusted for mobile
   const headerWidth = useTransform(scrollYProgress, [0, 1], ["50%", "48%"]);
   const headerMaxWidth = useTransform(scrollYProgress, [0, 1], [600, 550]);
   const headerPaddingY = useTransform(scrollYProgress, [0, 1], [12, 8]);
@@ -53,6 +55,11 @@ export default function Header() {
     { name: "Support", href: "/support" },
   ];
 
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <>
       {/* Invisible target for scroll tracking */}
@@ -70,37 +77,46 @@ export default function Header() {
           paddingLeft: headerPaddingX,
           paddingRight: headerPaddingX,
         }}
-        className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto flex items-center justify-center rounded-full shadow-lg bg-gradient-to-b from-white to-gray-100"
+        className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto`}
       >
-        {/* Navigation Links */}
+        {/* Hamburger Menu for Mobile */}
+        <button
+          className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ""}`}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle mobile menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        {/* Navigation Links for Desktop */}
         <motion.nav
           style={{
             gap: navSpacing,
           }}
-          className="flex items-center justify-center transition-all duration-300"
+          className={`${styles.nav} hidden sm:flex items-center justify-center transition-all duration-300`}
         >
           {navLinks.map((link) => (
             <motion.div
               key={link.name}
-              whileHover={{ scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } }}
-              whileTap={{ scale: 0.95, transition: { duration: 0.2 } }}
-              className="relative group"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className={styles.navLink}
             >
               <Link
                 href={link.href}
-                style={{
-                  fontSize: navFontSize, // Line 76
-                }}
-                className="text-gray-600 hover:text-gray-500 transition-colors duration-300 font-medium px-3 py-1"
+                style={{ fontSize: navFontSize }}
+                className="text-gray-600 hover:text-gray-500 transition-colors duration-300"
               >
                 {link.name}
               </Link>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-500 ease-out group-hover:w-full"></span>
+              <span className={styles.navLinkUnderline}></span>
             </motion.div>
           ))}
         </motion.nav>
 
-        {/* Book a Call Button in Header */}
+        {/* Book a Call Button */}
         <AnimatePresence>
           <motion.a
             href="/book-a-call"
@@ -111,24 +127,10 @@ export default function Header() {
             }}
             initial={{ opacity: 0, scale: 0.8 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            whileHover={{
-              scale: 1.05,
-              boxShadow:
-                "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.4), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.7), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
-              transition: { duration: 0.3, ease: "easeOut" },
-            }}
-            whileTap={{
-              scale: 0.95,
-              transform: "translateY(2px)",
-              boxShadow:
-                "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.5), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.8), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.4), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
-              transition: { duration: 0.2 },
-            }}
-            transition={{ duration: 0.3 }}
-            className="relative outline-none cursor-pointer border-0 rounded-[100px] bg-purple-600 transition-all duration-300 shadow-[inset_0_0.3rem_0.5rem_rgba(255,255,255,0.3),inset_0_-0.1rem_0.3rem_rgba(0,0,0,0.7),inset_0_-0.4rem_0.9rem_rgba(255,255,255,0.5),0_1rem_1rem_rgba(0,0,0,0.3),0_0.5rem_0.5rem_-0.3rem_rgba(0,0,0,0.8)] ml-4"
+            className={styles.bookButton}
           >
             <motion.div
-              className="relative overflow-hidden rounded-[100px]"
+              className={styles.bookButtonInner}
               style={{
                 paddingLeft: buttonPaddingX,
                 paddingRight: buttonPaddingX,
@@ -136,37 +138,41 @@ export default function Header() {
                 paddingBottom: buttonPaddingY,
               }}
             >
-              {/* Pseudo-elements for 3D effect */}
-              <div
-                className="absolute -left-[15%] -right-[15%] bottom-1/4 -top-full rounded-[50%] bg-[rgba(255,255,255,0.12)] transition-all duration-300"
-                style={{
-                  transform: scrollYProgress.get() > 0.5 ? "translateY(-5%)" : "translateY(0)",
-                }}
-              />
-              <div
-                className="absolute left-[6%] right-[6%] top-[12%] bottom-[40%] rounded-t-[22px] shadow-[inset_0_10px_8px_-10px_rgba(255,255,255,0.8)] bg-gradient-to-b from-[rgba(255,255,255,0.3)] to-transparent transition-all duration-300"
-                style={{
-                  opacity: scrollYProgress.get() > 0.5 ? 0.4 : 1,
-                  transform: scrollYProgress.get() > 0.5 ? "translateY(5%)" : "translateY(0)",
-                }}
-              />
-              {/* Button Text and Arrow */}
               <motion.p
-                style={{
-                  fontSize: buttonFontSize,
-                }}
-                className="flex items-center gap-2 m-0 text-white font-medium transition-all duration-300"
+                style={{ fontSize: buttonFontSize }}
+                className={styles.bookButtonText}
               >
-                <span className="relative z-10">Book a Call</span>
-                <span className="relative z-10">→</span>
+                <span>Book a Call</span>
+                <span>→</span>
               </motion.p>
             </motion.div>
           </motion.a>
         </AnimatePresence>
-
-        {/* Mobile Menu Placeholder */}
-        <div className="md:hidden"></div>
       </motion.header>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ""}`}
+            initial={{ transform: "translateX(100%)" }}
+            animate={{ transform: "translateX(0)" }}
+            exit={{ transform: "translateX(100%)" }}
+            transition={{ duration: 0.3 }}
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={styles.mobileMenuLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
