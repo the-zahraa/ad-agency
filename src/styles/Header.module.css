@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(to bottom, #ffffff, #f3f4f6);
-    border-radius: 12px;
+    border-radius: 9999px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
   }
@@ -47,7 +47,7 @@
     bottom: 0;
     left: 0;
     width: 0;
-    height: 2px;
+    height: 0.5px;
     background-color: #7c3aed;
     transition: width 0.5s ease-out;
   }
@@ -84,7 +84,7 @@
     font-size: 14px;
   }
   
-  /* Hamburger menu button */
+  /* Hamburger menu button (mobile) */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -95,7 +95,7 @@
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 50;
+    z-index: 60;
   }
   
   .hamburger span {
@@ -108,6 +108,7 @@
   
   .hamburger.open span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
+    background: #ffffff; /* White when open for contrast */
   }
   
   .hamburger.open span:nth-child(2) {
@@ -116,23 +117,27 @@
   
   .hamburger.open span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -7px);
+    background: #ffffff; /* White when open */
   }
   
-  /* Mobile dropdown menu */
+  /* Mobile full-screen menu */
   .mobileMenu {
     position: fixed;
-    top: 64px; /* Adjust based on header height */
+    top: 0;
     left: 0;
     right: 0;
-    background: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    bottom: 0;
+    background: rgba(144, 0, 255, 0.95); /* Purple #9000ff with slight transparency */
+    backdrop-filter: blur(8px); /* Blurry background */
+    border-radius: 16px; /* Rounded corners */
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     transform: translateY(-100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 40;
-    padding: 1rem;
+    transition: transform 0.4s ease-in-out;
+    z-index: 50;
+    padding: 2rem;
   }
   
   .mobileMenu.open {
@@ -140,35 +145,36 @@
   }
   
   .mobileMenuLink {
-    padding: 0.75rem;
-    color: #7c3aed; /* Purple theme */
-    font-size: 1rem;
+    padding: 1rem;
+    color: #ffffff;
+    font-size: 1.5rem;
     font-weight: 500;
     text-align: center;
     width: 100%;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.3s ease;
   }
   
   .mobileMenuLink:hover {
-    background: #f3f4f6;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
   }
   
-  /* Mobile CTA button in menu */
+  /* Mobile CTA button */
   .mobileCtaButton {
-    display: block;
-    margin: 1rem auto;
-    padding: 0.5rem 1.5rem;
-    background-color: #7c3aed;
-    color: #ffffff;
-    font-size: 0.875rem;
-    font-weight: 500;
+    margin-top: 2rem;
+    padding: 0.75rem 2rem;
+    background-color: #ffffff;
+    color: #9000ff;
+    font-size: 1rem;
+    font-weight: 600;
     border-radius: 9999px;
     text-align: center;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.3s ease;
   }
   
   .mobileCtaButton:hover {
-    background-color: #6d28d9;
+    background-color: #f3e8ff;
+    transform: scale(1.05);
   }
   
   /* Responsive styles */
@@ -177,7 +183,17 @@
       width: 90%;
       max-width: 400px;
       padding: 8px 12px;
-      height: 56px; /* Slimmer header */
+      height: 56px; /* Slim for mobile */
+    }
+  
+    .logoContainer img {
+      width: 32px;
+      height: 32px;
+    }
+  
+    .logoText {
+      font-size: 1rem;
+      color: #9000ff; /* Purple for mobile */
     }
   
     .nav {
@@ -190,10 +206,6 @@
   
     .hamburger {
       display: flex; /* Show hamburger */
-    }
-  
-    .logoText {
-      font-size: 1rem; /* Smaller on mobile */
     }
   }
   

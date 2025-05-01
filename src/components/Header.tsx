@@ -80,10 +80,10 @@ export default function Header() {
         }}
         className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto`}
       >
-        {/* Logo and m44.io */}
+        {/* Logo and m44.io (left) */}
         <div className={styles.logoContainer}>
           <Image
-            src="/m44-logo.png" // Replace with your logo
+            src="/logo.png" // Your logo
             alt="M44 Logo"
             width={32}
             height={32}
@@ -92,7 +92,7 @@ export default function Header() {
           <span className={styles.logoText}>m44.io</span>
         </div>
 
-        {/* Hamburger Menu for Mobile */}
+        {/* Hamburger Menu for Mobile (right) */}
         <button
           className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ""}`}
           onClick={toggleMobileMenu}
@@ -113,14 +113,14 @@ export default function Header() {
           {navLinks.map((link) => (
             <motion.div
               key={link.name}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } }}
+              whileTap={{ scale: 0.95, transition: { duration: 0.2 } }}
               className={styles.navLink}
             >
               <Link
                 href={link.href}
                 style={{ fontSize: navFontSize }}
-                className="text-gray-600 hover:text-gray-500 transition-colors duration-300"
+                className="text-gray-600 hover:text-gray-500 transition-colors duration-300 font-medium"
               >
                 {link.name}
               </Link>
@@ -140,6 +140,20 @@ export default function Header() {
             }}
             initial={{ opacity: 0, scale: 0.8 }}
             exit={{ opacity: 0, scale: 0.8 }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow:
+                "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.4), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.7), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
+              transition: { duration: 0.3, ease: "easeOut" },
+            }}
+            whileTap={{
+              scale: 0.95,
+              transform: "translateY(2px)",
+              boxShadow:
+                "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.5), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.8), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.4), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
+              transition: { duration: 0.2 },
+            }}
+            transition={{ duration: 0.3 }}
             className={`${styles.bookButton} hidden sm:block`}
           >
             <motion.div
@@ -163,7 +177,7 @@ export default function Header() {
         </AnimatePresence>
       </motion.header>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Full-Screen Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -171,7 +185,7 @@ export default function Header() {
             initial={{ transform: "translateY(-100%)" }}
             animate={{ transform: "translateY(0)" }}
             exit={{ transform: "translateY(-100%)" }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             {navLinks.map((link) => (
               <Link
