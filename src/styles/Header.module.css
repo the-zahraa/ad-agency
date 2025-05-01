@@ -48,7 +48,7 @@
     left: 0;
     width: 0;
     height: 0.5px;
-    background-color: #7c3aed;
+    background-color: #9000ff; /* Purple */
     transition: width 0.5s ease-out;
   }
   
@@ -56,12 +56,12 @@
     width: 100%;
   }
   
-  /* Book a Call button (desktop) */
+  /* Book a Call button (shared for desktop and mobile menu) */
   .bookButton {
     outline: none;
     border: none;
     border-radius: 9999px;
-    background-color: #7c3aed;
+    background-color: #9000ff; /* Purple */
     color: #ffffff;
     font-weight: 500;
     cursor: pointer;
@@ -77,11 +77,34 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.375rem 1rem;
   }
   
   .bookButtonText {
     font-size: 14px;
+  }
+  
+  /* Pseudo-elements for 3D effect (button) */
+  .bookButtonPseudo1 {
+    position: absolute;
+    left: -15%;
+    right: -15%;
+    bottom: 25%;
+    top: -100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    transition: all 0.3s ease;
+  }
+  
+  .bookButtonPseudo2 {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 12%;
+    bottom: 40%;
+    border-radius: 22px 22px 0 0;
+    box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.8);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+    transition: all 0.3s ease;
   }
   
   /* Hamburger menu button (mobile) */
@@ -101,14 +124,14 @@
   .hamburger span {
     width: 100%;
     height: 3px;
-    background: #4b5563;
+    background: #9000ff; /* Purple lines */
     border-radius: 10px;
     transition: all 0.3s ease;
   }
   
   .hamburger.open span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
-    background: #ffffff; /* White when open for contrast */
+    background: #9000ff; /* Purple for X */
   }
   
   .hamburger.open span:nth-child(2) {
@@ -117,7 +140,42 @@
   
   .hamburger.open span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -7px);
-    background: #ffffff; /* White when open */
+    background: #9000ff; /* Purple for X */
+  }
+  
+  /* Close button (X) for mobile menu */
+  .closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .closeButton::before,
+  .closeButton::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 3px;
+    background: #9000ff; /* Purple X */
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .closeButton::before {
+    transform: rotate(45deg);
+  }
+  
+  .closeButton::after {
+    transform: rotate(-45deg);
   }
   
   /* Mobile full-screen menu */
@@ -127,8 +185,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(144, 0, 255, 0.95); /* Purple #9000ff with slight transparency */
-    backdrop-filter: blur(8px); /* Blurry background */
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparent for blur */
+    backdrop-filter: blur(10px); /* Blurry background */
     border-radius: 16px; /* Rounded corners */
     display: flex;
     flex-direction: column;
@@ -145,6 +203,7 @@
   }
   
   .mobileMenuLink {
+    position: relative;
     padding: 1rem;
     color: #ffffff;
     font-size: 1.5rem;
@@ -154,67 +213,78 @@
     transition: background 0.3s ease, transform 0.3s ease;
   }
   
-  .mobileMenuLink:hover {
-    background: rgba(255, 255, 255, 0.1);
+  .mobileMenuLink:hover,
+  .mobileMenuLink:active {
+    background: rgba(144, 0, 255, 0.2); /* Light purple hover */
     transform: scale(1.05);
   }
   
-  /* Mobile CTA button */
-  .mobileCtaButton {
-    margin-top: 2rem;
-    padding: 0.75rem 2rem;
-    background-color: #ffffff;
-    color: #9000ff;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 9999px;
-    text-align: center;
-    transition: background 0.3s ease, transform 0.3s ease;
+  .mobileMenuLink::after {
+    content: "";
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: #9000ff; /* Purple underline */
+    transition: width 0.3s ease;
   }
   
-  .mobileCtaButton:hover {
-    background-color: #f3e8ff;
-    transform: scale(1.05);
+  .mobileMenuLink:hover::after,
+  .mobileMenuLink:active::after {
+    width: 50%; /* Sleek underline */
   }
   
   /* Responsive styles */
   @media (max-width: 640px) {
     .header {
-      width: 90%;
-      max-width: 400px;
-      padding: 8px 12px;
-      height: 56px; /* Slim for mobile */
+      /* Fixed dimensions for mobile, no scroll-based changes */
+      width: 98% !important;
+      max-width: 440px !important;
+      padding: 5px 8px !important;
+      height: 44px !important;
+      justify-content: space-between; /* Ensure logo and hamburger are on opposite ends */
+      /* Disable all transitions for mobile header */
+      transition: none !important;
     }
   
     .logoContainer img {
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
     }
   
     .logoText {
-      font-size: 1rem;
-      color: #9000ff; /* Purple for mobile */
+      font-size: 0.75rem; /* Smaller for mobile */
+      color: #9000ff; /* Purple */
     }
   
     .nav {
       display: none; /* Hide desktop nav */
     }
   
-    .bookButton {
+    .bookButton:not(.mobile) {
       display: none; /* Hide desktop CTA */
     }
   
     .hamburger {
       display: flex; /* Show hamburger */
     }
+  
+    .desktop {
+      display: none !important; /* Ensure desktop-only elements don't appear */
+    }
   }
   
   @media (min-width: 641px) {
-    .mobileMenu {
-      display: none; /* Hide mobile menu */
+    .mobileMenu,
+    .closeButton,
+    .bookButton.mobile,
+    .logoContainer:not(.desktop) {
+      display: none; /* Hide mobile elements */
     }
   
-    .mobileCtaButton {
-      display: none; /* Hide mobile CTA */
+    .logoText {
+      display: none; /* Hide m44.io on desktop */
     }
   }
