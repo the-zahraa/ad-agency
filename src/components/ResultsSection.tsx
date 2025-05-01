@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image"; // Import next/image
+import Image from "next/image";
 import styles from "../styles/ResultsSection.module.css";
 
 // Animation variants for Framer Motion
@@ -195,7 +195,7 @@ export function ResultsSection() {
               return (
                 <div
                   key={index}
-                  className={`flex-none transition-all duration-500 ease-in-out ${
+                  className={`flex-none transition-all duration-500 ease-in-out will-change-transform ${
                     isCenter
                       ? "w-[90%] md:w-1/2 z-10"
                       : isAdjacent
@@ -212,9 +212,11 @@ export function ResultsSection() {
                       <Image
                         src={result.imagePath}
                         alt={result.title}
-                        width={1536} // Match the aspect ratio width
-                        height={777} // Match the aspect ratio height
+                        width={768} // Reduced for mobile performance
+                        height={389} // Maintain aspect ratio (1536/777)
+                        sizes="(max-width: 768px) 90vw, 50vw" // Responsive sizes
                         className="w-full h-full object-cover"
+                        loading="lazy" // Lazy load images
                       />
                     </div>
                   </div>

@@ -33,15 +33,9 @@ export default function Header() {
   });
 
   // Map scroll progress to header properties (only for desktop)
-  const headerWidth = useTransform(scrollYProgress, [0, 1], ["50%", "48%"]);
-  const headerMaxWidth = useTransform(scrollYProgress, [0, 1], [600, 550]);
-  const headerPaddingY = useTransform(scrollYProgress, [0, 1], [12, 8]);
-  const headerPaddingX = useTransform(scrollYProgress, [0, 1], [12, 8]);
-  const navSpacing = useTransform(scrollYProgress, [0, 1], [12, 8]);
+  const headerScale = useTransform(scrollYProgress, [0, 1], [1, 0.96]); // Scale instead of width
   const navFontSizeMotion = useTransform(scrollYProgress, [0, 1], ["16px", "14px"]);
   const buttonScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
-  const buttonPaddingX = useTransform(scrollYProgress, [0, 1], [16, 12]);
-  const buttonPaddingY = useTransform(scrollYProgress, [0, 1], [6, 4]);
   const buttonFontSizeMotion = useTransform(scrollYProgress, [0, 1], ["14px", "12px"]);
   const buttonOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
   const buttonTranslateY = useTransform(scrollYProgress, [0, 1], [0, -2]);
@@ -55,7 +49,6 @@ export default function Header() {
     const handleResize = () => {
       const desktop = window.innerWidth >= 641;
       setIsDesktop(desktop);
-      console.log("isDesktop set to:", desktop, "Width:", window.innerWidth);
     };
 
     handleResize();
@@ -63,7 +56,7 @@ export default function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Log buttonOpacity for debugging
+  // Log buttonOpacity for debugging (remove in production)
   useEffect(() => {
     const unsubscribe = buttonOpacity.on("change", (value) => {
       console.log("buttonOpacity:", value, "isDesktop:", isDesktop);
@@ -71,7 +64,7 @@ export default function Header() {
     return () => unsubscribe();
   }, [buttonOpacity, isDesktop]);
 
-  // Debug DOM availability
+  // Debug DOM availability (remove in production)
   useEffect(() => {
     const sections = ["home", "why-m44", "services", "support", "book-call"];
     const checkSections = () => {
@@ -130,14 +123,9 @@ export default function Header() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          width: headerWidth,
-          maxWidth: headerMaxWidth,
-          paddingTop: headerPaddingY,
-          paddingBottom: headerPaddingY,
-          paddingLeft: headerPaddingX,
-          paddingRight: headerPaddingX,
+          scale: headerScale, // Use scale instead of width for smoother performance
         }}
-        className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto flex items-center rounded-full shadow-lg bg-gradient-to-b from-white to-gray-100`}
+        className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto flex items-center rounded-full shadow-lg bg-gradient-to-b from-white to-gray-100 px-4 py-2`} // Static padding
       >
         {/* Logo for Desktop */}
         <AnimatePresence>
@@ -189,10 +177,7 @@ export default function Header() {
 
         {/* Navigation Links for Desktop */}
         <motion.nav
-          style={{
-            gap: navSpacing,
-          }}
-          className={`${styles.nav} hidden sm:flex items-center justify-center transition-all duration-300`}
+          className={`${styles.nav} hidden sm:flex items-center justify-center transition-all duration-300 gap-3`} // Static gap
         >
           {navLinks.map((link) => (
             <motion.div
@@ -239,31 +224,10 @@ export default function Header() {
               transition: { duration: 0.2 },
             }}
             transition={{ duration: 0.3 }}
-            className={`${styles.bookButton} hidden sm:block ml-4 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300`}
+            className={`${styles.bookButton} hidden sm:block ml-4 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300 px-4 py-2`} // Static padding
           >
             <Link href="#book-call" scroll={false} onClick={() => scrollToSection("#book-call")}>
-              <motion.div
-                className="relative overflow-hidden rounded-[100px]"
-                style={{
-                  paddingLeft: buttonPaddingX,
-                  paddingRight: buttonPaddingX,
-                  paddingTop: buttonPaddingY,
-                  paddingBottom: buttonPaddingY,
-                }}
-              >
-                <div
-                  className={styles.bookButtonPseudo1}
-                  style={{
-                    transform: scrollYProgress.get() > 0.5 ? "translateY(-5%)" : "translateY(0)",
-                  }}
-                />
-                <div
-                  className={styles.bookButtonPseudo2}
-                  style={{
-                    opacity: scrollYProgress.get() > 0.5 ? 0.4 : 1,
-                    transform: scrollYProgress.get() > 0.5 ? "translateY(5%)" : "translateY(0)",
-                  }}
-                />
+              <motion.div className="relative overflow-hidden rounded-[100px]">
                 <motion.p
                   style={{ fontSize: buttonFontSize }}
                   className="flex items-center gap-2 m-0 text-white font-medium transition-all duration-300"
