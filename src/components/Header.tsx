@@ -5,7 +5,6 @@ import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "f
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
-import { useScrollContext } from "../components/ScrollProvider";
 
 // Custom hook to extract raw string value from MotionValue<string>
 function useMotionValueString(motionValue: MotionValue<string>): string {
@@ -25,7 +24,6 @@ export default function Header() {
   const heroRef = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
-  const { scrollToSection } = useScrollContext();
 
   // Track scroll progress within the hero section
   const { scrollYProgress } = useScroll({
