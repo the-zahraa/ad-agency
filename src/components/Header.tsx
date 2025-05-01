@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "../styles/Header.module.css";
 
 // Custom hook to extract raw string value from MotionValue<string>
@@ -29,7 +30,7 @@ export default function Header() {
     offset: ["start start", "end start"],
   });
 
-  // Map scroll progress to header properties, adjusted for mobile
+  // Map scroll progress to header properties
   const headerWidth = useTransform(scrollYProgress, [0, 1], ["50%", "48%"]);
   const headerMaxWidth = useTransform(scrollYProgress, [0, 1], [600, 550]);
   const headerPaddingY = useTransform(scrollYProgress, [0, 1], [12, 8]);
@@ -79,6 +80,18 @@ export default function Header() {
         }}
         className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto`}
       >
+        {/* Logo and m44.io */}
+        <div className={styles.logoContainer}>
+          <Image
+            src="/m44-logo.png" // Replace with your logo
+            alt="M44 Logo"
+            width={32}
+            height={32}
+            className="object-contain"
+          />
+          <span className={styles.logoText}>m44.io</span>
+        </div>
+
         {/* Hamburger Menu for Mobile */}
         <button
           className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ""}`}
@@ -116,7 +129,7 @@ export default function Header() {
           ))}
         </motion.nav>
 
-        {/* Book a Call Button */}
+        {/* Book a Call Button for Desktop */}
         <AnimatePresence>
           <motion.a
             href="/book-a-call"
@@ -127,7 +140,7 @@ export default function Header() {
             }}
             initial={{ opacity: 0, scale: 0.8 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            className={styles.bookButton}
+            className={`${styles.bookButton} hidden sm:block`}
           >
             <motion.div
               className={styles.bookButtonInner}
@@ -150,14 +163,14 @@ export default function Header() {
         </AnimatePresence>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Dropdown Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ""}`}
-            initial={{ transform: "translateX(100%)" }}
-            animate={{ transform: "translateX(0)" }}
-            exit={{ transform: "translateX(100%)" }}
+            initial={{ transform: "translateY(-100%)" }}
+            animate={{ transform: "translateY(0)" }}
+            exit={{ transform: "translateY(-100%)" }}
             transition={{ duration: 0.3 }}
           >
             {navLinks.map((link) => (
@@ -170,6 +183,13 @@ export default function Header() {
                 {link.name}
               </Link>
             ))}
+            <Link
+              href="/book-a-call"
+              className={styles.mobileCtaButton}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Book a Call
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
