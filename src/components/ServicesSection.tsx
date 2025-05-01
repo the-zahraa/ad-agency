@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "../styles/Services.module.css";
+import { useScrollContext } from "../app/layout";
 
 // Animation variants for Framer Motion
 const fadeInUp = {
@@ -20,6 +21,7 @@ export function ServicesSection() {
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
+  const { scrollToElement } = useScrollContext();
 
   const services = [
     {
@@ -102,12 +104,11 @@ export function ServicesSection() {
   const handleTabClick = (index: number) => {
     setActiveTab(index);
     if (window.innerWidth <= 768 && contentRef.current) {
-      const offset = 80;
-      const contentPosition = contentRef.current.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({
-        top: contentPosition,
-        behavior: "smooth",
-      });
+      setTimeout(() => {
+        if (contentRef.current) {
+          scrollToElement(contentRef.current);
+        }
+      }, 300);
     }
   };
 

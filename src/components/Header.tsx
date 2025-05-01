@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, forwardRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
+import { useScrollContext } from "../app/layout";
 
 // Custom hook to extract raw string value from MotionValue<string>
 function useMotionValueString(motionValue: MotionValue<string>): string {
@@ -20,11 +21,12 @@ function useMotionValueString(motionValue: MotionValue<string>): string {
   return value;
 }
 
-export default function Header() {
+// Forward ref to allow layout.tsx to pass headerRef
+const Header = forwardRef<HTMLElement>((props, ref) => {
   const heroRef = useRef(null);
-  const headerRef = useRef<HTMLDivElement>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
+  const { scrollToSection } = useScrollContext();
 
   // Track scroll progress within the hero section
   const { scrollYProgress } = useScroll({
@@ -33,7 +35,7 @@ export default function Header() {
   });
 
   // Map scroll progress to header properties (only for desktop)
-  const headerScale = useTransform(scrollYProgress, [0, 1], [1, 0.96]); // Scale instead of width
+  const headerScale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
   const navFontSizeMotion = useTransform(scrollYProgress, [0, 1], ["16px", "14px"]);
   const buttonScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
   const buttonFontSizeMotion = useTransform(scrollYProgress, [0, 1], ["14px", "12px"]);
@@ -52,31 +54,8 @@ export default function Header() {
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Log buttonOpacity for debugging (remove in production)
-  useEffect(() => {
-    const unsubscribe = buttonOpacity.on("change", (value) => {
-      console.log("buttonOpacity:", value, "isDesktop:", isDesktop);
-    });
-    return () => unsubscribe();
-  }, [buttonOpacity, isDesktop]);
-
-  // Debug DOM availability (remove in production)
-  useEffect(() => {
-    const sections = ["home", "why-m44", "services", "support", "book-call"];
-    const checkSections = () => {
-      sections.forEach((id) => {
-        const element = document.getElementById(id);
-        console.log(`Section ${id} found:`, element);
-      });
-    };
-
-    checkSections();
-    const timeout = setTimeout(checkSections, 1000);
-    return () => clearTimeout(timeout);
   }, []);
 
   // Navigation links
@@ -93,22 +72,6 @@ export default function Header() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Handle scroll to section on link click
-  const scrollToSection = (hash: string) => {
-    const sectionId = hash.replace("#", "");
-    const targetElement = document.getElementById(sectionId);
-    if (targetElement) {
-      const headerHeight = headerRef.current?.offsetHeight || 0;
-      const offsetPosition = targetElement.offsetTop - (headerHeight + 10);
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    } else {
-      console.error(`Element with ID "${sectionId}" not found.`);
-    }
-  };
-
   if (isDesktop === null) {
     return null;
   }
@@ -118,14 +81,14 @@ export default function Header() {
       <div ref={heroRef} className="absolute top-0 h-[150vh]" />
 
       <motion.header
-        ref={headerRef}
+        ref={ref}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
-          scale: headerScale, // Use scale instead of width for smoother performance
+          scale: headerScale,
         }}
-        className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto flex items-center rounded-full shadow-lg bg-gradient-to-b from-white to-gray-100 px-4 py-2`} // Static padding
+        className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto flex items-center rounded-full shadow-lg bg-gradient-to-b from-white to-gray-100 px-4 py-2`}
       >
         {/* Logo for Desktop */}
         <AnimatePresence>
@@ -137,7 +100,7 @@ export default function Header() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <Link href="#home" scroll={false} onClick={() => scrollToSection("#home")}>
+              <Link href="#home">
                 <Image
                   src="/logo.png"
                   alt="M44 Logo"
@@ -152,7 +115,7 @@ export default function Header() {
 
         {/* Logo and m44.io for Mobile */}
         <div className={`${styles.logoContainer} flex sm:hidden`}>
-          <Link href="#home" scroll={false} onClick={() => scrollToSection("#home")}>
+          <Link href="#home">
             <Image
               src="/logo.png"
               alt="M44 Logo"
@@ -177,7 +140,7 @@ export default function Header() {
 
         {/* Navigation Links for Desktop */}
         <motion.nav
-          className={`${styles.nav} hidden sm:flex items-center justify-center transition-all duration-300 gap-3`} // Static gap
+          className={`${styles.nav} hidden sm:flex items-center justify-center transition-all duration-300 gap-3`}
         >
           {navLinks.map((link) => (
             <motion.div
@@ -188,10 +151,8 @@ export default function Header() {
             >
               <Link
                 href={link.href}
-                scroll={false}
                 style={{ fontSize: navFontSize }}
                 className="text-gray-600 hover:text-gray-500 transition-colors duration-300 font-medium px-3 py-1"
-                onClick={() => scrollToSection(link.href)}
               >
                 {link.name}
               </Link>
@@ -224,9 +185,9 @@ export default function Header() {
               transition: { duration: 0.2 },
             }}
             transition={{ duration: 0.3 }}
-            className={`${styles.bookButton} hidden sm:block ml-4 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300 px-4 py-2`} // Static padding
+            className={`${styles.bookButton} hidden sm:block ml-4 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300 px-4 py-2`}
           >
-            <Link href="#book-call" scroll={false} onClick={() => scrollToSection("#book-call")}>
+            <Link href="#book-call">
               <motion.div className="relative overflow-hidden rounded-[100px]">
                 <motion.p
                   style={{ fontSize: buttonFontSize }}
@@ -260,24 +221,16 @@ export default function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                scroll={false}
                 className={styles.mobileMenuLink}
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  scrollToSection(link.href);
-                }}
+                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
               </Link>
             ))}
             <Link
               href="#book-call"
-              scroll={false}
               className={`${styles.mobileBookButton} mt-8`}
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                scrollToSection("#book-call");
-              }}
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               Book a Call
             </Link>
@@ -286,4 +239,8 @@ export default function Header() {
       </AnimatePresence>
     </>
   );
-}
+});
+
+Header.displayName = 'Header';
+
+export default Header;
