@@ -1,12 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "../styles/ResultsSection.module.css";
 
 // Animation variants for Framer Motion
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+// Animation variants for slide content
+const contentVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0, transition: { duration: 0.3 } },
 };
 
 // Interface for result items
@@ -94,15 +101,15 @@ const resultsData: Result[] = [
 
 export function ResultsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [transformPercentage, setTransformPercentage] = useState(70); // Default for mobile
+  const [transformPercentage, setTransformPercentage] = useState(70);
 
   // Set transform percentage based on window width after mount
   useEffect(() => {
     const updateTransformPercentage = () => {
-      setTransformPercentage(window.innerWidth >= 768 ? 50 : 70);
+      setTransformPercentage(window.innerWidth >= 768 ? 50 : 60);
     };
 
-    updateTransformPercentage(); // Initial check
+    updateTransformPercentage();
     window.addEventListener("resize", updateTransformPercentage);
     return () => window.removeEventListener("resize", updateTransformPercentage);
   }, []);
@@ -111,7 +118,7 @@ export function ResultsSection() {
     setCurrentSlide((prev) => {
       const newIndex = prev - 1;
       if (newIndex < 0) {
-        return resultsData.length - 1; // Loop to the last slide
+        return resultsData.length - 1;
       }
       return newIndex;
     });
@@ -121,7 +128,7 @@ export function ResultsSection() {
     setCurrentSlide((prev) => {
       const newIndex = prev + 1;
       if (newIndex >= resultsData.length) {
-        return 0; // Loop to the first slide
+        return 0;
       }
       return newIndex;
     });
@@ -168,7 +175,7 @@ export function ResultsSection() {
         {/* Slider */}
         <div className="relative">
           {/* Image Row (Slider) */}
-          <div className="flex overflow-hidden justify-center">
+          <div className="flex overflow-hidden justify-center h-[214px] md:h-[380px]">
             {resultsData.map((result: Result, index: number) => {
               const isCenter = index === currentSlide;
               const isAdjacent =
@@ -181,7 +188,7 @@ export function ResultsSection() {
                 index !== (currentSlide - 2 + resultsData.length) % resultsData.length &&
                 index !== (currentSlide + 2) % resultsData.length
               ) {
-                return null; // Only render the center slide and its immediate neighbors
+                return null;
               }
 
               return (
@@ -189,9 +196,9 @@ export function ResultsSection() {
                   key={index}
                   className={`flex-none transition-all duration-500 ease-in-out ${
                     isCenter
-                      ? "w-2/3 md:w-1/2 z-10"
+                      ? "w-[90%] md:w-1/2 z-10"
                       : isAdjacent
-                      ? "w-1/4 md:w-1/6 z-0 cursor-pointer"
+                      ? "w-[20%] md:w-1/6 z-0 cursor-pointer"
                       : "w-0 opacity-0"
                   }`}
                   style={{
@@ -249,20 +256,23 @@ export function ResultsSection() {
         </div>
 
         {/* Content for the Current Slide */}
-        <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="max-w-xl mx-auto mt-8 p-4 bg-gray-100 rounded-lg"
-        >
-          <h3 className="text-xl md:text-2xl font-bold text-black mb-4">
-            {resultsData[currentSlide].title}
-          </h3>
-          <p className="text-gray-600 text-base md:text-lg">
-            {resultsData[currentSlide].description}
-          </p>
-        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            variants={contentVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="max-w-xl mx-auto mt-8 p-4 bg-gray-100 rounded-lg min-h-[200px]"
+          >
+            <h3 className="text-xl md:text-2xl font-bold text-black mb-4">
+              {resultsData[currentSlide].title}
+            </h3>
+            <p className="text-gray-600 text-base md:text-lg">
+              {resultsData[currentSlide].description}
+            </p>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

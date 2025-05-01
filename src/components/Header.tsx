@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 
@@ -22,8 +23,11 @@ function useMotionValueString(motionValue: MotionValue<string>): string {
 
 export default function Header() {
   const heroRef = useRef(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // Track scroll progress within the hero section
   const { scrollYProgress } = useScroll({
@@ -42,7 +46,7 @@ export default function Header() {
   const buttonPaddingX = useTransform(scrollYProgress, [0, 1], [16, 12]);
   const buttonPaddingY = useTransform(scrollYProgress, [0, 1], [6, 4]);
   const buttonFontSizeMotion = useTransform(scrollYProgress, [0, 1], ["14px", "12px"]);
-  const buttonOpacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const buttonOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]); // Adjusted to appear earlier
   const buttonTranslateY = useTransform(scrollYProgress, [0, 1], [0, -2]);
 
   // Extract raw string values
@@ -70,16 +74,59 @@ export default function Header() {
     return () => unsubscribe();
   }, [buttonOpacity, isDesktop]);
 
+  // Debug DOM availability
+  useEffect(() => {
+    const sections = ["home", "why-m44", "services", "support", "book-call"];
+    const checkSections = () => {
+      sections.forEach((id) => {
+        const element = document.getElementById(id);
+        console.log(`Section ${id} found:`, element);
+      });
+    };
+
+    checkSections();
+    // Retry after hydration
+    const timeout = setTimeout(checkSections, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  // Scroll to section based on URL hash
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      const scrollToSection = () => {
+        const targetElement = document.getElementById(hash);
+        if (targetElement) {
+          const headerHeight = headerRef.current?.offsetHeight || 0;
+          const offsetPosition = targetElement.offsetTop - (headerHeight + 10);
+          console.log(`Scrolling to ${hash} at position:`, offsetPosition);
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        } else {
+          console.error(`Element with ID "${hash}" not found.`);
+        }
+      };
+
+      // Scroll immediately and retry after hydration
+      scrollToSection();
+      setTimeout(scrollToSection, 1000); // Retry after 1 second
+      setTimeout(scrollToSection, 2000); // Retry after 2 seconds
+    }
+  }, [pathname, searchParams]);
+
   // Navigation links
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Why M44", href: "/why-m44" },
-    { name: "Services", href: "/services" },
-    { name: "Support", href: "/support" },
+    { name: "Home", href: "#home" },
+    { name: "Why M44", href: "#why-m44" },
+    { name: "Services", href: "#services" },
+    { name: "Support", href: "#support" },
   ];
 
   // Toggle mobile menu
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
@@ -92,6 +139,7 @@ export default function Header() {
       <div ref={heroRef} className="absolute top-0 h-[150vh]" />
 
       <motion.header
+        ref={headerRef}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -105,7 +153,7 @@ export default function Header() {
         }}
         className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto flex items-center rounded-full shadow-lg bg-gradient-to-b from-white to-gray-100`}
       >
-        {/* Logo for Desktop (visible only with button on scroll, ≥641px) */}
+        {/* Logo for Desktop (Only the Logo, No m44.io Text) */}
         <AnimatePresence>
           {isDesktop && buttonOpacity.get() > 0 && (
             <motion.div
@@ -115,26 +163,30 @@ export default function Header() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <Image
-                src="/logo.png"
-                alt="M44 Logo"
-                width={32}
-                height={32}
-                className="object-contain"
-              />
+              <Link href="#home" scroll={false}>
+                <Image
+                  src="/logo.png"
+                  alt="M44 Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Logo and m44.io for Mobile (static, <640px) */}
+        {/* Logo and m44.io for Mobile */}
         <div className={`${styles.logoContainer} flex sm:hidden`}>
-          <Image
-            src="/logo.png"
-            alt="M44 Logo"
-            width={20}
-            height={20}
-            className="object-contain"
-          />
+          <Link href="#home" scroll={false}>
+            <Image
+              src="/logo.png"
+              alt="M44 Logo"
+              width={28}
+              height={28}
+              className="object-contain"
+            />
+          </Link>
           <span className={styles.logoText}>m44.io</span>
         </div>
 
@@ -165,6 +217,7 @@ export default function Header() {
             >
               <Link
                 href={link.href}
+                scroll={false}
                 style={{ fontSize: navFontSize }}
                 className="text-gray-600 hover:text-gray-500 transition-colors duration-300 font-medium px-3 py-1"
               >
@@ -177,8 +230,7 @@ export default function Header() {
 
         {/* Book a Call Button for Desktop */}
         <AnimatePresence>
-          <motion.a
-            href="/book-a-call"
+          <motion.div
             style={{
               scale: buttonScale,
               opacity: buttonOpacity,
@@ -200,93 +252,9 @@ export default function Header() {
               transition: { duration: 0.2 },
             }}
             transition={{ duration: 0.3 }}
-            className={`${styles.bookButton} relative hidden sm:block ml-4 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300`}
+            className={`${styles.bookButton} hidden sm:block ml-4 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300`}
           >
-            <motion.div
-              className="relative overflow-hidden rounded-[100px]"
-              style={{
-                paddingLeft: buttonPaddingX,
-                paddingRight: buttonPaddingX,
-                paddingTop: buttonPaddingY,
-                paddingBottom: buttonPaddingY,
-              }}
-            >
-              <div
-                className={styles.bookButtonPseudo1}
-                style={{
-                  transform: scrollYProgress.get() > 0.5 ? "translateY(-5%)" : "translateY(0)",
-                }}
-              />
-              <div
-                className={styles.bookButtonPseudo2}
-                style={{
-                  opacity: scrollYProgress.get() > 0.5 ? 0.4 : 1,
-                  transform: scrollYProgress.get() > 0.5 ? "translateY(5%)" : "translateY(0)",
-                }}
-              />
-              <motion.p
-                style={{ fontSize: buttonFontSize }}
-                className="flex items-center gap-2 m-0 text-white font-medium transition-all duration-300"
-              >
-                <span className="relative z-10">Book a Call</span>
-                <span className="relative z-10">→</span>
-              </motion.p>
-            </motion.div>
-          </motion.a>
-        </AnimatePresence>
-      </motion.header>
-
-      {/* Mobile Full-Screen Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ""}`}
-            initial={{ y: "-100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "-100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <button
-              className={styles.closeButton}
-              onClick={toggleMobileMenu}
-              aria-label="Close mobile menu"
-            />
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={styles.mobileMenuLink}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <motion.a
-              href="/book-a-call"
-              style={{
-                scale: buttonScale,
-                translateY: buttonTranslateY,
-              }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow:
-                  "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.4), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.7), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
-                transition: { duration: 0.3, ease: "easeOut" },
-              }}
-              whileTap={{
-                scale: 0.95,
-                transform: "translateY(2px)",
-                boxShadow:
-                  "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.5), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.8), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.4), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
-                transition: { duration: 0.2 },
-              }}
-              transition={{ duration: 0.3 }}
-              className={`${styles.bookButton} mobile relative mt-8 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link href="#book-call" scroll={false}>
               <motion.div
                 className="relative overflow-hidden rounded-[100px]"
                 style={{
@@ -317,7 +285,46 @@ export default function Header() {
                   <span className="relative z-10">→</span>
                 </motion.p>
               </motion.div>
-            </motion.a>
+            </Link>
+          </motion.div>
+        </AnimatePresence>
+      </motion.header>
+
+      {/* Mobile Full-Screen Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ""}`}
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <button
+              className={styles.closeButton}
+              onClick={toggleMobileMenu}
+              aria-label="Close mobile menu"
+            />
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                scroll={false}
+                className={styles.mobileMenuLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+            {/* Simple Purple Button */}
+            <Link
+              href="#book-call"
+              scroll={false}
+              className={`${styles.mobileBookButton} mt-8`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Book a Call
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

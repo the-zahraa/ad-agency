@@ -99,7 +99,7 @@ export function FAQSection() {
           variants={fadeInUp}
           className="text-4xl md:text-5xl font-bold text-center mb-12 text-[#9000ff]"
         >
-          Still Have Questions? Let’s Kill the Confusion.
+          Still Have Questions?
         </motion.h2>
 
         {/* FAQ Container */}
