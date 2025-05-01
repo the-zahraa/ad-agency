@@ -1,11 +1,23 @@
-"use client";import { useState, useEffect } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import styles from "../styles/ResultsSection.module.css";// Animation variants for Framer Motion
+import styles from "../styles/ResultsSection.module.css";
+
+// Animation variants for Framer Motion
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};// Data for the slides with image paths
-const resultsData = [
+};
+
+// Interface for result items
+interface Result {
+  title: string;
+  description: string;
+  imagePath: string;
+}
+
+// Data for the slides with image paths
+const resultsData: Result[] = [
   {
     title: "Achieving Milestones in a Bear Market",
     description:
@@ -78,39 +90,59 @@ const resultsData = [
       "Join us and achieve similar success! Most brands we work with see results within the first ~60 days of starting the campaign!",
     imagePath: "/12.jpg",
   },
-];export function ResultsSection() {
+];
+
+export function ResultsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [extendedSlides, setExtendedSlides] = useState([...resultsData]);  // Create an infinite loop by duplicating slides
+  const [extendedSlides, setExtendedSlides] = useState<Result[]>([]);
+
   useEffect(() => {
     const extended = [
-      ...resultsData.slice(-2), // Add the last two slides at the beginning
-      ...resultsData,
-      ...resultsData.slice(0, 2), // Add the first two slides at the end
+      ...resultsData.slice(-2), // Last two slides
+      ...resultsData, // All slides
+      ...resultsData.slice(0, 2), // First two slides
     ];
     setExtendedSlides(extended);
-  }, []);  const handlePrev = () => {
+    setCurrentSlide(2); // Start at index 2 (first actual slide after prepended slides)
+  }, []);
+
+  const handlePrev = () => {
     setCurrentSlide((prev) => {
       const newIndex = prev - 1;
-      if (newIndex < 0) {
-        return resultsData.length - 1; // Loop to the last slide
+      if (newIndex < 2) {
+        return extendedSlides.length - 3; // Last actual slide
       }
       return newIndex;
     });
-  };  const handleNext = () => {
+  };
+
+  const handleNext = () => {
     setCurrentSlide((prev) => {
       const newIndex = prev + 1;
-      if (newIndex >= resultsData.length) {
-        return 0; // Loop to the first slide
+      if (newIndex >= extendedSlides.length - 2) {
+        return 2; // First actual slide
       }
       return newIndex;
     });
-  };  const handleSlideClick = (index) => {
-    if (index === (currentSlide - 1 + resultsData.length) % resultsData.length) {
+  };
+
+  const handleSlideClick = (index: number) => {
+    const adjustedIndex = index % resultsData.length;
+    const currentAdjustedIndex = currentSlide % resultsData.length;
+
+    if (
+      adjustedIndex ===
+      (currentAdjustedIndex - 1 + resultsData.length) % resultsData.length
+    ) {
       handlePrev();
-    } else if (index === (currentSlide + 1) % resultsData.length) {
+    } else if (
+      adjustedIndex === (currentAdjustedIndex + 1) % resultsData.length
+    ) {
       handleNext();
     }
-  };  return (
+  };
+
+  return (
     <section className="py-16 text-black bg-[#f7f7f7] rounded-lg">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Headline */}
@@ -124,127 +156,133 @@ const resultsData = [
           The Results Behind the Work
         </motion.h2>
 
-    {/* Subheading */}
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeInUp}
-      className="text-center max-w-3xl mx-auto mb-12"
-    >
-      <p className="text-lg md:text-xl text-gray-600">
-        Partnered with Convert Cake, a battle-tested team trusted by global brands to execute performance campaigns across paid media, creatives, and funnels.
-      </p>
-      <p className="text-lg md:text-xl text-gray-600 mt-2">
-        They've scaled brands in e-commerce, SaaS, and retail and the results speak for themselves
-      </p>
-    </motion.div>
+        {/* Subheading */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
+          <p className="text-lg md:text-xl text-gray-600">
+            Partnered with Convert Cake, a battle-tested team trusted by global
+            brands to execute performance campaigns across paid media, creatives,
+            and funnels.
+          </p>
+          <p className="text-lg md:text-xl text-gray-600 mt-2">
+            They've scaled brands in e-commerce, SaaS, and retail and the results
+            speak for themselves
+          </p>
+        </motion.div>
 
-    {/* Slider */}
-    <div className="relative">
-      {/* Image Row (Slider) */}
-      <div className="flex overflow-hidden justify-center">
-        {resultsData.map((result, index) => {
-          const isCenter = index === currentSlide;
-          const isAdjacent =
-            index === (currentSlide - 1 + resultsData.length) % resultsData.length ||
-            index === (currentSlide + 1) % resultsData.length;
+        {/* Slider */}
+        <div className="relative">
+          {/* Image Row (Slider) */}
+          <div className="flex overflow-hidden justify-center">
+            {extendedSlides.map((result: Result, index: number) => {
+              const isCenter = index === currentSlide;
+              const isAdjacent =
+                index === currentSlide - 1 || index === currentSlide + 1;
 
-          if (
-            !isCenter &&
-            !isAdjacent &&
-            index !== (currentSlide - 2 + resultsData.length) % resultsData.length &&
-            index !== (currentSlide + 2) % resultsData.length
-          ) {
-            return null; // Only render the center slide and its immediate neighbors
-          }
+              if (
+                !isCenter &&
+                !isAdjacent &&
+                index !== currentSlide - 2 &&
+                index !== currentSlide + 2
+              ) {
+                return null; // Only render center slide and neighbors
+              }
 
-          return (
-            <div
-              key={index}
-              className={`flex-none transition-all duration-500 ease-in-out ${
-                isCenter
-                  ? "w-2/3 md:w-1/2 z-10" // Reduced size for center slide, no scale
-                  : isAdjacent
-                  ? "w-1/4 md:w-1/6 z-0 cursor-pointer" // Reduced size for adjacent slides, no scale or opacity change
-                  : "w-0 opacity-0"
-              }`}
-              style={{
-                transform: `translateX(${
-                  (index - currentSlide) * (window.innerWidth >= 768 ? 50 : 70)
-                }%)`,
-              }}
-              onClick={() => handleSlideClick(index)}
-            >
-              <div className="px-1">
-                <div className="bg-gray-200 rounded-lg overflow-hidden aspect-[1536/777]">
-                  <img
-                    src={result.imagePath}
-                    alt={result.title}
-                    className="w-full h-full object-cover"
-                  />
+              return (
+                <div
+                  key={index}
+                  className={`flex-none transition-all duration-500 ease-in-out ${
+                    isCenter
+                      ? "w-2/3 md:w-1/2 z-10"
+                      : isAdjacent
+                      ? "w-1/4 md:w-1/6 z-0 cursor-pointer"
+                      : "w-0 opacity-0"
+                  }`}
+                  style={{
+                    transform: `translateX(${
+                      (index - currentSlide) * (window.innerWidth >= 768 ? 50 : 70)
+                    }%)`,
+                  }}
+                  onClick={() => handleSlideClick(index)}
+                >
+                  <div className="px-1">
+                    <div className="bg-gray-200 rounded-lg overflow-hidden aspect-[1536/777]">
+                      <img
+                        src={result.imagePath}
+                        alt={result.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+              );
+            })}
+          </div>
 
-      {/* Navigation Arrows (Below the Slider) */}
-      <div className="flex justify-center mt-6 space-x-4">
-        <div className="flex justify-center mt-6 space-x-4">
-          <button
-            onClick={handlePrev}
-            className={`${styles.arrow} ${styles.active}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
+          {/* Navigation Arrows (Below the Slider) */}
+          <div className="flex justify-center mt-6 space-x-4">
+            <button
+              onClick={handlePrev}
+              className={`${styles.arrow} ${styles.active}`}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={handleNext}
-            className={`${styles.arrow} ${styles.active}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              onClick={handleNext}
+              className={`${styles.arrow} ${styles.active}`}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
+
+        {/* Content for the Current Slide */}
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="max-w-xl mx-auto mt-8 p-4 bg-gray-100 rounded-lg"
+        >
+          <h3 className="text-xl md:text-2xl font-bold text-black mb-4">
+            {resultsData[currentSlide % resultsData.length].title}
+          </h3>
+          <p className="text-gray-600 text-base md:text-lg">
+            {resultsData[currentSlide % resultsData.length].description}
+          </p>
+        </motion.div>
       </div>
-    </div>
-
-    {/* Content for the Current Slide */}
-    <motion.div
-      key={currentSlide}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="max-w-xl mx-auto mt-8 p-4 bg-gray-100 rounded-lg"
-    >
-      <h3 className="text-xl md:text-2xl font-bold text-black mb-4">
-        {resultsData[currentSlide].title}
-      </h3>
-      <p className="text-gray-600 text-base md:text-lg">
-        {resultsData[currentSlide].description}
-      </p>
-    </motion.div>
-  </div>
-</section>
-
+    </section>
   );
 }
-

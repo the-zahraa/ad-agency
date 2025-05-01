@@ -1,8 +1,22 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
+
+// Custom hook to extract raw string value from MotionValue<string>
+function useMotionValueString(motionValue: MotionValue<string>): string {
+  const [value, setValue] = useState<string>(motionValue.get());
+
+  useEffect(() => {
+    const unsubscribe = motionValue.on("change", (latest) => {
+      setValue(latest);
+    });
+    return () => unsubscribe();
+  }, [motionValue]);
+
+  return value;
+}
 
 export default function Header() {
   const heroRef = useRef(null);
@@ -19,15 +33,17 @@ export default function Header() {
   const headerPaddingY = useTransform(scrollYProgress, [0, 1], [12, 8]);
   const headerPaddingX = useTransform(scrollYProgress, [0, 1], [12, 8]);
   const navSpacing = useTransform(scrollYProgress, [0, 1], [12, 8]);
-  const navFontSize = useTransform(scrollYProgress, [0, 1], [16, 14]);
-  const buttonScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]); // Reduced scale change for less bulkiness
-  const buttonPaddingX = useTransform(scrollYProgress, [0, 1], [16, 12]); // Reduced padding for smaller button
-  const buttonPaddingY = useTransform(scrollYProgress, [0, 1], [6, 4]); // Reduced padding for smaller button
-  const buttonFontSize = useTransform(scrollYProgress, [0, 1], [14, 12]); // Smaller font size
+  const navFontSizeMotion = useTransform(scrollYProgress, [0, 1], ["16px", "14px"]);
+  const buttonScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+  const buttonPaddingX = useTransform(scrollYProgress, [0, 1], [16, 12]);
+  const buttonPaddingY = useTransform(scrollYProgress, [0, 1], [6, 4]);
+  const buttonFontSizeMotion = useTransform(scrollYProgress, [0, 1], ["14px", "12px"]);
   const buttonOpacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-  const buttonTranslateY = useTransform(scrollYProgress, [0, 1], [0, -2]); // Reduced translation
+  const buttonTranslateY = useTransform(scrollYProgress, [0, 1], [0, -2]);
 
-
+  // Extract raw string values
+  const navFontSize = useMotionValueString(navFontSizeMotion);
+  const buttonFontSize = useMotionValueString(buttonFontSizeMotion);
 
   // Navigation links
   const navLinks = [
@@ -73,13 +89,12 @@ export default function Header() {
               <Link
                 href={link.href}
                 style={{
-                  fontSize: navFontSize,
+                  fontSize: navFontSize, // Line 76
                 }}
                 className="text-gray-600 hover:text-gray-500 transition-colors duration-300 font-medium px-3 py-1"
               >
                 {link.name}
               </Link>
-              {/* Slimmer Purple Underline Effect on Hover */}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-500 ease-out group-hover:w-full"></span>
             </motion.div>
           ))}
@@ -99,7 +114,7 @@ export default function Header() {
             whileHover={{
               scale: 1.05,
               boxShadow:
-                "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.4), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.7), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)", // Reduced shadow for less bulkiness
+                "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.4), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.7), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
               transition: { duration: 0.3, ease: "easeOut" },
             }}
             whileTap={{
@@ -110,7 +125,7 @@ export default function Header() {
               transition: { duration: 0.2 },
             }}
             transition={{ duration: 0.3 }}
-            className="relative outline-none cursor-pointer border-0 rounded-[100px] bg-purple-600 transition-all duration-300 shadow-[inset_0_0.3rem_0.5rem_rgba(255, Akin to a modern-day Pandora's box, the internet has unleashed a torrent of information, both good and bad. shadow-[inset_0_0.3rem_0.9rem_rgba(255,255,255,0.3),inset_0_-0.1rem_0.3rem_rgba(0,0,0,0.7),inset_0_-0.4rem_0.9rem_rgba(255,255,255,0.5),0_1rem_1rem_rgba(0,0,0,0.3),0_0.5rem_0.5rem_-0.3rem_rgba(0,0,0,0.8)] ml-4"
+            className="relative outline-none cursor-pointer border-0 rounded-[100px] bg-purple-600 transition-all duration-300 shadow-[inset_0_0.3rem_0.5rem_rgba(255,255,255,0.3),inset_0_-0.1rem_0.3rem_rgba(0,0,0,0.7),inset_0_-0.4rem_0.9rem_rgba(255,255,255,0.5),0_1rem_1rem_rgba(0,0,0,0.3),0_0.5rem_0.5rem_-0.3rem_rgba(0,0,0,0.8)] ml-4"
           >
             <motion.div
               className="relative overflow-hidden rounded-[100px]"
