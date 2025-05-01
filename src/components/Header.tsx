@@ -23,7 +23,7 @@ function useMotionValueString(motionValue: MotionValue<string>): string {
 export default function Header() {
   const heroRef = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDesktop, setIsDesktop] = useState<boolean | null>(null); // Initially null to prevent rendering
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
 
   // Track scroll progress within the hero section
   const { scrollYProgress } = useScroll({
@@ -57,10 +57,7 @@ export default function Header() {
       console.log("isDesktop set to:", desktop, "Width:", window.innerWidth);
     };
 
-    // Initial check
     handleResize();
-
-    // Listen for resize events
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -86,15 +83,13 @@ export default function Header() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Prevent rendering until isDesktop is determined
   if (isDesktop === null) {
-    return null; // Avoid rendering during hydration to prevent flicker
+    return null;
   }
 
   return (
     <>
-      {/* Invisible target for scroll tracking */}
-      <div ref={heroRef} className="absolute top-0 h-screen" />
+      <div ref={heroRef} className="absolute top-0 h-[150vh]" />
 
       <motion.header
         initial={{ y: -100 }}
@@ -136,8 +131,8 @@ export default function Header() {
           <Image
             src="/logo.png"
             alt="M44 Logo"
-            width={24}
-            height={24}
+            width={20}
+            height={20}
             className="object-contain"
           />
           <span className={styles.logoText}>m44.io</span>
@@ -246,10 +241,10 @@ export default function Header() {
         {isMobileMenuOpen && (
           <motion.div
             className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ""}`}
-            initial={{ transform: "translateY(-100%)" }}
-            animate={{ transform: "translateY(0)" }}
-            exit={{ transform: "translateY(-100%)" }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             <button
               className={styles.closeButton}
@@ -290,6 +285,7 @@ export default function Header() {
               }}
               transition={{ duration: 0.3 }}
               className={`${styles.bookButton} mobile relative mt-8 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300`}
+              onClick={() => setIsMobileMenuOpen(false)}
             >
               <motion.div
                 className="relative overflow-hidden rounded-[100px]"

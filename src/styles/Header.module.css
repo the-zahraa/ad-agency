@@ -193,7 +193,7 @@
     align-items: center;
     justify-content: center;
     transform: translateY(-100%);
-    transition: transform 0.4s ease-in-out;
+    transition: transform 0.3s ease-in-out; /* Simplified for smoothness */
     z-index: 50;
     padding: 2rem;
   }
@@ -210,13 +210,15 @@
     font-weight: 500;
     text-align: center;
     width: 100%;
-    transition: background 0.3s ease, transform 0.3s ease;
+    transition: transform 0.2s ease; /* Smooth scale transition */
   }
   
-  .mobileMenuLink:hover,
-  .mobileMenuLink:active {
-    background: rgba(144, 0, 255, 0.2); /* Light purple hover */
+  .mobileMenuLink:hover {
     transform: scale(1.05);
+  }
+  
+  .mobileMenuLink:active {
+    transform: scale(0.95); /* Slight scale down on click */
   }
   
   .mobileMenuLink::after {
@@ -239,40 +241,48 @@
   /* Responsive styles */
   @media (max-width: 640px) {
     .header {
-      /* Fixed dimensions for mobile, no scroll-based changes */
-      width: 98% !important;
-      max-width: 440px !important;
-      padding: 5px 8px !important;
-      height: 44px !important;
-      justify-content: space-between; /* Ensure logo and hamburger are on opposite ends */
-      /* Disable all transitions for mobile header */
+      /* Adjusted dimensions for mobile */
+      width: 90% !important; /* Smaller left and right */
+      max-width: 380px !important; /* Reduced max-width */
+      padding: 4px 6px !important; /* Adjusted padding */
+      height: 36px !important; /* Slimmer */
+      justify-content: space-between;
       transition: none !important;
     }
   
     .logoContainer img {
-      width: 24px;
-      height: 24px;
+      width: 20px; /* Slightly smaller logo to fit */
+      height: 20px;
     }
   
     .logoText {
-      font-size: 0.75rem; /* Smaller for mobile */
+      font-size: 0.65rem; /* Slightly smaller text to fit */
       color: #9000ff; /* Purple */
     }
   
     .nav {
-      display: none; /* Hide desktop nav */
+      display: none;
     }
   
     .bookButton:not(.mobile) {
-      display: none; /* Hide desktop CTA */
+      display: none;
     }
   
     .hamburger {
-      display: flex; /* Show hamburger */
+      display: flex;
     }
   
     .desktop {
-      display: none !important; /* Ensure desktop-only elements don't appear */
+      display: none !important;
+    }
+  
+    /* Ensure Book a Call button in mobile menu fits */
+    .bookButton.mobile {
+      padding: 8px 16px; /* Adjusted padding for mobile */
+    }
+  
+    .bookButtonText {
+      font-size: 12px; /* Smaller text for mobile */
     }
   }
   
@@ -281,10 +291,10 @@
     .closeButton,
     .bookButton.mobile,
     .logoContainer:not(.desktop) {
-      display: none; /* Hide mobile elements */
+      display: none;
     }
   
     .logoText {
-      display: none; /* Hide m44.io on desktop */
+      display: none;
     }
   }
