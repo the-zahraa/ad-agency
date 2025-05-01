@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import styles from "../styles/ResultsSection.module.css";
 
@@ -94,23 +94,12 @@ const resultsData: Result[] = [
 
 export function ResultsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [extendedSlides, setExtendedSlides] = useState<Result[]>([]);
-
-  useEffect(() => {
-    const extended = [
-      ...resultsData.slice(-2), // Last two slides
-      ...resultsData, // All slides
-      ...resultsData.slice(0, 2), // First two slides
-    ];
-    setExtendedSlides(extended);
-    setCurrentSlide(2); // Start at index 2 (first actual slide after prepended slides)
-  }, []);
 
   const handlePrev = () => {
     setCurrentSlide((prev) => {
       const newIndex = prev - 1;
-      if (newIndex < 2) {
-        return extendedSlides.length - 3; // Last actual slide
+      if (newIndex < 0) {
+        return resultsData.length - 1; // Loop to the last slide
       }
       return newIndex;
     });
@@ -119,25 +108,17 @@ export function ResultsSection() {
   const handleNext = () => {
     setCurrentSlide((prev) => {
       const newIndex = prev + 1;
-      if (newIndex >= extendedSlides.length - 2) {
-        return 2; // First actual slide
+      if (newIndex >= resultsData.length) {
+        return 0; // Loop to the first slide
       }
       return newIndex;
     });
   };
 
   const handleSlideClick = (index: number) => {
-    const adjustedIndex = index % resultsData.length;
-    const currentAdjustedIndex = currentSlide % resultsData.length;
-
-    if (
-      adjustedIndex ===
-      (currentAdjustedIndex - 1 + resultsData.length) % resultsData.length
-    ) {
+    if (index === (currentSlide - 1 + resultsData.length) % resultsData.length) {
       handlePrev();
-    } else if (
-      adjustedIndex === (currentAdjustedIndex + 1) % resultsData.length
-    ) {
+    } else if (index === (currentSlide + 1) % resultsData.length) {
       handleNext();
     }
   };
@@ -165,13 +146,10 @@ export function ResultsSection() {
           className="text-center max-w-3xl mx-auto mb-12"
         >
           <p className="text-lg md:text-xl text-gray-600">
-            Partnered with Convert Cake, a battle-tested team trusted by global
-            brands to execute performance campaigns across paid media, creatives,
-            and funnels.
+            Partnered with Convert Cake, a battle-tested team trusted by global brands to execute performance campaigns across paid media, creatives, and funnels.
           </p>
           <p className="text-lg md:text-xl text-gray-600 mt-2">
-            They've scaled brands in e-commerce, SaaS, and retail and the results
-            speak for themselves
+            They\'ve scaled brands in e-commerce, SaaS, and retail and the results speak for themselves
           </p>
         </motion.div>
 
@@ -179,18 +157,19 @@ export function ResultsSection() {
         <div className="relative">
           {/* Image Row (Slider) */}
           <div className="flex overflow-hidden justify-center">
-            {extendedSlides.map((result: Result, index: number) => {
+            {resultsData.map((result: Result, index: number) => {
               const isCenter = index === currentSlide;
               const isAdjacent =
-                index === currentSlide - 1 || index === currentSlide + 1;
+                index === (currentSlide - 1 + resultsData.length) % resultsData.length ||
+                index === (currentSlide + 1) % resultsData.length;
 
               if (
                 !isCenter &&
                 !isAdjacent &&
-                index !== currentSlide - 2 &&
-                index !== currentSlide + 2
+                index !== (currentSlide - 2 + resultsData.length) % resultsData.length &&
+                index !== (currentSlide + 2) % resultsData.length
               ) {
-                return null; // Only render center slide and neighbors
+                return null; // Only render the center slide and its immediate neighbors
               }
 
               return (
@@ -238,11 +217,7 @@ export function ResultsSection() {
                 stroke="currentColor"
                 className="w-6 h-6"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 19l-7-7 7-7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
@@ -257,11 +232,7 @@ export function ResultsSection() {
                 stroke="currentColor"
                 className="w-6 h-6"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
@@ -276,10 +247,10 @@ export function ResultsSection() {
           className="max-w-xl mx-auto mt-8 p-4 bg-gray-100 rounded-lg"
         >
           <h3 className="text-xl md:text-2xl font-bold text-black mb-4">
-            {resultsData[currentSlide % resultsData.length].title}
+            {resultsData[currentSlide].title}
           </h3>
           <p className="text-gray-600 text-base md:text-lg">
-            {resultsData[currentSlide % resultsData.length].description}
+            {resultsData[currentSlide].description}
           </p>
         </motion.div>
       </div>

@@ -62,7 +62,7 @@ export function PartneredSection() {
           variants={fadeInUp}
           className="text-lg md:text-xl mb-6 text-[#9000ff]"
         >
-          Companies we've grown with performance marketing
+          Companies we\'ve grown with performance marketing
         </motion.p>
 
         {/* Logos Bar */}
