@@ -3,7 +3,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 
@@ -26,7 +25,6 @@ export default function Header() {
   const headerRef = useRef<HTMLDivElement>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
-  const pathname = usePathname();
 
   // Track scroll progress within the hero section
   const { scrollYProgress } = useScroll({
