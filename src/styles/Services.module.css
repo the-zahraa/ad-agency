@@ -137,22 +137,27 @@
   .tabs {
     flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem; /* Reduced from 2rem to minimize gap */
     padding: 0;
   }
 
   .tab {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 0.75rem 1.5rem; /* Increased padding for a more spacious look */
+    border: none; /* Remove border for a cleaner look */
+    border-radius: 12px; /* More rounded corners */
+    background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Subtle gradient for depth */
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1), -4px -4px 8px rgba(255, 255, 255, 0.8); /* Neumorphic shadow */
+    transition: all 0.3s ease;
     justify-content: flex-start;
+    color: #333; /* Darker base color for better contrast */
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif; /* Modern font */
   }
 
   .tab:hover {
-    background-color: #f0f0f0;
+    background: linear-gradient(145deg, #f0f0f0, #d9d9d9); /* Slightly darker gradient on hover */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1), -2px -2px 4px rgba(255, 255, 255, 0.8); /* Subtle inset effect */
+    transform: scale(1.02); /* Slight scale on hover */
   }
 
   .tab:hover::after {
@@ -160,21 +165,56 @@
   }
 
   .tab.active {
-    background-color: #fff;
-    border-color: #9000ff;
+    background: linear-gradient(145deg, #9000ff, #6b00cc); /* Futuristic gradient */
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.2); /* Inset shadow for depth */
+    color: #fff; /* White text for contrast */
+    border: none;
+    position: relative;
+    overflow: hidden;
   }
 
   .tab.active::after {
     content: none;
   }
 
+  /* Add a glowing effect for active state */
+  .tab.active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    padding: 2px; /* Thickness of the glow */
+    background: linear-gradient(145deg, #a033ff, #ff66cc); /* Neon gradient glow */
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .tab.active:hover::before {
+    opacity: 1; /* Brighter glow on hover */
+  }
+
   .tabIcon {
     width: 1.5rem;
     height: 1.5rem;
+    fill: #9000ff;
+    transition: fill 0.3s ease;
+  }
+
+  .tab.active .tabIcon {
+    fill: #fff; /* White icon for active state */
   }
 
   .tabText {
     font-size: 1rem;
+    font-weight: 500; /* Slightly lighter for a modern look */
   }
 
   .content {
@@ -190,13 +230,21 @@
   }
 
   .imageContainer {
-    height: 250px;
+    height: 350px; /* Increased from 250px to make the image larger */
     margin-top: 2rem;
     margin-bottom: 0.5rem;
   }
 
+  .imageContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-width: 500px; /* Allow the image to scale up to 500px wide */
+  }
+
   .serviceTitle {
     font-size: 1.5rem;
+    margin-top: 0; /* Ensure no extra space above the title */
   }
 
   .serviceDescription {

@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useRef, ReactNode } from "react";
 
 type ScrollContextType = {
   scrollToSection: (sectionId: string) => void;
-  scrollToElement: (element: HTMLElement) => void;
+  scrollToElement: (element: HTMLElement, extraOffset?: number) => void;
 };
 
 const ScrollContext = createContext<ScrollContextType | undefined>(undefined);
@@ -56,11 +56,11 @@ export default function ScrollProvider({ children }: { children: ReactNode }) {
   };
 
   // Handle scrolling to a specific element
-  const scrollToElement = (element: HTMLElement) => {
+  const scrollToElement = (element: HTMLElement, extraOffset: number = 0) => {
     console.log("[ScrollProvider] scrollToElement called with element:", element);
     if (element) {
       const headerHeight = headerRef.current?.offsetHeight || 0;
-      const offset = headerHeight + 10;
+      const offset = headerHeight + extraOffset;
       element.scrollIntoView({ behavior: "smooth" });
       const position = element.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({

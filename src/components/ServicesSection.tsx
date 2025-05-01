@@ -20,7 +20,7 @@ const contentVariants = {
 export function ServicesSection() {
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null); // New ref for the service title
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const { scrollToElement } = useScrollContext();
 
@@ -44,7 +44,7 @@ export function ServicesSection() {
       name: "Creative",
       icon: (
         <svg className={styles.tabIcon} viewBox="0 0 24 24" fill="currentColor">
-          <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
+          <path d="M21.5 3.5c0-.28-.22-.5-.5-.5h-3.29l-.35-1.41c-.14-.56-.65-.94-1.22-.94h-7.08c-.57 0-1.08.38-1.22.94l-.35 1.41h-3.29c-.28 0-.5.22-.5.5v1c0 .28.22.5.5.5h1.29l-.65 2.59h-1.64c-.28 0-.5.22-.5.5v1c0 .28.22.5.5.5h1.14l-.94 3.76c-.13.51.18 1.03.69 1.16.09.02.19.03.28.03.42 0 .81-.27.94-.68l.82-3.27h2.47l-.94 3.76c-.13.51.18 1.03.69 1.16.09.02.19.03.28.03.42 0 .81-.27.94-.68l.82-3.27h2.47l-.94 3.76c-.13.51.18 1.03.69 1.16.09.02.19.03.28.03.42 0 .81-.27.94-.68l.82-3.27h1.14c.28 0 .5-.22.5-.5v-1c0-.28-.22-.5-.5-.5h-1.64l-.65-2.59h1.29c.28 0 .5-.22.5-.5v-1zm-7.5 3.5c0-.55-.45-1-1-1h-2c-.55 0-1 .45-1 1v2h-2v-2c0-1.66 1.34-3 3-3s3 1.34 3 3v2h-2v-2z" />
         </svg>
       ),
       title: "Creative That Sells",
@@ -59,7 +59,7 @@ export function ServicesSection() {
       name: "Paid Media",
       icon: (
         <svg className={styles.tabIcon} viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-2h2v2h-2zm2.07-4.36l-.07.36H11v-.36c0-.67.28-1.31.76-1.76.47-.45 1.04-.74 1.31-.96.26-.22.5-.43.5-.76 0-.33-.27-.60-.60-.60-.33 0-.60.27-.60.60v.4h-2v-.4c0-.99.81-1.80 1.80-1.80.99 0 1.80.81 1.80 1.80 0 .67-.28 1.31-.76 1.76-.47.45-1.04.74-1.31.96-.26.22-.50.43-.50.76z" />
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-2h4v2zm0-4H7v-2h4v2zm6 4h-4v-2h4v2zm0-4h-4v-2h4v2zm0-4h-4V7h4v2z" />
         </svg>
       ),
       title: "Paid Media That Prints Money",
@@ -74,7 +74,7 @@ export function ServicesSection() {
       name: "Tracking & Reporting",
       icon: (
         <svg className={styles.tabIcon} viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-2V9h2v8zm-4 0H8V7h2v10zm8 0h-2V11h2v6z" />
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c-1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-2V9h2v8zm-4 0H8V7h2v10zm8 0h-2V11h2v6z" />
         </svg>
       ),
       title: "Tracking That Tells the Truth",
@@ -104,12 +104,15 @@ export function ServicesSection() {
 
   const handleTabClick = (index: number) => {
     setActiveTab(index);
-    if (window.innerWidth <= 768 && titleRef.current) {
+    if (window.innerWidth <= 768 && titleRef.current && tabsRef.current) {
       setTimeout(() => {
-        if (titleRef.current) {
-          scrollToElement(titleRef.current); // Scroll to the title instead of the content container
+        if (titleRef.current && tabsRef.current) {
+          const tabsHeight = tabsRef.current.offsetHeight;
+          const tabsMarginBottom = 16; // 1rem = 16px, based on CSS
+          const extraOffset = tabsHeight + tabsMarginBottom;
+          scrollToElement(titleRef.current, extraOffset);
         }
-      }, 300);
+      }, 200);
     }
   };
 
