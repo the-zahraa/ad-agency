@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image"; // Import next/image
 import styles from "../styles/ResultsSection.module.css";
 
 // Animation variants for Framer Motion
@@ -208,9 +209,11 @@ export function ResultsSection() {
                 >
                   <div className="px-1">
                     <div className="bg-gray-200 rounded-lg overflow-hidden aspect-[1536/777]">
-                      <img
+                      <Image
                         src={result.imagePath}
                         alt={result.title}
+                        width={1536} // Match the aspect ratio width
+                        height={777} // Match the aspect ratio height
                         className="w-full h-full object-cover"
                       />
                     </div>

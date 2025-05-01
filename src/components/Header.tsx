@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
 
@@ -27,7 +27,6 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   // Track scroll progress within the hero section
   const { scrollYProgress } = useScroll({
@@ -46,7 +45,7 @@ export default function Header() {
   const buttonPaddingX = useTransform(scrollYProgress, [0, 1], [16, 12]);
   const buttonPaddingY = useTransform(scrollYProgress, [0, 1], [6, 4]);
   const buttonFontSizeMotion = useTransform(scrollYProgress, [0, 1], ["14px", "12px"]);
-  const buttonOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]); // Adjusted to appear earlier
+  const buttonOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
   const buttonTranslateY = useTransform(scrollYProgress, [0, 1], [0, -2]);
 
   // Extract raw string values
@@ -85,36 +84,9 @@ export default function Header() {
     };
 
     checkSections();
-    // Retry after hydration
     const timeout = setTimeout(checkSections, 1000);
     return () => clearTimeout(timeout);
   }, []);
-
-  // Scroll to section based on URL hash
-  useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (hash) {
-      const scrollToSection = () => {
-        const targetElement = document.getElementById(hash);
-        if (targetElement) {
-          const headerHeight = headerRef.current?.offsetHeight || 0;
-          const offsetPosition = targetElement.offsetTop - (headerHeight + 10);
-          console.log(`Scrolling to ${hash} at position:`, offsetPosition);
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
-        } else {
-          console.error(`Element with ID "${hash}" not found.`);
-        }
-      };
-
-      // Scroll immediately and retry after hydration
-      scrollToSection();
-      setTimeout(scrollToSection, 1000); // Retry after 1 second
-      setTimeout(scrollToSection, 2000); // Retry after 2 seconds
-    }
-  }, [pathname, searchParams]);
 
   // Navigation links
   const navLinks = [
@@ -128,6 +100,22 @@ export default function Header() {
   const toggleMobileMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Handle scroll to section on link click
+  const scrollToSection = (hash: string) => {
+    const sectionId = hash.replace("#", "");
+    const targetElement = document.getElementById(sectionId);
+    if (targetElement) {
+      const headerHeight = headerRef.current?.offsetHeight || 0;
+      const offsetPosition = targetElement.offsetTop - (headerHeight + 10);
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    } else {
+      console.error(`Element with ID "${sectionId}" not found.`);
+    }
   };
 
   if (isDesktop === null) {
@@ -153,7 +141,7 @@ export default function Header() {
         }}
         className={`${styles.header} fixed top-4 left-1/2 transform -translate-x-1/2 z-50 mx-auto flex items-center rounded-full shadow-lg bg-gradient-to-b from-white to-gray-100`}
       >
-        {/* Logo for Desktop (Only the Logo, No m44.io Text) */}
+        {/* Logo for Desktop */}
         <AnimatePresence>
           {isDesktop && buttonOpacity.get() > 0 && (
             <motion.div
@@ -163,7 +151,7 @@ export default function Header() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <Link href="#home" scroll={false}>
+              <Link href="#home" scroll={false} onClick={() => scrollToSection("#home")}>
                 <Image
                   src="/logo.png"
                   alt="M44 Logo"
@@ -178,7 +166,7 @@ export default function Header() {
 
         {/* Logo and m44.io for Mobile */}
         <div className={`${styles.logoContainer} flex sm:hidden`}>
-          <Link href="#home" scroll={false}>
+          <Link href="#home" scroll={false} onClick={() => scrollToSection("#home")}>
             <Image
               src="/logo.png"
               alt="M44 Logo"
@@ -220,6 +208,7 @@ export default function Header() {
                 scroll={false}
                 style={{ fontSize: navFontSize }}
                 className="text-gray-600 hover:text-gray-500 transition-colors duration-300 font-medium px-3 py-1"
+                onClick={() => scrollToSection(link.href)}
               >
                 {link.name}
               </Link>
@@ -254,7 +243,7 @@ export default function Header() {
             transition={{ duration: 0.3 }}
             className={`${styles.bookButton} hidden sm:block ml-4 outline-none cursor-pointer border-0 rounded-[100px] transition-all duration-300`}
           >
-            <Link href="#book-call" scroll={false}>
+            <Link href="#book-call" scroll={false} onClick={() => scrollToSection("#book-call")}>
               <motion.div
                 className="relative overflow-hidden rounded-[100px]"
                 style={{
@@ -311,17 +300,22 @@ export default function Header() {
                 href={link.href}
                 scroll={false}
                 className={styles.mobileMenuLink}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  scrollToSection(link.href);
+                }}
               >
                 {link.name}
               </Link>
             ))}
-            {/* Simple Purple Button */}
             <Link
               href="#book-call"
               scroll={false}
               className={`${styles.mobileBookButton} mt-8`}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                scrollToSection("#book-call");
+              }}
             >
               Book a Call
             </Link>
