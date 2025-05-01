@@ -20,6 +20,7 @@ const contentVariants = {
 export function ServicesSection() {
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null); // New ref for the service title
   const tabsRef = useRef<HTMLDivElement>(null);
   const { scrollToElement } = useScrollContext();
 
@@ -103,10 +104,10 @@ export function ServicesSection() {
 
   const handleTabClick = (index: number) => {
     setActiveTab(index);
-    if (window.innerWidth <= 768 && contentRef.current) {
+    if (window.innerWidth <= 768 && titleRef.current) {
       setTimeout(() => {
-        if (contentRef.current) {
-          scrollToElement(contentRef.current);
+        if (titleRef.current) {
+          scrollToElement(titleRef.current); // Scroll to the title instead of the content container
         }
       }, 300);
     }
@@ -158,7 +159,9 @@ export function ServicesSection() {
             className={styles.content}
           >
             <div className={styles.textContent}>
-              <h3 className={`${styles.serviceTitle} text-[#9000ff]`}>{services[activeTab].title}</h3>
+              <h3 ref={titleRef} className={`${styles.serviceTitle} text-[#9000ff]`}>
+                {services[activeTab].title}
+              </h3>
               <p className={styles.serviceDescription}>{services[activeTab].description}</p>
               <h4 className={`${styles.whyTitle} text-[#9000ff]`}>{services[activeTab].whyTitle}</h4>
               <p className={styles.whyDescription}>{services[activeTab].whyDescription}</p>
