@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef, useEffect, useState, forwardRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, MotionValue } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "../styles/Header.module.css";
-import { useScrollContext } from "../app/layout";
+import { useScrollContext } from "../components/ScrollProvider";
 
 // Custom hook to extract raw string value from MotionValue<string>
 function useMotionValueString(motionValue: MotionValue<string>): string {
@@ -21,8 +21,7 @@ function useMotionValueString(motionValue: MotionValue<string>): string {
   return value;
 }
 
-// Forward ref to allow layout.tsx to pass headerRef
-const Header = forwardRef<HTMLElement>((props, ref) => {
+export default function Header() {
   const heroRef = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
@@ -81,7 +80,6 @@ const Header = forwardRef<HTMLElement>((props, ref) => {
       <div ref={heroRef} className="absolute top-0 h-[150vh]" />
 
       <motion.header
-        ref={ref}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
@@ -239,8 +237,4 @@ const Header = forwardRef<HTMLElement>((props, ref) => {
       </AnimatePresence>
     </>
   );
-});
-
-Header.displayName = 'Header';
-
-export default Header;
+}

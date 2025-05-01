@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "../styles/Services.module.css";
-import { useScrollContext } from "../app/layout";
+import { useScrollContext } from "./ScrollProvider";
 
 // Animation variants for Framer Motion
 const fadeInUp = {
