@@ -149,7 +149,7 @@ export function ResultsSection() {
             Partnered with Convert Cake, a battle-tested team trusted by global brands to execute performance campaigns across paid media, creatives, and funnels.
           </p>
           <p className="text-lg md:text-xl text-gray-600 mt-2">
-            They\'ve scaled brands in e-commerce, SaaS, and retail and the results speak for themselves
+            They have scaled brands in e-commerce, SaaS, and retail and the results speak for themselves
           </p>
         </motion.div>
 
