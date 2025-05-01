@@ -1,0 +1,127 @@
+/* src/styles/StepCard.module.css */
+
+/* Card container */
+.outer {
+    position: relative;
+    border-radius: 0.75rem;
+    border: 2px solid #242325;
+    width: 28rem;
+    height: 14rem;
+    transition: all 0.3s ease;
+  }
+  
+  /* Glowing layers */
+  .a {
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(
+      155deg,
+      #9000ff,
+      #b266ff 20%,
+      #b266ff00 30%,
+      #9000ff00 70%,
+      #9000ff 80%,
+      #b266ff
+    );
+    border-radius: calc(0.75rem + 2px);
+    filter: blur(4px);
+    opacity: 0.4; /* Increased static opacity slightly (from 0.3) */
+    transition: opacity 0.3s ease;
+  }
+  
+  .b {
+    position: absolute;
+    inset: 0px;
+    background: linear-gradient(
+      155deg,
+      #9000ff,
+      #b266ff00,
+      #9000ff00,
+      #b266ff
+    );
+    border-radius: calc(0.75rem + 0px);
+    filter: blur(15px);
+    opacity: 0.3; /* Increased static opacity slightly (from 0.2) */
+    transition: opacity 0.3s ease;
+  }
+  
+  .c {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    inset: -20px;
+    background: linear-gradient(
+      155deg,
+      #9000ff,
+      #b266ff00,
+      #9000ff00,
+      #b266ff
+    );
+    filter: blur(40px);
+    opacity: 0.4; /* Increased static opacity slightly (from 0.3) */
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Enhance lighting on hover */
+  .outer:hover .a,
+  .outer:hover .b,
+  .outer:hover .c {
+    opacity: 1; /* Strong neon effect on hover (unchanged) */
+  }
+  
+  /* Card content */
+  .label {
+    position: absolute;
+    inset: 0;
+    background-color: #111215;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    color: #fff;
+  }
+  
+  .titleWrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .stepNumber {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #9000ff;
+  }
+  
+  .stepTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .stepDescription {
+    font-size: 1.125rem;
+    color: #bebebe;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .outer {
+      width: 100%;
+      max-width: 24rem;
+      height: 16rem;
+    }
+  
+    .stepNumber {
+      font-size: 1.25rem;
+    }
+  
+    .stepTitle {
+      font-size: 1.25rem;
+    }
+  
+    .stepDescription {
+      font-size: 1rem;
+    }
+  }

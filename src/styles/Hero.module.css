@@ -1,0 +1,95 @@
+/* From Uiverse.io by muhammad_1180 */
+.background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(125% 125% at 50% 10%, #fff 40%, #63e 100%) !important;
+    z-index: -10;
+  }
+  
+  /* Hero Title */
+  .heroTitle {
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  /* Each line container */
+  .titleLine {
+    display: block;
+    white-space: nowrap;
+  }
+  
+  /* Highlight effect for "Profit" and "Budget" */
+  .highlightedText {
+    position: relative;
+    display: inline-block;
+    color: #000; /* Black text */
+  }
+  
+  /* Underline effect with animation and enhanced lighting */
+  .highlightedText::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 3px; /* Base thickness for large screens */
+    background: #9000ff; /* Purple */
+    box-shadow: 0 0 6px rgba(144, 0, 255, 1), 0 0 12px rgba(144, 0, 255, 0.8), 0 0 18px rgba(144, 0, 255, 0.6); /* Stronger, vibrant glow */
+    animation: growUnderline 1s ease-out forwards;
+  }
+  
+  /* Animation for the underline */
+  @keyframes growUnderline {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .heroTitle {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+    }
+  
+    .highlightedText::after {
+      height: 3.5px;
+      box-shadow: 0 0 5px rgba(144, 0, 255, 1), 0 0 10px rgba(144, 0, 255, 0.9), 0 0 15px rgba(144, 0, 255, 0.7);
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .heroTitle {
+      gap: 0.3rem;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+  
+    .titleLine {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    .highlightedText::after {
+      height: 4px;
+      box-shadow: 0 0 4px rgba(144, 0, 255, 1), 0 0 8px rgba(144, 0, 255, 1), 0 0 12px rgba(144, 0, 255, 0.8);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .heroTitle {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    }
+  
+    .highlightedText::after {
+      height: 3.5px;
+      box-shadow: 0 0 3px rgba(144, 0, 255, 1), 0 0 6px rgba(144, 0, 255, 1), 0 0 10px rgba(144, 0, 255, 0.9);
+    }
+  }

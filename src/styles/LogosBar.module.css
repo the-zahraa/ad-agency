@@ -1,0 +1,79 @@
+.logosContainer {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.logosWrapper {
+  display: flex;
+  flex-direction: column; /* Stack rows vertically */
+  gap: 20px; /* Space between rows */
+}
+
+.logosRow {
+  display: flex;
+  flex-wrap: nowrap; /* Keep logos in a single line */
+  gap: 2rem; /* Space between logos */
+  align-items: center;
+  width: fit-content; /* Allow row to expand for animation */
+}
+
+.leftToRight {
+  animation: slideLeftToRight 30s linear infinite;
+}
+
+.rightToLeft {
+  animation: slideRightToLeft 30s linear infinite;
+}
+
+.logoPlaceholder {
+  width: 120px;
+  height: 60px;
+  background-color: #333; /* Placeholder background */
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: grayscale(100%); /* Grayscale for a sleek look */
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.logoPlaceholder:hover {
+  filter: grayscale(0%); /* Show color on hover */
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+@keyframes slideLeftToRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Move half the width (due to duplicated logos) */
+  }
+}
+
+@keyframes slideRightToLeft {
+  0% {
+    transform: translateX(-50%); /* Start at -50% to align with duplicated logos */
+  }
+  100% {
+    transform: translateX(0); /* Move to 0 for right-to-left */
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .logosRow {
+    gap: 1.5rem;
+  }
+
+  .logoPlaceholder {
+    width: 100px;
+    height: 50px;
+  }
+
+  .leftToRight,
+  .rightToLeft {
+    animation-duration: 20s; /* Faster scroll on mobile */
+  }
+}

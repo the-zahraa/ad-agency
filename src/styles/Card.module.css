@@ -1,0 +1,155 @@
+/* src/styles/Card.module.css */
+
+/* Define the card container */
+.cardContainer {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    border-radius: 1em;
+    margin: 0 2em;
+  }
+  
+  .cardBorder {
+    position: absolute;
+    inset: 0;
+    background: #0005;
+    border-radius: inherit;
+  }
+  
+  .card {
+    position: absolute;
+    inset: 0.125em;
+    border-radius: 0.875em;
+    background: #111215;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    overflow: hidden;
+  }
+  
+  .header {
+    background: #0b0d10;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Center the title */
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #1d1f23;
+  }
+  
+  .repoName {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .content {
+    height: 100%;
+    overflow: auto;
+    padding: 16px;
+  }
+  
+  .content::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .listItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #bebebe;
+  }
+  
+  .check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .checkSvg {
+    width: 0.75rem;
+    height: 0.75rem;
+    fill: #9000ff; /* Purple checkmark */
+  }
+  
+  .spin {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+  }
+  
+  .spinBlur {
+    filter: blur(3em) url(#unopaq);
+  }
+  
+  .spinIntense {
+    inset: -0.125em;
+    filter: blur(0.5em) url(#unopaq2);
+    border-radius: 0.75em;
+  }
+  
+  .spinInside {
+    inset: -2px;
+    border-radius: inherit;
+    filter: blur(2px) url(#unopaq3);
+    z-index: 0;
+  }
+  
+  .spin::before {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    animation: speen 8s cubic-bezier(0.56, 0.15, 0.28, 0.86) infinite;
+  }
+  
+  .spinBlur::before {
+    background: linear-gradient(-45deg, #9000ff, #0000 46% 54%, #b266ff); /* Purple gradient */
+  }
+  
+  .spinIntense::before {
+    background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #b266ff); /* Purple gradient */
+  }
+  
+  .spinInside::before {
+    background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #b266ff); /* Purple gradient */
+  }
+  
+  @keyframes speen {
+    0% {
+      rotate: 10deg;
+    }
+    50% {
+      rotate: 190deg;
+    }
+    to {
+      rotate: 370deg;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .cardContainer {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  
+    .repoName {
+      font-size: 1.1rem;
+    }
+  
+    .listItem {
+      font-size: 0.85rem;
+    }
+  }

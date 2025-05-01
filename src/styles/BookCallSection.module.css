@@ -1,0 +1,209 @@
+.sectionBackground {
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111aa 50%);
+  background-size: 3px 3px;
+}
+
+.sectionContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.cardContainer {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 600px;
+  border-radius: 1em;
+  margin: 0 auto;
+}
+
+.cardBorder {
+  position: absolute;
+  inset: 0;
+  background: #0005;
+  border-radius: inherit;
+}
+
+.card {
+  position: absolute;
+  inset: 0.125em;
+  border-radius: 0.875em;
+  background: #111215;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  overflow: hidden;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.calendarEmbed {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Target Cal.com iframe or container */
+.calendarEmbed > * {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Target internal calendar content */
+.calendarEmbed iframe,
+.calendarEmbed div {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: unset !important;
+  min-height: unset !important;
+  overflow: hidden !important;
+}
+
+/* Target the calendar's month view container specifically */
+.calendarEmbed [data-cal-view="month"] {
+  transform: scale(0.85);
+  transform-origin: top left;
+  width: calc(100% / 0.85) !important;
+  height: calc(100% / 0.85) !important;
+}
+
+/* Hide scrollbars */
+.calendarEmbed::-webkit-scrollbar {
+  display: none;
+}
+
+.calendarEmbed {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0; /* Fixed to match parent dimensions */
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111aa 50%);
+  background-size: 3px 3px;
+  z-index: -1;
+}
+
+.spin {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.spinBlur {
+  filter: blur(3em) url(#unopaq);
+}
+
+.spinIntense {
+  inset: -0.125em;
+  filter: blur(0.5em) url(#unopaq2);
+  border-radius: 0.75em;
+}
+
+.spinInside {
+  inset: -2px;
+  border-radius: inherit;
+  filter: blur(2px) url(#unopaq3);
+  z-index: 0;
+}
+
+.spin::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  animation: speen 8s cubic-bezier(0.56, 0.15, 0.28, 0.86) infinite;
+}
+
+.spinBlur::before {
+  background: linear-gradient(-45deg, #9000ff, #0000 46% 54%, #9000ff);
+}
+
+.spinIntense::before {
+  background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #9000ff);
+}
+
+.spinInside::before {
+  background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #9000ff);
+}
+
+@keyframes speen {
+  0% {
+    rotate: 10deg;
+  }
+  50% {
+    rotate: 190deg;
+  }
+  to {
+    rotate: 370deg;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1440px) {
+  .sectionContainer {
+    max-width: 1200px;
+  }
+  .cardContainer {
+    max-width: 700px;
+    height: 550px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sectionContainer {
+    max-width: 960px;
+  }
+  .cardContainer {
+    max-width: 600px;
+    height: 500px;
+  }
+  .calendarEmbed [data-cal-view="month"] {
+    transform: scale(0.82);
+    width: calc(100% / 0.82) !important;
+    height: calc(100% / 0.82) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionContainer {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+  .cardContainer {
+    max-width: 100%;
+    height: 450px;
+  }
+  .calendarEmbed [data-cal-view="month"] {
+    transform: scale(0.80);
+    width: calc(100% / 0.80) !important;
+    height: calc(100% / 0.80) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionContainer {
+    padding: 0 0.25rem;
+  }
+  .cardContainer {
+    max-width: 100%;
+    height: 400px;
+  }
+  .calendarEmbed [data-cal-view="month"] {
+    transform: scale(0.78);
+    width: calc(100% / 0.78) !important;
+    height: calc(100% / 0.78) !important;
+  }
+}
