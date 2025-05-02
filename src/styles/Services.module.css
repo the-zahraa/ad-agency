@@ -118,14 +118,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 16px; /* Ensure rounded corners */
+  overflow: hidden; /* Clip the image to the rounded corners */
 }
 
 .imageContainer img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 16px; /* Ensure the image itself has rounded corners */
+  display: block; /* Ensure border-radius is respected in all browsers */
 }
 
 /* Responsive adjustments */
@@ -137,27 +139,36 @@
   .tabs {
     flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 1rem; /* Reduced from 2rem to minimize gap */
-    padding: 0;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f8f8f8;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .tab {
     width: 100%;
-    padding: 0.75rem 1.5rem; /* Increased padding for a more spacious look */
-    border: none; /* Remove border for a cleaner look */
-    border-radius: 12px; /* More rounded corners */
-    background: linear-gradient(145deg, #ffffff, #e6e6e6); /* Subtle gradient for depth */
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1), -4px -4px 8px rgba(255, 255, 255, 0.8); /* Neumorphic shadow */
+    max-width: none;
+    margin: 0;
+    padding: 1rem 1rem;
+    min-height: 48px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1), -4px -4px 8px rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
-    justify-content: flex-start;
-    color: #333; /* Darker base color for better contrast */
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif; /* Modern font */
+    justify-content: center;
+    color: #333;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   .tab:hover {
-    background: linear-gradient(145deg, #f0f0f0, #d9d9d9); /* Slightly darker gradient on hover */
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1), -2px -2px 4px rgba(255, 255, 255, 0.8); /* Subtle inset effect */
-    transform: scale(1.02); /* Slight scale on hover */
+    background: linear-gradient(145deg, #f0f0f0, #d9d9d9);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1), -2px -2px 4px rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
   }
 
   .tab:hover::after {
@@ -165,9 +176,9 @@
   }
 
   .tab.active {
-    background: linear-gradient(145deg, #9000ff, #6b00cc); /* Futuristic gradient */
-    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.2); /* Inset shadow for depth */
-    color: #fff; /* White text for contrast */
+    background: linear-gradient(145deg, #9000ff, #7a00e6);
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), inset -2px -2px 4px rgba(255, 255, 255, 0.2);
+    color: #fff;
     border: none;
     position: relative;
     overflow: hidden;
@@ -177,7 +188,6 @@
     content: none;
   }
 
-  /* Add a glowing effect for active state */
   .tab.active::before {
     content: "";
     position: absolute;
@@ -185,9 +195,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 12px;
-    padding: 2px; /* Thickness of the glow */
-    background: linear-gradient(145deg, #a033ff, #ff66cc); /* Neon gradient glow */
+    border-radius: 10px;
+    padding: 2px;
+    background: linear-gradient(145deg, #9000ff, #b833ff);
     -webkit-mask: 
       linear-gradient(#fff 0 0) content-box, 
       linear-gradient(#fff 0 0);
@@ -198,7 +208,7 @@
   }
 
   .tab.active:hover::before {
-    opacity: 1; /* Brighter glow on hover */
+    opacity: 1;
   }
 
   .tabIcon {
@@ -209,12 +219,12 @@
   }
 
   .tab.active .tabIcon {
-    fill: #fff; /* White icon for active state */
+    fill: #fff;
   }
 
   .tabText {
     font-size: 1rem;
-    font-weight: 500; /* Slightly lighter for a modern look */
+    font-weight: 500;
   }
 
   .content {
@@ -230,21 +240,25 @@
   }
 
   .imageContainer {
-    height: 350px; /* Increased from 250px to make the image larger */
+    height: 350px;
     margin-top: 2rem;
     margin-bottom: 0.5rem;
+    border-radius: 16px; /* Ensure rounded corners on mobile */
+    overflow: hidden; /* Reinforce clipping */
   }
 
   .imageContainer img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    max-width: 500px; /* Allow the image to scale up to 500px wide */
+    max-width: 500px;
+    border-radius: 16px; /* Ensure rounded corners on mobile */
+    display: block; /* Ensure border-radius is respected */
   }
 
   .serviceTitle {
     font-size: 1.5rem;
-    margin-top: 0; /* Ensure no extra space above the title */
+    margin-top: 0;
   }
 
   .serviceDescription {
