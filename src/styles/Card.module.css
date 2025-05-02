@@ -1,6 +1,6 @@
 /* Section-level styles for WhyM44 */
 .sectionBackground {
-  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111aa 50%);
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111cc 50%); /* Increased opacity for better visibility */
   background-size: 3px 3px;
   width: 100%;
   margin: 0;
@@ -183,9 +183,9 @@
 
 @media (max-width: 640px) {
   .cardContainer {
-    width: 350px; /* Reduced from 100% (390px) to 350px to create more space around the card */
-    max-width: 350px;
-    height: 280px; /* Slightly reduced height to maintain proportions */
+    width: 320px; /* Reduced from 350px to 320px for more space around the card */
+    max-width: 320px;
+    height: 260px; /* Adjusted height to maintain proportions */
     margin: 0 auto;
   }
 
@@ -201,12 +201,12 @@
     inset: -10%;
   }
   .spinBlur {
-    filter: blur(4em) url(#unopaq);
+    filter: blur(4.5em) url(#unopaq); /* Increased to 72px for stronger lighting */
   }
   .spinIntense {
-    filter: blur(0.75em) url(#unopaq2);
+    filter: blur(0.85em) url(#unopaq2);
   }
   .spinInside {
-    filter: blur(3px) url(#unopaq3);
+    filter: blur(3.5px) url(#unopaq3);
   }
 }
