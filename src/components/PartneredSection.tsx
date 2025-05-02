@@ -16,9 +16,9 @@ const logosBarVariants = {
 };
 
 export function PartneredSection() {
-  // Split placeholders into two rows
-  const firstRowLogos = Array(12).fill(null); // First 12 logos
-  const secondRowLogos = Array(11).fill(null); // Remaining 11 logos
+  // Split logos into two rows (14 logos each)
+  const firstRowLogos = Array(14).fill(null); // First 14 logos
+  const secondRowLogos = Array(14).fill(null); // Next 14 logos
 
   return (
     <section className="py-16 bg-white text-white">
@@ -78,7 +78,13 @@ export function PartneredSection() {
             <div className={`${styles.logosRow} ${styles.leftToRight}`}>
               {[...firstRowLogos, ...firstRowLogos].map((_, index) => (
                 <div key={`first-${index}`} className={styles.logoPlaceholder}>
-                  <span className="text-white text-sm">Logo {(index % 12) + 1}</span>
+                  <Image
+                    src={`/${(index % 14) + 1}.png`} // Updated path: /1.png to /14.png
+                    alt={`Logo ${(index % 14) + 1}`}
+                    width={120}
+                    height={60}
+                    className={styles.logoImage}
+                  />
                 </div>
               ))}
             </div>
@@ -86,7 +92,13 @@ export function PartneredSection() {
             <div className={`${styles.logosRow} ${styles.rightToLeft}`}>
               {[...secondRowLogos, ...secondRowLogos].map((_, index) => (
                 <div key={`second-${index}`} className={styles.logoPlaceholder}>
-                  <span className="text-white text-sm">Logo {(index % 11) + 13}</span>
+                  <Image
+                    src={`/${(index % 14) + 15}.png`} // Updated path: /15.png to /28.png
+                    alt={`Logo ${(index % 14) + 15}`}
+                    width={120}
+                    height={60}
+                    className={styles.logoImage}
+                  />
                 </div>
               ))}
             </div>
