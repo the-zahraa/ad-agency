@@ -1,7 +1,7 @@
 .sectionBackground {
   background: radial-gradient(circle at 50% 50%, #0000 0, #0000 30%, #111111cc 60%);
   background-size: 3px 3px;
-  width: 100%; /* Inherit from parent */
+  width: 100%;
   margin: 0;
   padding: 0;
   border-top-left-radius: 1.5rem;
@@ -20,14 +20,14 @@
 @media (max-width: 768px) {
   .sectionContainer {
     max-width: 100%;
-    padding: 0 1rem;
+    padding: 0 0.5rem; /* Reduced from 1rem to 0.5rem (8px) */
     margin: 0;
   }
 }
 
 @media (max-width: 480px) {
   .sectionContainer {
-    padding: 0 0.75rem;
+    padding: 0 0.25rem; /* Reduced from 0.75rem to 0.25rem (4px) */
   }
 }
 
@@ -36,10 +36,16 @@
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
   }
+  @media (max-width: 768px) {
+    .sectionContainer {
+      padding-left: max(0.5rem, env(safe-area-inset-left)); /* Reduced base padding */
+      padding-right: max(0.5rem, env(safe-area-inset-right));
+    }
+  }
   @media (max-width: 480px) {
     .sectionContainer {
-      padding-left: max(0.75rem, env(safe-area-inset-left));
-      padding-right: max(0.75rem, env(safe-area-inset-right));
+      padding-left: max(0.25rem, env(safe-area-inset-left));
+      padding-right: max(0.25rem, env(safe-area-inset-right));
     }
   }
 }
