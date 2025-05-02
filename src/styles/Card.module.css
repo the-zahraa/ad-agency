@@ -20,7 +20,7 @@
 @media (max-width: 768px) {
   .sectionContainer {
     max-width: 100%;
-    padding: 0 0.5rem; /* Reduced from 1rem to 0.5rem (8px) */
+    padding: 0 0; /* Reduced from 1rem to 0.5rem (8px) */
     margin: 0;
   }
 }
