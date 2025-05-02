@@ -21,7 +21,7 @@ export function PartneredSection() {
   const secondRowLogos = Array(14).fill(null); // Next 14 logos
 
   return (
-    <section className="py-16 bg-white text-white">
+    <section className="pt-16 pb-8 bg-white text-white"> {/* Reduced bottom padding */}
       <div className="container mx-auto px-4 text-center">
         {/* Headline */}
         <motion.div
@@ -79,7 +79,7 @@ export function PartneredSection() {
               {[...firstRowLogos, ...firstRowLogos].map((_, index) => (
                 <div key={`first-${index}`} className={styles.logoPlaceholder}>
                   <Image
-                    src={`/${(index % 14) + 1}.png`} // Updated path: /1.png to /14.png
+                    src={`/${(index % 14) + 1}.png`}
                     alt={`Logo ${(index % 14) + 1}`}
                     width={120}
                     height={60}
@@ -93,7 +93,7 @@ export function PartneredSection() {
               {[...secondRowLogos, ...secondRowLogos].map((_, index) => (
                 <div key={`second-${index}`} className={styles.logoPlaceholder}>
                   <Image
-                    src={`/${(index % 14) + 15}.png`} // Updated path: /15.png to /28.png
+                    src={`/${(index % 14) + 15}.png`}
                     alt={`Logo ${(index % 14) + 15}`}
                     width={120}
                     height={60}
