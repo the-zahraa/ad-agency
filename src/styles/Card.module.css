@@ -1,18 +1,12 @@
 /* Section-level styles for WhyM44 */
 .sectionBackground {
-  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111dd 50%); /* Increased opacity for contrast */
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111aa 50%);
   background-size: 3px 3px;
   width: 100%;
   margin: 0;
   padding: 0;
   position: relative;
   overflow: hidden;
-}
-
-@media (max-width: 768px) {
-  .sectionBackground {
-    background-size: 4px 4px; /* Increased for mobile visibility */
-  }
 }
 
 .sectionContainer {
@@ -164,15 +158,15 @@
 }
 
 .spinBlur::before {
-  background: linear-gradient(-45deg, #9000ff99, #0000 46% 54%, #b266ff99); /* Reduced opacity for background visibility */
+  background: linear-gradient(-45deg, #9000ffcc, #0000 46% 54%, #b266ffcc);
 }
 
 .spinIntense::before {
-  background: linear-gradient(-45deg, #9000ff99, #0000 35% 65%, #b266ff99);
+  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc);
 }
 
 .spinInside::before {
-  background: linear-gradient(-45deg, #9000ff99, #0000 35% 65%, #b266ff99);
+  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc);
 }
 
 @keyframes speen {
@@ -189,8 +183,9 @@
 
 @media (max-width: 640px) {
   .cardContainer {
-    width: 100%;
-    max-width: 400px;
+    width: 350px; /* Reduced from 100% (390px) to 350px to create more space around the card */
+    max-width: 350px;
+    height: 280px; /* Slightly reduced height to maintain proportions */
     margin: 0 auto;
   }
 
@@ -206,12 +201,12 @@
     inset: -10%;
   }
   .spinBlur {
-    filter: blur(3.5em) url(#unopaq); /* Reduced from 4em to balance with background */
+    filter: blur(4em) url(#unopaq);
   }
   .spinIntense {
-    filter: blur(0.6em) url(#unopaq2);
+    filter: blur(0.75em) url(#unopaq2);
   }
   .spinInside {
-    filter: blur(2.5px) url(#unopaq3);
+    filter: blur(3px) url(#unopaq3);
   }
 }
