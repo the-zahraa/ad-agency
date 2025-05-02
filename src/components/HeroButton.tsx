@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import styles from "../styles/HeroButton.module.css";
 
 export default function HeroButton() {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const bookCallSection = document.getElementById("book-call");
     if (bookCallSection) {
