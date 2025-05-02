@@ -39,7 +39,7 @@ export function WhyM44() {
       ],
     },
     {
-      title: "Why m44?",
+      title: "why m44?",
       items: [
         "We’re obsessed with outcomes, not vanity metrics.",
         "Fast execution, clear strategy, no fluff.",
@@ -57,6 +57,14 @@ export function WhyM44() {
       ],
     },
   ];
+
+  // Function to scroll to Book Call section
+  const scrollToBookCall = () => {
+    const bookCallSection = document.getElementById("book-call");
+    if (bookCallSection) {
+      bookCallSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <section className={`${styles.sectionBackground} py-16 text-white`}>
@@ -98,7 +106,7 @@ export function WhyM44() {
           className="text-4xl md:text-5xl font-bold mb-4"
           style={{ color: "#9000ff" }}
         >
-          Why m44?
+          why m44?
         </motion.h2>
 
         {/* Subheading */}
@@ -178,16 +186,16 @@ export function WhyM44() {
         </motion.div>
 
         {/* CTA Button */}
-        <motion.a
-          href="/contact"
+        <motion.button
+          onClick={scrollToBookCall}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="inline-block mt-12 px-6 py-3 bg-gradient-to-r from-[#8e26e2] to-[#f4b1fd] text-white font-semibold rounded-full hover:scale-105 transition-transform"
+          className="inline-block mt-12 mb-8 px-6 py-3 bg-[#9000ff] text-white font-semibold rounded-full hover:scale-105 transition-transform"
         >
           Let’s Talk Results.
-        </motion.a>
+        </motion.button>
       </div>
     </section>
   );

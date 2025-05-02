@@ -7,6 +7,7 @@
   padding: 0;
   position: relative;
   overflow: hidden;
+  padding-top: 4rem; /* Added padding-top for spacing above 'why m44?' */
 }
 
 .sectionContainer {
@@ -82,7 +83,7 @@
 }
 
 .repoName {
-  font-size: 1.25rem;
+  font-size: 1.5rem; /* Increased for larger screens */
   font-weight: 600;
   color: #fff;
   text-align: center;
@@ -109,7 +110,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.9rem;
+  font-size: 1rem; /* Increased for larger screens */
   color: #bebebe;
   white-space: nowrap;
 }
@@ -192,23 +193,36 @@
   }
 
   .repoName {
-    font-size: 1rem;
+    font-size: 1rem; /* Smaller for mobile to ensure one line */
   }
 
   .listItem {
-    font-size: 0.75rem;
+    font-size: 0.75rem; /* Smaller for mobile to ensure one line */
+    white-space: nowrap; /* Ensures one line per item */
   }
 
+  /* Match desktop animation and lighting for mobile */
   .spin::before {
-    inset: -5%; /* Reduced to 19.5px on a 390px card to fit within clipped area */
+    inset: -30%; /* Same as desktop for consistent glow */
   }
   .spinBlur {
-    filter: blur(5em) url(#unopaq); /* Increased to 80px for shinier glow */
+    filter: blur(3em) url(#unopaq); /* Same as desktop */
   }
   .spinIntense {
-    filter: blur(1em) url(#unopaq2);
+    filter: blur(0.5em) url(#unopaq2); /* Same as desktop */
   }
   .spinInside {
-    filter: blur(4px) url(#unopaq3);
+    filter: blur(2px) url(#unopaq3); /* Same as desktop */
+  }
+}
+
+/* Larger screens font adjustments */
+@media (min-width: 768px) {
+  .repoName {
+    font-size: 1.75rem; /* Even larger for better readability */
+  }
+
+  .listItem {
+    font-size: 1.1rem; /* Slightly larger for readability */
   }
 }
