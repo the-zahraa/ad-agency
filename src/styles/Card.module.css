@@ -1,13 +1,13 @@
 /* Section-level styles for WhyM44 */
 .sectionBackground {
-  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111dd 50%); /* Increased opacity for better visibility */
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111dd 50%);
   background-size: 3px 3px;
   width: 100%;
   margin: 0;
   padding: 0;
   position: relative;
   overflow: hidden;
-  padding-top: 4rem; /* Added padding-top for spacing above 'why m44?' */
+  padding-top: 4rem;
 }
 
 .sectionContainer {
@@ -52,6 +52,7 @@
   height: 300px;
   border-radius: 1em;
   margin: 0 2em;
+  will-change: transform; /* Optimize for animation */
 }
 
 .cardBorder {
@@ -83,7 +84,7 @@
 }
 
 .repoName {
-  font-size: 1.5rem; /* Increased for larger screens */
+  font-size: 1.5rem;
   font-weight: 600;
   color: #fff;
   text-align: center;
@@ -110,7 +111,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 1rem; /* Increased for larger screens */
+  font-size: 1rem;
   color: #bebebe;
   white-space: nowrap;
 }
@@ -133,54 +134,77 @@
   position: absolute;
   inset: 0;
   z-index: -2;
-  overflow: hidden; /* Kept to control glow extent */
+  overflow: hidden;
+  will-change: transform; /* Optimize for animation */
 }
 
 .spinBlur {
-  filter: blur(3em) url(#unopaq);
+  filter: blur(2em) url(#unopaq); /* Reduced blur intensity */
 }
 
 .spinIntense {
   inset: -0.125em;
-  filter: blur(0.5em) url(#unopaq2);
+  filter: blur(0.3em) url(#unopaq2); /* Reduced blur intensity */
   border-radius: 0.75em;
 }
 
 .spinInside {
   inset: -2px;
   border-radius: inherit;
-  filter: blur(2px) url(#unopaq3);
+  filter: blur(1px) url(#unopaq3); /* Reduced blur intensity */
   z-index: 0;
 }
 
 .spin::before {
   content: "";
   position: absolute;
-  inset: -30%;
-  animation: speen 8s cubic-bezier(0.56, 0.15, 0.28, 0.86) infinite;
+  inset: -20%; /* Reduced to lower rendering load */
+  animation: speen 6s linear infinite; /* Changed to linear for smoother iOS rendering */
+  transform: translate3d(0, 0, 0); /* Force GPU acceleration */
 }
 
 .spinBlur::before {
-  background: linear-gradient(-45deg, #9000ffdd, #0000 46% 54%, #b266ffdd); /* Increased opacity for shinier glow */
+  background: linear-gradient(-45deg, #9000ffcc, #0000 46% 54%, #b266ffcc); /* Slightly reduced opacity */
 }
 
 .spinIntense::before {
-  background: linear-gradient(-45deg, #9000ffdd, #0000 35% 65%, #b266ffdd);
+  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc);
 }
 
 .spinInside::before {
-  background: linear-gradient(-45deg, #9000ffdd, #0000 35% 65%, #b266ffdd);
+  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc);
 }
 
 @keyframes speen {
-  0% {
-    rotate: 10deg;
-  }
-  50% {
-    rotate: 190deg;
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg); /* Use translate3d for GPU */
   }
   to {
-    rotate: 370deg;
+    transform: translate3d(0, 0, 0) rotate(360deg);
+  }
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .spin::before {
+    animation: none; /* Disable animation */
+    background: #9000ff33; /* Fallback static glow */
+  }
+}
+
+/* High-density display adjustments for iPhone 15 Pro Max */
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .spinBlur {
+    filter: blur(1.5em) url(#unopaq); /* Slightly reduced for performance */
+  }
+  .spinIntense {
+    filter: blur(0.25em) url(#unopaq2);
+  }
+  .spinInside {
+    filter: blur(0.8px) url(#unopaq3);
+  }
+  .spin::before {
+    inset: -15%; /* Slightly smaller to avoid clipping */
   }
 }
 
@@ -188,41 +212,40 @@
   .cardContainer {
     width: 100%;
     max-width: 400px;
-    height: 240px; /* Reduced height to remove empty space */
+    height: 240px;
     margin: 0 auto;
   }
 
   .repoName {
-    font-size: 1rem; /* Smaller for mobile to ensure one line */
+    font-size: 1rem;
   }
 
   .listItem {
-    font-size: 0.75rem; /* Smaller for mobile to ensure one line */
-    white-space: nowrap; /* Ensures one line per item */
+    font-size: 0.75rem;
+    white-space: nowrap;
   }
 
-  /* Match desktop animation and lighting for mobile */
   .spin::before {
-    inset: -30%; /* Same as desktop for consistent glow */
+    inset: -20%; /* Match desktop for consistency */
   }
   .spinBlur {
-    filter: blur(3em) url(#unopaq); /* Same as desktop */
+    filter: blur(2em) url(#unopaq); /* Same as desktop */
   }
   .spinIntense {
-    filter: blur(0.5em) url(#unopaq2); /* Same as desktop */
+    filter: blur(0.3em) url(#unopaq2);
   }
   .spinInside {
-    filter: blur(2px) url(#unopaq3); /* Same as desktop */
+    filter: blur(1px) url(#unopaq3);
   }
 }
 
 /* Larger screens font adjustments */
 @media (min-width: 768px) {
   .repoName {
-    font-size: 1.75rem; /* Even larger for better readability */
+    font-size: 1.75rem;
   }
 
   .listItem {
-    font-size: 1.1rem; /* Slightly larger for readability */
+    font-size: 1.1rem;
   }
 }

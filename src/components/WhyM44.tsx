@@ -39,6 +39,7 @@ export function WhyM44() {
       ],
     },
     {
+      forceNewLine: true,
       title: "why m44?",
       items: [
         "We’re obsessed with outcomes, not vanity metrics.",
@@ -67,136 +68,145 @@ export function WhyM44() {
   };
 
   return (
-    <section className={`${styles.sectionBackground} py-16 text-white`}>
-      {/* SVG Filters for Glowing Animation */}
-      <svg style={{ position: "absolute", width: 0, height: 0 }}>
-        <filter id="unopaq" y="-100%" height="300%" x="-100%" width="300%">
-          <feColorMatrix
-            values="1 0 0 0 0 
-                    0 1 0 0 0 
-                    0 0 1 0 0 
-                    0 0 0 5 0"
-          ></feColorMatrix>
-        </filter>
-        <filter id="unopaq2" y="-100%" height="300%" x="-100%" width="300%">
-          <feColorMatrix
-            values="1 0 0 0 0 
-                    0 1 0 0 0 
-                    0 0 1 0 0 
-                    0 0 0 10 0"
-          ></feColorMatrix>
-        </filter>
-        <filter id="unopaq3" y="-100%" height="300%" x="-100%" width="300%">
-          <feColorMatrix
-            values="1 0 0 1 0 
-                    0 1 0 1 0 
-                    0 0 1 1 0 
-                    0 0 0 2 0"
-          ></feColorMatrix>
-        </filter>
-      </svg>
+    <>
+      {/* Ensure proper viewport scaling for iOS */}
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+      </head>
+      <section className={`${styles.sectionBackground} py-16 text-white`}>
+        {/* SVG Filters for Glowing Animation (Simplified) */}
+        <svg style={{ position: "absolute", width: 0, height: 0 }}>
+          <filter id="unopaq" y="-50%" height="200%" x="-50%" width="200%">
+            <feColorMatrix
+              values="1 0 0 0 0 
+                      0 1 0 0 0 
+                      0 0 1 0 0 
+                      0 0 0 3 0"
+            ></feColorMatrix>
+          </filter>
+          <filter id="unopaq2" y="-50%" height="200%" x="-50%" width="200%">
+            <feColorMatrix
+              values="1 0 0 0 0 
+                      0 1 0 0 0 
+                      0 0 1 0 0 
+                      0 0 0 5 0"
+            ></feColorMatrix>
+          </filter>
+          <filter id="unopaq3" y="-50%" height="200%" x="-50%" width="200%">
+            <feColorMatrix
+              values="1 0 0 0.5 0 
+                      0 1 0 0.5 0 
+                      0 0 1 0.5 0 
+                      0 0 0 1 0"
+            ></feColorMatrix>
+          </filter>
+        </svg>
 
-      <div className={styles.sectionContainer}>
-        {/* Headline */}
-        <motion.h2
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="text-4xl md:text-5xl font-bold mb-4"
-          style={{ color: "#9000ff" }}
-        >
-          why m44?
-        </motion.h2>
+        <div className={styles.sectionContainer}>
+          {/* Headline */}
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl font-bold mb-4"
+            style={{ color: "#9000ff" }}
+          >
+            why m44?
+          </motion.h2>
 
-        {/* Subheading */}
-        <motion.h3
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="text-2xl md:text-3xl font-semibold mb-2"
-        >
-          Not Another Agency. A Performance-Obsessed Partner.
-        </motion.h3>
+          {/* Subheading */}
+          <motion.h3
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-2xl md:text-3xl font-semibold mb-2"
+          >
+            Not Another Agency. A Performance-Obsessed Partner.
+          </motion.h3>
 
-        {/* Description */}
-        <motion.p
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="text-lg md:text-xl mb-12"
-        >
-          Most agencies care about impressions. We care about outcomes.
-        </motion.p>
+          {/* Description */}
+          <motion.p
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-lg md:text-xl mb-12"
+          >
+            Most agencies care about impressions. We care about outcomes.
+          </motion.p>
 
-        {/* Cards */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
-          className="flex flex-col md:flex-row justify-center items-center gap-8"
-        >
-          {cards.map((card, index) => (
-            <motion.div
-              key={index}
-              custom={index}
-              variants={cardVariants}
-              className={styles.cardContainer}
-            >
-              <div className={styles.spin + " " + styles.spinBlur}></div>
-              <div className={styles.spin + " " + styles.spinIntense}></div>
-              <div className={styles.cardBorder}>
-                <div className={styles.spin + " " + styles.spinInside}></div>
-              </div>
-              <div className={styles.card}>
-                <div className={styles.header}>
-                  <div className={styles.repo}>
-                    <span className={styles.repoName}>{card.title}</span>
+          {/* Cards */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+            className="flex flex-col md:flex-row justify-center items-center gap-8"
+          >
+            {cards.map((card, index) => (
+              <motion.div
+                key={index}
+                custom={index}
+                variants={cardVariants}
+                className={styles.cardContainer}
+              >
+                <div className={styles.spin + " " + styles.spinBlur}></div>
+                <div className={styles.spin + " " + styles.spinIntense}></div>
+                <div className={styles.cardBorder}>
+                  <div className={styles.spin + " " + styles.spinInside}></div>
+                </div>
+                <div className={styles.card}>
+                  <div className={styles.header}>
+                    <div className={styles.repo}>
+                      <span className={styles.repoName}>{card.title}</span>
+                    </div>
+                  </div>
+                  <div className={styles.content}>
+                    <div className={styles.list}>
+                      {card.items.map((item, idx) => (
+                        <div key={idx} className={styles.listItem}>
+                          <span className={styles.check}>
+                            <svg
+                              className={styles.checkSvg}
+                              fill="currentColor"
+                              viewBox="0 0 16 16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                clipRule="evenodd"
+                                d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6 stationary-74a.75.75 0 0 1 1.04-.207Z"
+                                fillRule="evenodd"
+                              ></path>
+                            </svg>
+                          </span>
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div className={styles.content}>
-                  <div className={styles.list}>
-                    {card.items.map((item, idx) => (
-                      <div key={idx} className={styles.listItem}>
-                        <span className={styles.check}>
-                          <svg
-                            className={styles.checkSvg}
-                            fill="currentColor"
-                            viewBox="0 0 16 16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              clipRule="evenodd"
-                              d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
-                              fillRule="evenodd"
-                            ></path>
-                          </svg>
-                        </span>
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
 
-        {/* CTA Button */}
-        <motion.button
-          onClick={scrollToBookCall}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="inline-block mt-12 mb-8 px-6 py-3 bg-[#9000ff] text-white font-semibold rounded-full hover:scale-105 transition-transform"
-        >
-          Let’s Talk Results.
-        </motion.button>
-      </div>
-    </section>
+          {/* CTA Button */}
+          <motion.button
+            onClick={scrollToBookCall}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="inline-block mt-12 mb-8 px-6 py-3 bg-[#9000ff] text-white font-semibold rounded-full hover:scale-105 transition-transform"
+          >
+            Let’s Talk Results.
+          </motion.button>
+        </div>
+      </section>
+    </>
   );
 }
