@@ -14,7 +14,7 @@ const cardVariants = {
   visible: (i: number) => ({
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.6, delay: i * 0.2 }, // Staggered delay for each card
+    transition: { duration: 0.6, delay: i * 0.2 },
   }),
 };
 
@@ -22,7 +22,7 @@ const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.2, // Stagger the cards
+      staggerChildren: 0.2,
     },
   },
 };
@@ -59,13 +59,7 @@ export function WhyM44() {
   ];
 
   return (
-    <section
-      className="py-16 text-white"
-      style={{
-        background: "radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111aa 50%)",
-        backgroundSize: "3px 3px", /* Pixelated background for the section */
-      }}
-    >
+    <section className={`${styles.sectionBackground} py-16 text-white`}>
       {/* SVG Filters for Glowing Animation */}
       <svg style={{ position: "absolute", width: 0, height: 0 }}>
         <filter id="unopaq" y="-100%" height="300%" x="-100%" width="300%">
@@ -94,7 +88,7 @@ export function WhyM44() {
         </filter>
       </svg>
 
-      <div className="container mx-auto px-4 text-center">
+      <div className={styles.sectionContainer}>
         {/* Headline */}
         <motion.h2
           initial="hidden"

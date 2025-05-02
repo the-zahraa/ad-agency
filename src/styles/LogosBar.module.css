@@ -1,3 +1,47 @@
+.sectionBackground {
+  background: #fff;
+  width: 100%; /* Inherit from parent */
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.sectionContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .sectionContainer {
+    max-width: 100%;
+    padding: 0 1rem;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionContainer {
+    padding: 0 0.75rem;
+  }
+}
+
+@supports (padding: env(safe-area-inset-left)) {
+  .sectionContainer {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  @media (max-width: 480px) {
+    .sectionContainer {
+      padding-left: max(0.75rem, env(safe-area-inset-left));
+      padding-right: max(0.75rem, env(safe-area-inset-right));
+    }
+  }
+}
+
 .logosContainer {
   width: 100%;
   overflow: hidden;
@@ -6,16 +50,16 @@
 
 .logosWrapper {
   display: flex;
-  flex-direction: column; /* Stack rows vertically */
-  gap: 20px; /* Space between rows */
+  flex-direction: column;
+  gap: 20px;
 }
 
 .logosRow {
   display: flex;
-  flex-wrap: nowrap; /* Keep logos in a single line */
-  gap: 2rem; /* Space between logos */
+  flex-wrap: nowrap;
+  gap: 2rem;
   align-items: center;
-  width: fit-content; /* Allow row to expand for animation */
+  width: fit-content;
 }
 
 .leftToRight {
@@ -29,18 +73,18 @@
 .logoPlaceholder {
   width: 120px;
   height: 60px;
-  background-color: #333; /* Placeholder background */
+  background-color: #333;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  filter: grayscale(100%); /* Grayscale for a sleek look */
+  filter: grayscale(100%);
   transition: filter 0.3s ease, transform 0.3s ease;
 }
 
 .logoPlaceholder:hover {
-  filter: grayscale(0%); /* Show color on hover */
-  transform: scale(1.1); /* Slight zoom on hover */
+  filter: grayscale(0%);
+  transform: scale(1.1);
 }
 
 @keyframes slideLeftToRight {
@@ -48,20 +92,19 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%); /* Move half the width (due to duplicated logos) */
+    transform: translateX(-50%);
   }
 }
 
 @keyframes slideRightToLeft {
   0% {
-    transform: translateX(-50%); /* Start at -50% to align with duplicated logos */
+    transform: translateX(-50%);
   }
   100% {
-    transform: translateX(0); /* Move to 0 for right-to-left */
+    transform: translateX(0);
   }
 }
 
-/* Responsive adjustments */
 @media (max-width: 640px) {
   .logosRow {
     gap: 1.5rem;
@@ -74,6 +117,6 @@
 
   .leftToRight,
   .rightToLeft {
-    animation-duration: 20s; /* Faster scroll on mobile */
+    animation-duration: 20s;
   }
 }

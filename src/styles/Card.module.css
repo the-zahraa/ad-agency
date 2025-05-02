@@ -1,155 +1,198 @@
-/* src/styles/Card.module.css */
+/* Section-level styles for WhyM44 */
+.sectionBackground {
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111aa 50%);
+  background-size: 3px 3px;
+  width: 100%; /* Inherit from parent */
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
 
-/* Define the card container */
+.sectionContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .sectionContainer {
+    max-width: 100%;
+    padding: 0 1rem;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionContainer {
+    padding: 0 0.75rem;
+  }
+}
+
+@supports (padding: env(safe-area-inset-left)) {
+  .sectionContainer {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  @media (max-width: 480px) {
+    .sectionContainer {
+      padding-left: max(0.75rem, env(safe-area-inset-left));
+      padding-right: max(0.75rem, env(safe-area-inset-right));
+    }
+  }
+}
+
+/* Original card styles */
 .cardContainer {
-    position: relative;
-    width: 400px;
-    height: 300px;
-    border-radius: 1em;
-    margin: 0 2em;
+  position: relative;
+  width: 400px;
+  height: 300px;
+  border-radius: 1em;
+  margin: 0 2em;
+}
+
+.cardBorder {
+  position: absolute;
+  inset: 0;
+  background: #0005;
+  border-radius: inherit;
+}
+
+.card {
+  position: absolute;
+  inset: 0.125em;
+  border-radius: 0.875em;
+  background: #111215;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  overflow: hidden;
+}
+
+.header {
+  background: #0b0d10;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #1d1f23;
+}
+
+.repoName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+
+.content {
+  height: 100%;
+  overflow: auto;
+  padding: 16px;
+}
+
+.content::-webkit-scrollbar {
+  width: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #bebebe;
+}
+
+.check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1rem;
+  height: 1rem;
+}
+
+.checkSvg {
+  width: 0.75rem;
+  height: 0.75rem;
+  fill: #9000ff;
+}
+
+.spin {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.spinBlur {
+  filter: blur(3em) url(#unopaq);
+}
+
+.spinIntense {
+  inset: -0.125em;
+  filter: blur(0.5em) url(#unopaq2);
+  border-radius: 0.75em;
+}
+
+.spinInside {
+  inset: -2px;
+  border-radius: inherit;
+  filter: blur(2px) url(#unopaq3);
+  z-index: 0;
+}
+
+.spin::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  animation: speen 8s cubic-bezier(0.56, 0.15, 0.28, 0.86) infinite;
+}
+
+.spinBlur::before {
+  background: linear-gradient(-45deg, #9000ff, #0000 46% 54%, #b266ff);
+}
+
+.spinIntense::before {
+  background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #b266ff);
+}
+
+.spinInside::before {
+  background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #b266ff);
+}
+
+@keyframes speen {
+  0% {
+    rotate: 10deg;
   }
-  
-  .cardBorder {
-    position: absolute;
-    inset: 0;
-    background: #0005;
-    border-radius: inherit;
+  50% {
+    rotate: 190deg;
   }
-  
-  .card {
-    position: absolute;
-    inset: 0.125em;
-    border-radius: 0.875em;
-    background: #111215;
-    display: flex;
-    flex-direction: column;
-    color: #fff;
-    overflow: hidden;
+  to {
+    rotate: 370deg;
   }
-  
-  .header {
-    background: #0b0d10;
-    display: flex;
-    flex-direction: row;
-    justify-content: center; /* Center the title */
-    align-items: center;
-    padding: 12px;
-    border-bottom: 1px solid #1d1f23;
+}
+
+@media (max-width: 640px) {
+  .cardContainer {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
-  
+
   .repoName {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #fff;
-    text-align: center;
+    font-size: 1.1rem;
   }
-  
-  .content {
-    height: 100%;
-    overflow: auto;
-    padding: 16px;
-  }
-  
-  .content::-webkit-scrollbar {
-    width: 0;
-  }
-  
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
+
   .listItem {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    color: #bebebe;
+    font-size: 0.85rem;
   }
-  
-  .check {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 1rem;
-    height: 1rem;
-  }
-  
-  .checkSvg {
-    width: 0.75rem;
-    height: 0.75rem;
-    fill: #9000ff; /* Purple checkmark */
-  }
-  
-  .spin {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    overflow: hidden;
-  }
-  
-  .spinBlur {
-    filter: blur(3em) url(#unopaq);
-  }
-  
-  .spinIntense {
-    inset: -0.125em;
-    filter: blur(0.5em) url(#unopaq2);
-    border-radius: 0.75em;
-  }
-  
-  .spinInside {
-    inset: -2px;
-    border-radius: inherit;
-    filter: blur(2px) url(#unopaq3);
-    z-index: 0;
-  }
-  
-  .spin::before {
-    content: "";
-    position: absolute;
-    inset: -30%;
-    animation: speen 8s cubic-bezier(0.56, 0.15, 0.28, 0.86) infinite;
-  }
-  
-  .spinBlur::before {
-    background: linear-gradient(-45deg, #9000ff, #0000 46% 54%, #b266ff); /* Purple gradient */
-  }
-  
-  .spinIntense::before {
-    background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #b266ff); /* Purple gradient */
-  }
-  
-  .spinInside::before {
-    background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #b266ff); /* Purple gradient */
-  }
-  
-  @keyframes speen {
-    0% {
-      rotate: 10deg;
-    }
-    50% {
-      rotate: 190deg;
-    }
-    to {
-      rotate: 370deg;
-    }
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 640px) {
-    .cardContainer {
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-  
-    .repoName {
-      font-size: 1.1rem;
-    }
-  
-    .listItem {
-      font-size: 0.85rem;
-    }
-  }
+}

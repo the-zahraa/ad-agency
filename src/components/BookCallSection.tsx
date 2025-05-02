@@ -14,19 +14,19 @@ const fadeInUp = {
 export function BookCallSection() {
   const [calLoaded, setCalLoaded] = useState(false);
   const [calKey, setCalKey] = useState(Date.now());
-  const intervalRef = useRef<NodeJS.Timeout | null>(null); // Ref to store interval
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   // Function to initialize or reinitialize the Cal API
   const initializeCal = async () => {
     try {
       const calApi = await getCalApi();
       calApi("ui", {
-        hideEventTypeDetails: false,
+        hideEventTypeDetails: true, // Minimize content height
         layout: "month_view",
       });
       console.log("Cal.com API initialized successfully");
       setCalLoaded(true);
-      // Clear interval once loaded
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -36,6 +36,24 @@ export function BookCallSection() {
       setCalLoaded(false);
     }
   };
+
+  // Dynamic scaling based on card height
+  useEffect(() => {
+    const adjustCalendarScale = () => {
+      if (calendarRef.current) {
+        const cardHeight = calendarRef.current.offsetHeight;
+        // Assume calendar's intrinsic height is ~550px (adjusted based on testing)
+        const intrinsicHeight = 550; // Refined estimate
+        const scale = Math.min(cardHeight / intrinsicHeight, 1);
+        calendarRef.current.style.setProperty("--calendar-scale", scale.toString());
+      }
+    };
+
+    adjustCalendarScale();
+    window.addEventListener("resize", adjustCalendarScale);
+
+    return () => window.removeEventListener("resize", adjustCalendarScale);
+  }, [calLoaded]);
 
   // Initial load
   useEffect(() => {
@@ -55,7 +73,6 @@ export function BookCallSection() {
       }
     };
 
-    // Periodic check to ensure calendar loads
     const checkCalendarLoad = () => {
       const calendarElement = document.querySelector("[data-cal-view='month']");
       if (!calLoaded && !calendarElement) {
@@ -66,22 +83,19 @@ export function BookCallSection() {
       }
     };
 
-    // Set up interval to check every 2 seconds if calendar hasn't loaded
     intervalRef.current = setInterval(checkCalendarLoad, 2000);
-
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    // Cleanup on unmount
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
     };
-  }, [calLoaded]); // Depend on calLoaded to restart interval if needed
+  }, [calLoaded]);
 
   return (
-    <section className={`${styles.sectionBackground} pt-16 pb-16 text-white`}>
+    <section className={`${styles.sectionBackground} pt-16 pb-8 text-white`}>
       <div className={styles.sectionContainer}>
         <motion.h2
           initial="hidden"
@@ -94,22 +108,15 @@ export function BookCallSection() {
         </motion.h2>
         <div className="flex justify-center">
           <div className={styles.cardContainer}>
-            {/* SVG Filters */}
             <svg style={{ position: "absolute", width: 0, height: 0 }}>
               <filter id="unopaq" y="-100%" height="300%" x="-100%" width="300%">
-                <feColorMatrix
-                  values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 0"
-                />
+                <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 5 0" />
               </filter>
               <filter id="unopaq2" y="-100%" height="300%" x="-100%" width="300%">
-                <feColorMatrix
-                  values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0"
-                />
+                <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 10 0" />
               </filter>
               <filter id="unopaq3" y="-100%" height="300%" x="-100%" width="300%">
-                <feColorMatrix
-                  values="1 0 0 1 0 0 1 0 1 0 0 0 1 1 0 0 0 0 2 0"
-                />
+                <feColorMatrix values="1 0 0 1 0 0 1 0 1 0 0 0 1 1 0 0 0 0 2 0" />
               </filter>
             </svg>
             <div className={`${styles.spin} ${styles.spinBlur}`}></div>
@@ -119,7 +126,7 @@ export function BookCallSection() {
               <div className={`${styles.spin} ${styles.spinInside}`}></div>
             </div>
             <div className={styles.card}>
-              <div className={styles.content}>
+              <div className={styles.content} ref={calendarRef}>
                 {calLoaded ? (
                   <Cal
                     key={calKey}
