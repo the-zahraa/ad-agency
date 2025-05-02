@@ -26,8 +26,8 @@ export default function Home() {
       </div>
 
       {/* Other Sections */}
-      <div className="flex flex-col items-center w-full">
-        <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col w-full">
+        <div className="w-full">
           <div id="why-m44">
             <DebugSection id="why-m44" />
             <WhyM44 />
