@@ -1,12 +1,18 @@
 /* Section-level styles for WhyM44 */
 .sectionBackground {
-  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111aa 50%);
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111dd 50%); /* Increased opacity for contrast */
   background-size: 3px 3px;
   width: 100%;
   margin: 0;
   padding: 0;
   position: relative;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .sectionBackground {
+    background-size: 4px 4px; /* Increased for mobile visibility */
+  }
 }
 
 .sectionContainer {
@@ -130,7 +136,7 @@
   position: absolute;
   inset: 0;
   z-index: -2;
-  overflow: hidden; /* Kept to control glow extent */
+  overflow: hidden;
 }
 
 .spinBlur {
@@ -158,15 +164,15 @@
 }
 
 .spinBlur::before {
-  background: linear-gradient(-45deg, #9000ffcc, #0000 46% 54%, #b266ffcc); /* Slightly reduced opacity */
+  background: linear-gradient(-45deg, #9000ff99, #0000 46% 54%, #b266ff99); /* Reduced opacity for background visibility */
 }
 
 .spinIntense::before {
-  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc); /* Slightly reduced opacity */
+  background: linear-gradient(-45deg, #9000ff99, #0000 35% 65%, #b266ff99);
 }
 
 .spinInside::before {
-  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc); /* Slightly reduced opacity */
+  background: linear-gradient(-45deg, #9000ff99, #0000 35% 65%, #b266ff99);
 }
 
 @keyframes speen {
@@ -196,17 +202,16 @@
     font-size: 0.85rem;
   }
 
-  /* Adjust glow for mobile */
   .spin::before {
-    inset: -10%; /* Reduced to 39px on each side for 390px card */
+    inset: -10%;
   }
   .spinBlur {
-    filter: blur(4em) url(#unopaq); /* Increased to 64px for vibrancy */
+    filter: blur(3.5em) url(#unopaq); /* Reduced from 4em to balance with background */
   }
   .spinIntense {
-    filter: blur(0.75em) url(#unopaq2);
+    filter: blur(0.6em) url(#unopaq2);
   }
   .spinInside {
-    filter: blur(3px) url(#unopaq3);
+    filter: blur(2.5px) url(#unopaq3);
   }
 }
