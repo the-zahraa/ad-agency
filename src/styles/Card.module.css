@@ -20,14 +20,14 @@
 @media (max-width: 768px) {
   .sectionContainer {
     max-width: 100%;
-    padding: 0 0; /* Reduced from 1rem to 0.5rem (8px) */
+    padding: 0 1rem;
     margin: 0;
   }
 }
 
 @media (max-width: 480px) {
   .sectionContainer {
-    padding: 0 0.25rem; /* Reduced from 0.75rem to 0.25rem (4px) */
+    padding: 0 0.75rem;
   }
 }
 
@@ -36,21 +36,15 @@
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
   }
-  @media (max-width: 768px) {
-    .sectionContainer {
-      padding-left: max(0.5rem, env(safe-area-inset-left)); /* Reduced base padding */
-      padding-right: max(0.5rem, env(safe-area-inset-right));
-    }
-  }
   @media (max-width: 480px) {
     .sectionContainer {
-      padding-left: max(0.25rem, env(safe-area-inset-left));
-      padding-right: max(0.25rem, env(safe-area-inset-right));
+      padding-left: max(0.75rem, env(safe-area-inset-left));
+      padding-right: max(0.75rem, env(safe-area-inset-right));
     }
   }
 }
 
-/* Original card styles */
+/* Card styles */
 .cardContainer {
   position: relative;
   width: 400px;
@@ -136,7 +130,7 @@
   position: absolute;
   inset: 0;
   z-index: -2;
-  overflow: hidden;
+  overflow: hidden; /* Kept to control glow extent */
 }
 
 .spinBlur {
@@ -164,15 +158,15 @@
 }
 
 .spinBlur::before {
-  background: linear-gradient(-45deg, #9000ff, #0000 46% 54%, #b266ff);
+  background: linear-gradient(-45deg, #9000ffcc, #0000 46% 54%, #b266ffcc); /* Slightly reduced opacity */
 }
 
 .spinIntense::before {
-  background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #b266ff);
+  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc); /* Slightly reduced opacity */
 }
 
 .spinInside::before {
-  background: linear-gradient(-45deg, #9000ff, #0000 35% 65%, #b266ff);
+  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc); /* Slightly reduced opacity */
 }
 
 @keyframes speen {
@@ -200,5 +194,19 @@
 
   .listItem {
     font-size: 0.85rem;
+  }
+
+  /* Adjust glow for mobile */
+  .spin::before {
+    inset: -10%; /* Reduced to 39px on each side for 390px card */
+  }
+  .spinBlur {
+    filter: blur(4em) url(#unopaq); /* Increased to 64px for vibrancy */
+  }
+  .spinIntense {
+    filter: blur(0.75em) url(#unopaq2);
+  }
+  .spinInside {
+    filter: blur(3px) url(#unopaq3);
   }
 }
