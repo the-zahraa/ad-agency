@@ -52,7 +52,6 @@
   height: 300px;
   border-radius: 1em;
   margin: 0 2em;
-  will-change: transform; /* Optimize for animation */
 }
 
 .cardBorder {
@@ -135,76 +134,131 @@
   inset: 0;
   z-index: -2;
   overflow: hidden;
-  will-change: transform; /* Optimize for animation */
 }
 
 .spinBlur {
-  filter: blur(2em) url(#unopaq); /* Reduced blur intensity */
+  filter: blur(3em) url(#unopaq);
 }
 
 .spinIntense {
   inset: -0.125em;
-  filter: blur(0.3em) url(#unopaq2); /* Reduced blur intensity */
+  filter: blur(0.5em) url(#unopaq2);
   border-radius: 0.75em;
 }
 
 .spinInside {
   inset: -2px;
   border-radius: inherit;
-  filter: blur(1px) url(#unopaq3); /* Reduced blur intensity */
+  filter: blur(2px) url(#unopaq3);
   z-index: 0;
 }
 
 .spin::before {
   content: "";
   position: absolute;
-  inset: -20%; /* Reduced to lower rendering load */
-  animation: speen 6s linear infinite; /* Changed to linear for smoother iOS rendering */
-  transform: translate3d(0, 0, 0); /* Force GPU acceleration */
+  inset: -30%;
+  animation: speen 8s cubic-bezier(0.56, 0.15, 0.28, 0.86) infinite;
 }
 
 .spinBlur::before {
-  background: linear-gradient(-45deg, #9000ffcc, #0000 46% 54%, #b266ffcc); /* Slightly reduced opacity */
+  background: linear-gradient(-45deg, #9000ffdd, #0000 46% 54%, #b266ffdd);
 }
 
 .spinIntense::before {
-  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc);
+  background: linear-gradient(-45deg, #9000ffdd, #0000 35% 65%, #b266ffdd);
 }
 
 .spinInside::before {
-  background: linear-gradient(-45deg, #9000ffcc, #0000 35% 65%, #b266ffcc);
+  background: linear-gradient(-45deg, #9000ffdd, #0000 35% 65%, #b266ffdd);
 }
 
 @keyframes speen {
-  from {
-    transform: translate3d(0, 0, 0) rotate(0deg); /* Use translate3d for GPU */
+  0% {
+    rotate: 10deg;
+  }
+  50% {
+    rotate: 190deg;
   }
   to {
-    transform: translate3d(0, 0, 0) rotate(360deg);
+    rotate: 370deg;
+  }
+}
+
+/* Fallback for iOS */
+@supports (-webkit-overflow-scrolling: touch) {
+  .spinBlur,
+  .spinIntense,
+  .spinInside {
+    filter: none !important;
+    background: linear-gradient(-45deg, #9000ffdd, #0000 46% 54%, #b266ffdd);
+  }
+
+  .spinBlur {
+    box-shadow: 0 0 3em 1.5em rgba(144, 0, 255, 0.7),
+                0 0 6em 3em rgba(178, 102, 255, 0.4);
+    border-radius: 1em;
+  }
+
+  .spinIntense {
+    inset: -0.125em;
+    box-shadow: 0 0 0.5em 0.375em rgba(144, 0, 255, 0.8);
+    border-radius: 0.75em;
+    background: linear-gradient(-45deg, #9000ffdd, #0000 35% 65%, #b266ffdd);
+  }
+
+  .spinInside {
+    inset: -2px;
+    box-shadow: 0 0 2px 1.5px rgba(144, 0, 255, 0.5);
+    border-radius: inherit;
+    background: linear-gradient(-45deg, #9000ffdd, #0000 35% 65%, #b266ffdd);
   }
 }
 
 /* Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .spin::before {
-    animation: none; /* Disable animation */
-    background: #9000ff33; /* Fallback static glow */
+    animation: none;
+    background: rgba(144, 0, 255, 0.3);
+  }
+  @supports (-webkit-overflow-scrolling: touch) {
+    .spinBlur {
+      box-shadow: 0 0 3em 1.5em rgba(144, 0, 255, 0.7),
+                  0 0 6em 3em rgba(178, 102, 255, 0.4);
+    }
+    .spinIntense {
+      box-shadow: 0 0 0.5em 0.375em rgba(144, 0, 255, 0.8);
+    }
+    .spinInside {
+      box-shadow: 0 0 2px 1.5px rgba(144, 0, 255, 0.5);
+    }
   }
 }
 
-/* High-density display adjustments for iPhone 15 Pro Max */
+/* High-density display adjustments (e.g., iPhone 15 Pro Max) */
 @media only screen and (-webkit-min-device-pixel-ratio: 3) {
   .spinBlur {
-    filter: blur(1.5em) url(#unopaq); /* Slightly reduced for performance */
+    filter: blur(2em) url(#unopaq);
   }
   .spinIntense {
-    filter: blur(0.25em) url(#unopaq2);
+    filter: blur(0.375em) url(#unopaq2);
   }
   .spinInside {
-    filter: blur(0.8px) url(#unopaq3);
+    filter: blur(1.5px) url(#unopaq3);
   }
   .spin::before {
-    inset: -15%; /* Slightly smaller to avoid clipping */
+    inset: -20%;
+  }
+  @supports (-webkit-overflow-scrolling: touch) {
+    .spinBlur {
+      box-shadow: 0 0 2em 1em rgba(144, 0, 255, 0.7),
+                  0 0 4em 2em rgba(178, 102, 255, 0.4);
+    }
+    .spinIntense {
+      box-shadow: 0 0 0.375em 0.25em rgba(144, 0, 255, 0.8);
+    }
+    .spinInside {
+      box-shadow: 0 0 1.5px 1px rgba(144, 0, 255, 0.5);
+    }
   }
 }
 
@@ -226,16 +280,28 @@
   }
 
   .spin::before {
-    inset: -20%; /* Match desktop for consistency */
+    inset: -30%;
   }
   .spinBlur {
-    filter: blur(2em) url(#unopaq); /* Same as desktop */
+    filter: blur(3em) url(#unopaq);
   }
   .spinIntense {
-    filter: blur(0.3em) url(#unopaq2);
+    filter: blur(0.5em) url(#unopaq2);
   }
   .spinInside {
-    filter: blur(1px) url(#unopaq3);
+    filter: blur(2px) url(#unopaq3);
+  }
+  @supports (-webkit-overflow-scrolling: touch) {
+    .spinBlur {
+      box-shadow: 0 0 3em 1.5em rgba(144, 0, 255, 0.7),
+                  0 0 6em 3em rgba(178, 102, 255, 0.4);
+    }
+    .spinIntense {
+      box-shadow: 0 0 0.5em 0.375em rgba(144, 0, 255, 0.8);
+    }
+    .spinInside {
+      box-shadow: 0 0 2px 1.5px rgba(144, 0, 255, 0.5);
+    }
   }
 }
 
