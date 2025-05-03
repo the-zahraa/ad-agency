@@ -1,10 +1,11 @@
 /* Section-level styles for WhyM44 */
 .sectionBackground {
-  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111dd 50%); /* Increased opacity for better visibility */
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 20%, #111111dd 50%);
   background-size: 3px 3px;
   width: 100%;
   margin: 0;
   padding: 0;
+  padding-top: 4rem;
   position: relative;
   overflow: hidden;
 }
@@ -15,42 +16,22 @@
   padding: 0 2rem;
   box-sizing: border-box;
   text-align: center;
-}
-
-@media (max-width: 768px) {
-  .sectionContainer {
-    max-width: 100%;
-    padding: 0 1rem;
-    margin: 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .sectionContainer {
-    padding: 0 0.75rem;
-  }
-}
-
-@supports (padding: env(safe-area-inset-left)) {
-  .sectionContainer {
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
-  }
-  @media (max-width: 480px) {
-    .sectionContainer {
-      padding-left: max(0.75rem, env(safe-area-inset-left));
-      padding-right: max(0.75rem, env(safe-area-inset-right));
-    }
-  }
+  container-type: inline-size;
+  container-name: section-container;
 }
 
 /* Card styles */
 .cardContainer {
   position: relative;
-  width: 400px;
-  height: 300px;
   border-radius: 1em;
-  margin: 0 2em;
+  margin: 0; /* Remove margin to prevent clipping */
+  min-height: 240px;
+  max-height: 400px;
+  min-width: 300px;
+  max-width: 400px;
+  width: 100%;
+  container-type: inline-size;
+  container-name: card-container;
 }
 
 .cardBorder {
@@ -86,23 +67,22 @@
   font-weight: 600;
   color: #fff;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .content {
-  height: 100%;
-  overflow: auto;
+  flex: 1;
   padding: 12px;
-}
-
-.content::-webkit-scrollbar {
-  width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .list {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1;
 }
 
 .listItem {
@@ -110,29 +90,30 @@
   align-items: center;
   gap: 8px;
   font-size: 0.9rem;
-  color: #bebebe;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
-.check {
+.listItem span:nth-child(2) {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.bullet {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1rem;
-  height: 1rem;
-}
-
-.checkSvg {
-  width: 0.75rem;
-  height: 0.75rem;
-  fill: #9000ff;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #9000ff;
+  font-size: 1.2rem;
 }
 
 .spin {
   position: absolute;
   inset: 0;
   z-index: -2;
-  overflow: hidden; /* Kept to control glow extent */
+  overflow: hidden;
 }
 
 .spinBlur {
@@ -160,7 +141,7 @@
 }
 
 .spinBlur::before {
-  background: linear-gradient(-45deg, #9000ffdd, #0000 46% 54%, #b266ffdd); /* Increased opacity for shinier glow */
+  background: linear-gradient(-45deg, #9000ffdd, #0000 46% 54%, #b266ffdd);
 }
 
 .spinIntense::before {
@@ -183,12 +164,98 @@
   }
 }
 
-@media (max-width: 640px) {
+/* Neon glow effect for the icon */
+.neon-glow {
+  filter: drop-shadow(0 0 8px #9000ff) brightness(1.2);
+  transition: filter 0.3s ease;
+}
+
+.neon-glow:hover {
+  filter: drop-shadow(0 0 12px #9000ff) brightness(1.5);
+}
+
+/* CSS Container Queries for card content */
+@container card-container (max-width: 360px) {
+  .repoName {
+    font-size: 1.125rem;
+  }
+
+  .listItem {
+    font-size: 0.875rem;
+  }
+
+  .bullet {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 1.125rem;
+  }
+}
+
+@container card-container (max-width: 340px) {
+  .repoName {
+    font-size: 1rem;
+  }
+
+  .listItem {
+    font-size: 0.8125rem;
+  }
+
+  .bullet {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 1rem;
+  }
+}
+
+@container card-container (max-width: 300px) {
+  .repoName {
+    font-size: 0.9375rem;
+  }
+
+  .listItem {
+    font-size: 0.75rem;
+  }
+
+  .bullet {
+    width: 1.1rem;
+    height: 1.1rem;
+    font-size: 0.9375rem;
+  }
+}
+
+/* Fallback media queries for broader compatibility */
+@media (max-width: 1024px) {
+  .sectionContainer {
+    max-width: 100%;
+    padding: 0 1.5rem;
+  }
+
   .cardContainer {
-    width: 100%;
-    max-width: 400px;
-    height: 240px; /* Reduced height to remove empty space */
-    margin: 0 auto;
+    max-width: 360px;
+  }
+
+  .repoName {
+    font-size: 1.125rem;
+  }
+
+  .listItem {
+    font-size: 0.875rem;
+  }
+
+  .bullet {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionContainer {
+    padding: 0 1rem;
+  }
+
+  .cardContainer {
+    max-width: 340px;
   }
 
   .repoName {
@@ -196,19 +263,86 @@
   }
 
   .listItem {
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .bullet {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 1rem;
   }
 
   .spin::before {
-    inset: -5%; /* Reduced to 19.5px on a 390px card to fit within clipped area */
+    inset: -10%;
   }
+
   .spinBlur {
-    filter: blur(5em) url(#unopaq); /* Increased to 80px for shinier glow */
+    filter: blur(4em) url(#unopaq);
   }
+
+  .spinIntense {
+    filter: blur(0.75em) url(#unopaq2);
+  }
+
+  .spinInside {
+    filter: blur(3px) url(#unopaq3);
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionContainer {
+    padding: 0 0.75rem;
+  }
+
+  .cardContainer {
+    max-width: 300px;
+  }
+
+  .repoName {
+    font-size: 0.9375rem;
+  }
+
+  .listItem {
+    font-size: 0.75rem;
+  }
+
+  .bullet {
+    width: 1.1rem;
+    height: 1.1rem;
+    font-size: 0.9375rem;
+  }
+
+  .spin::before {
+    inset: -5%;
+  }
+
+  .spinBlur {
+    filter: blur(5em) url(#unopaq);
+  }
+
   .spinIntense {
     filter: blur(1em) url(#unopaq2);
   }
+
   .spinInside {
     filter: blur(4px) url(#unopaq3);
+  }
+
+  .neon-glow {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@supports (padding: env(safe-area-inset-left)) {
+  .sectionContainer {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  @media (max-width: 480px) {
+    .sectionContainer {
+      padding-left: max(0.75rem, env(safe-area-inset-left));
+      padding-right: max(0.75rem, env(safe-area-inset-right));
+    }
   }
 }

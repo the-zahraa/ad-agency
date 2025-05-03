@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "../styles/Services.module.css";
@@ -116,6 +116,24 @@ export function ServicesSection() {
     }
   };
 
+  // Handle URL hash changes to set active tab
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", "");
+      const serviceIndex = services.findIndex(
+        (service) => service.name.toLowerCase().replace(/ & /g, "-").replace(" ", "-") === hash
+      );
+      if (serviceIndex !== -1) {
+        setActiveTab(serviceIndex);
+      }
+    };
+
+    // Run on mount
+    setTimeout(handleHashChange, 100);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [services]);
+
   return (
     <section className="pt-8 pb-16 bg-white text-black w-full">
       <div className={styles.servicesContainer}>
@@ -160,6 +178,7 @@ export function ServicesSection() {
             animate="visible"
             variants={contentVariants}
             className={styles.content}
+            id={services[activeTab].name.toLowerCase().replace(/ & /g, "-").replace(" ", "-")}
           >
             <div className={styles.textContent}>
               <h3 ref={titleRef} className={`${styles.serviceTitle} text-[#9000ff]`}>
@@ -173,6 +192,7 @@ export function ServicesSection() {
               <Image
                 src={services[activeTab].image}
                 alt={`${services[activeTab].name} illustration`}
+ 
                 width={services[activeTab].width}
                 height={services[activeTab].height}
                 className="object-contain"
@@ -184,4 +204,3 @@ export function ServicesSection() {
     </section>
   );
 }
-

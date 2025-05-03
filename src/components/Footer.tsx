@@ -33,8 +33,8 @@ export default function Footer() {
               <Image
                 src="/logo.png"
                 alt="m44.io logo"
-                width={40} // Increased from 32 to 40
-                height={40} // Increased from 32 to 40
+                width={40}
+                height={40}
                 className={styles.logoIcon}
               />
               m44.io
@@ -63,7 +63,9 @@ export default function Footer() {
                   variants={hoverEffect}
                   className={styles.serviceItem}
                 >
-                  <a href="#">{item}</a>
+                  <a href={`#${item.toLowerCase().replace(" ", "-")}`}>
+                    {item}
+                  </a>
                 </motion.li>
               ))}
             </ul>
@@ -128,4 +130,3 @@ export default function Footer() {
     </motion.footer>
   );
 }
-

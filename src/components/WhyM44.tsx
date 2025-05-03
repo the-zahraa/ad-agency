@@ -1,7 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import styles from "../styles/Card.module.css";
+import { useEffect, useRef, useState } from "react";
 
 // Animation variants for Framer Motion
 const fadeInUp = {
@@ -32,33 +34,98 @@ export function WhyM44() {
     {
       title: "Tired of Wasting Time and Money?",
       items: [
-        "Slow agencies that never deliver.",
-        "Freelancers who disappear when things get tough.",
-        "In-house teams that don’t know how to scale.",
-        "You don’t need more “ads.” You need results. Fast.",
+        "Most agencies move slow and miss deadlines.",
+        "Freelancers disappear the moment things get hard.",
+        "Internal teams don’t know how to scale profitably.",
+        "You don’t need more ads — you need more money.",
       ],
     },
     {
-      title: "why m44?",
+      title: "Why Businesses Choose m44?",
       items: [
-        "We’re obsessed with outcomes, not vanity metrics.",
-        "Fast execution, clear strategy, no fluff.",
-        "Ads that don’t just get clicks—they convert.",
-        "We don’t run ads. We make you money.",
+        "We measure success by dollars in your bank, not likes on your post.",
+        "Speed is our default. Strategy is baked in.",
+        "We write ads that convert, not just attract.",
+        "We’re not an ad agency. We’re a growth partner",
       ],
     },
     {
       title: "Wherever You Are, We Scale You Fast",
       items: [
-        "Just starting with ads? We’ll get you results fast.",
-        "Already spending big? We’ll make your budget work harder.",
-        "No guesswork. Just real, fast growth.",
-        "We don’t sell marketing. We sell growth.",
+        "Just getting started? We’ll help you hit profit quickly.",
+        "Already spending? We’ll squeeze more from every dollar.",
+        "No guesswork. No fluff. Just proven, scalable growth.",
+        "We don’t sell marketing. We sell results.",
       ],
     },
   ];
 
-  // Function to scroll to Book Call section
+  // State to store card dimensions
+  const [cardDimensions, setCardDimensions] = useState<{ width: number; height: number }[]>(
+    cards.map(() => ({ width: 400, height: 240 }))
+  );
+
+  // State to store whether the layout should be single-column
+  const [isSingleColumn, setIsSingleColumn] = useState(false);
+
+  // Refs for each card to observe resizing, with proper TypeScript typing
+  const cardRefs = useRef<React.MutableRefObject<HTMLDivElement | null>[]>(cards.map(() => ({ current: null })));
+
+  // Ref for the parent container
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // ResizeObserver for cards
+    const cardObserver = new ResizeObserver((entries) => {
+      const newDimensions = [...cardDimensions];
+      entries.forEach((entry, index) => {
+        const card = entry.target as HTMLDivElement;
+        const header = card.querySelector(`.${styles.header}`) as HTMLDivElement;
+        const content = card.querySelector(`.${styles.content}`) as HTMLDivElement;
+        const list = content.querySelector(`.${styles.list}`) as HTMLDivElement;
+
+        const headerHeight = header.getBoundingClientRect().height;
+        const contentHeight = list.getBoundingClientRect().height;
+        const totalHeight = headerHeight + contentHeight + 24;
+
+        const title = card.querySelector(`.${styles.repoName}`) as HTMLSpanElement;
+        const titleWidth = title.scrollWidth + 48;
+
+        newDimensions[index] = {
+          width: Math.max(titleWidth, 300),
+          height: Math.max(totalHeight, 240),
+        };
+      });
+      setCardDimensions(newDimensions);
+    });
+
+    // ResizeObserver for the parent container
+    const containerObserver = new ResizeObserver((entries) => {
+      const container = entries[0].target as HTMLDivElement;
+      const containerWidth = container.getBoundingClientRect().width;
+      const totalCardWidth = cardDimensions.reduce((sum, dim) => sum + dim.width, 0);
+      const gapCount = cards.length - 1;
+      const totalGapWidth = gapCount * 32;
+      const requiredWidth = totalCardWidth + totalGapWidth;
+
+      setIsSingleColumn(requiredWidth > containerWidth);
+    });
+
+    // Observe each card
+    cardRefs.current.forEach((ref) => {
+      if (ref.current) cardObserver.observe(ref.current);
+    });
+
+    // Observe the parent container
+    if (containerRef.current) containerObserver.observe(containerRef.current);
+
+    // Cleanup on unmount
+    return () => {
+      cardObserver.disconnect();
+      containerObserver.disconnect();
+    };
+  }, [cardDimensions]);
+
   const scrollToBookCall = () => {
     const bookCallSection = document.getElementById("book-call");
     if (bookCallSection) {
@@ -67,7 +134,7 @@ export function WhyM44() {
   };
 
   return (
-    <section className={`${styles.sectionBackground} py-16 text-white`}>
+    <section className={`${styles.sectionBackground} py-12 sm:py-16 text-white`}>
       {/* SVG Filters for Glowing Animation */}
       <svg style={{ position: "absolute", width: 0, height: 0 }}>
         <filter id="unopaq" y="-100%" height="300%" x="-100%" width="300%">
@@ -76,7 +143,7 @@ export function WhyM44() {
                     0 1 0 0 0 
                     0 0 1 0 0 
                     0 0 0 5 0"
-          ></feColorMatrix>
+          />
         </filter>
         <filter id="unopaq2" y="-100%" height="300%" x="-100%" width="300%">
           <feColorMatrix
@@ -84,7 +151,7 @@ export function WhyM44() {
                     0 1 0 0 0 
                     0 0 1 0 0 
                     0 0 0 10 0"
-          ></feColorMatrix>
+          />
         </filter>
         <filter id="unopaq3" y="-100%" height="300%" x="-100%" width="300%">
           <feColorMatrix
@@ -92,19 +159,19 @@ export function WhyM44() {
                     0 1 0 1 0 
                     0 0 1 1 0 
                     0 0 0 2 0"
-          ></feColorMatrix>
+          />
         </filter>
       </svg>
 
-      <div className={styles.sectionContainer}>
+      <div className={`${styles.sectionContainer} px-4 sm:px-6 lg:px-8`}>
         {/* Headline */}
         <motion.h2
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-4xl md:text-5xl font-bold mb-4"
-          style={{ color: "#9000ff" }}
+          className="font-bold mb-4 text-[#9000ff]"
+          style={{ fontSize: "clamp(2rem, 5vw, 3.125rem)" }}
         >
           why m44?
         </motion.h2>
@@ -115,7 +182,8 @@ export function WhyM44() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-2xl md:text-3xl font-semibold mb-2"
+          className="font-semibold mb-2"
+          style={{ fontSize: "clamp(1.5rem, 3vw, 1.875rem)" }}
         >
           Not Another Agency. A Performance-Obsessed Partner.
         </motion.h3>
@@ -126,7 +194,8 @@ export function WhyM44() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-lg md:text-xl mb-12"
+          className="mb-8 sm:mb-12 max-w-3xl mx-auto"
+          style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)" }}
         >
           Most agencies care about impressions. We care about outcomes.
         </motion.p>
@@ -137,14 +206,24 @@ export function WhyM44() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="flex flex-col md:flex-row justify-center items-center gap-8"
+          className={`flex justify-center items-center gap-4 sm:gap-6 lg:gap-8 ${
+            isSingleColumn ? "flex-col" : "flex-row flex-wrap"
+          }`}
+          ref={containerRef}
         >
           {cards.map((card, index) => (
             <motion.div
               key={index}
               custom={index}
               variants={cardVariants}
-              className={styles.cardContainer}
+              className={`${styles.cardContainer}`}
+              style={{
+                width: `min(${cardDimensions[index].width}px, 100%)`,
+                height: `${cardDimensions[index].height}px`,
+              }}
+              ref={(el: HTMLDivElement | null) => {
+                cardRefs.current[index] = { current: el };
+              }}
             >
               <div className={styles.spin + " " + styles.spinBlur}></div>
               <div className={styles.spin + " " + styles.spinIntense}></div>
@@ -153,29 +232,59 @@ export function WhyM44() {
               </div>
               <div className={styles.card}>
                 <div className={styles.header}>
-                  <div className={styles.repo}>
-                    <span className={styles.repoName}>{card.title}</span>
+                  <div className="flex flex-col items-center">
+                    {index === 0 && (
+                      <div className="relative mb-2">
+                        <Image
+                          src="/Asset3.png"
+                          alt="Stopwatch Icon"
+                          width={48}
+                          height={48}
+                          className="neon-glow"
+                          sizes="(max-width: 640px) 40px, 48px"
+                        />
+                      </div>
+                    )}
+                    {index === 1 && (
+                      <div className="relative mb-2">
+                        <Image
+                          src="/Asset5.png"
+                          alt="Business Icon"
+                          width={48}
+                          height={48}
+                          className="neon-glow"
+                          sizes="(max-width: 640px) 40px, 48px"
+                        />
+                      </div>
+                    )}
+                    {index === 2 && (
+                      <div className="relative mb-2">
+                        <Image
+                          src="/Asset4.png"
+                          alt="Scale Icon"
+                          width={48}
+                          height={48}
+                          className="neon-glow"
+                          sizes="(max-width: 640px) 40px, 48px"
+                        />
+                      </div>
+                    )}
+                    <div className={styles.repo}>
+                      <span
+                        className={styles.repoName}
+                        style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)" }}
+                      >
+                        {card.title}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className={styles.content}>
                   <div className={styles.list}>
                     {card.items.map((item, idx) => (
                       <div key={idx} className={styles.listItem}>
-                        <span className={styles.check}>
-                          <svg
-                            className={styles.checkSvg}
-                            fill="currentColor"
-                            viewBox="0 0 16 16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              clipRule="evenodd"
-                              d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z"
-                              fillRule="evenodd"
-                            ></path>
-                          </svg>
-                        </span>
-                        <span>{item}</span>
+                        <span className={styles.bullet}>•</span>
+                        <span style={{ fontSize: "clamp(0.75rem, 2vw, 0.9rem)" }}>{item}</span>
                       </div>
                     ))}
                   </div>
@@ -192,7 +301,8 @@ export function WhyM44() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="inline-block mt-12 mb-8 px-6 py-3 bg-[#9000ff] text-white font-semibold rounded-full hover:scale-105 transition-transform"
+          className="inline-block mt-8 sm:mt-12 mb-6 sm:mb-8 px-4 sm:px-6 py-2 sm:py-3 bg-[#9000ff] text-white font-semibold rounded-full hover:scale-105 transition-transform"
+          style={{ fontSize: "clamp(1rem, 2.5vw, 1.125rem)" }}
         >
           Let’s Talk Results.
         </motion.button>

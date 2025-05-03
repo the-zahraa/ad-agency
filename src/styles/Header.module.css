@@ -3,144 +3,72 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(to bottom, #ffffff, #f3f4f6);
   border-radius: 9999px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-/* Logo container */
-.logoContainer {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.logoText {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #4b5563;
-}
-
-/* Navigation container (desktop) */
-.nav {
-  display: flex;
-  align-items: center;
-}
-
-/* Navigation links (desktop) */
-.navLink {
-  position: relative;
-  padding: 0.5rem 0.75rem;
-  color: #4b5563;
-  font-weight: 500;
-  font-size: 16px;
-  transition: color 0.3s ease;
-}
-
-.navLink:hover {
-  color: #6b7280;
-}
-
-.navLinkUnderline {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0.5px;
-  background-color: #9000ff;
-  transition: width 0.5s ease-out;
-}
-
-.navLink:hover .navLinkUnderline {
-  width: 100%;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  background: rgb(255, 255, 255); /* Solid white */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 /* Book a Call button (desktop only) */
 .bookButton {
-  outline: none;
-  border: none;
-  border-radius: 9999px;
-  background-color: #9000ff;
+  background: linear-gradient(45deg, #9000ff, #b300ff);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
   color: #ffffff;
   font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.3),
-    inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7),
-    inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.5),
-    0 1rem 1rem rgba(0, 0, 0, 0.3),
-    0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8);
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(144, 0, 255, 0.3);
 }
 
-.bookButtonInner {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.bookButtonText {
-  font-size: 14px;
-}
-
-/* Pseudo-elements for 3D effect (desktop button) */
-.bookButtonPseudo1 {
-  position: absolute;
-  left: -15%;
-  right: -15%;
-  bottom: 25%;
-  top: -100%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  transition: all 0.3s ease;
-}
-
-.bookButtonPseudo2 {
-  position: absolute;
-  left: 6%;
-  right: 6%;
-  top: 12%;
-  bottom: 40%;
-  border-radius: 22px 22px 0 0;
-  box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.8);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
-  transition: all 0.3s ease;
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Hamburger menu button (mobile) */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 28px;
-  height: 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 100;
-}
+@media (max-width: 767px) {
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    touch-action: manipulation;
+  }
 
-.hamburger span {
-  width: 100%;
-  height: 3px;
-  background: #9000ff;
-  border-radius: 10px;
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
-}
+  .hamburger span {
+    width: 100%;
+    height: 3px;
+    background: #9000ff;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  }
 
-.hamburger.open span:nth-child(1) {
-  transform: rotate(45deg) translate(6px, 6px);
-  background: #9000ff;
-}
+  .hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+    background: #ffffff;
+  }
 
-.hamburger.open span:nth-child(2) {
-  opacity: 0;
-}
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
 
-.hamburger.open span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px, -6px);
-  background: #9000ff;
+  .hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+    background: #ffffff;
+  }
 }
 
 /* Close button (X) for mobile menu */
@@ -153,7 +81,6 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 70;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +92,7 @@
   position: absolute;
   width: 24px;
   height: 3px;
-  background: #9000ff;
+  background: #ffffff;
   border-radius: 10px;
   transition: all 0.3s ease;
 }
@@ -185,21 +112,23 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #9000ff 0%, #b300ff 100%);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform: translateY(-100%);
-  transition: transform 0.3s ease-in-out;
-  z-index: 50;
+  overflow: auto;
   padding: 2rem;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  will-change: transform;
 }
 
-.mobileMenu.open {
-  transform: translateY(0);
+@supports not (backdrop-filter: blur(10px)) {
+  .mobileMenu {
+    background: linear-gradient(135deg, #9000ff 0%, #b300ff 100%);
+  }
 }
 
 .mobileMenuLink {
@@ -229,7 +158,7 @@
   transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background: #9000ff;
+  background: #ffffff;
   transition: width 0.3s ease;
 }
 
@@ -242,82 +171,22 @@
 .mobileBookButton {
   display: block;
   padding: 8px 16px;
-  background-color: #9000ff;
-  color: #ffffff;
+  background: #ffffff;
+  color: #9000ff;
   font-size: 1.25rem;
   font-weight: 500;
   text-align: center;
   border-radius: 9999px;
   text-decoration: none;
   transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .mobileBookButton:hover {
   transform: scale(1.05);
-  background-color: #7b00e6;
+  background: #f0f0f0;
 }
 
 .mobileBookButton:active {
   transform: scale(0.95);
-}
-
-/* Responsive styles */
-@media (max-width: 640px) {
-  .header {
-    width: 80% !important;
-    max-width: 320px !important;
-    padding: 8px 12px !important;
-    height: 56px !important;
-    justify-content: space-between;
-    transition: none !important;
-  }
-
-  .logoContainer {
-    gap: 0.625rem;
-  }
-
-  .logoContainer img {
-    width: 28px;
-    height: 28px;
-  }
-
-  .logoText {
-    font-size: 0.875rem;
-    color: #9000ff;
-  }
-
-  .nav {
-    display: none;
-  }
-
-  .bookButton:not(.mobile) {
-    display: none;
-  }
-
-  .hamburger {
-    display: flex;
-    width: 28px;
-    height: 24px;
-  }
-
-  .hamburger span {
-    height: 3px;
-  }
-
-  .desktop {
-    display: none !important;
-  }
-}
-
-@media (min-width: 641px) {
-  .mobileMenu,
-  .closeButton,
-  .mobileBookButton,
-  .logoContainer:not(.desktop) {
-    display: none;
-  }
-
-  .logoText {
-    display: none;
-  }
 }

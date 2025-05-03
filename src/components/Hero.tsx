@@ -3,29 +3,28 @@
 import { motion } from "framer-motion";
 import HeroButton from "./HeroButton";
 import styles from "../styles/Hero.module.css";
-import Link from "next/link";
 import Image from "next/image";
-import Header from "./Header";
+import Link from "next/link";
 
-const Hero = () => {
+export default function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center text-black relative">
       {/* Radial Gradient Background Pattern */}
       <div className={styles.background} />
 
-      {/* Logo and Text in Top-Left Corner (Hidden on Mobile) */}
-      <div className="absolute top-7 left-4 z-50 flex items-center space-x-2 hidden sm:flex">
-        <Link href="/" className="flex items-center space-x-2">
+      {/* Logo and m44.io Text in Left Corner (Bigger Screens Only) */}
+      <div className="absolute top-6 left-[3%] hidden md:block">
+        <Link href="#home" className="flex items-center">
           <Image
             src="/logo.png"
             alt="M44 Logo"
-            width={48}
-            height={48}
+            width={48} // Increased from 36 to 48
+            height={48} // Increased from 36 to 48
+            sizes="48px"
             className="object-contain"
+            priority
           />
-          <span style={{ color: "#9000ff" }} className="text-xl font-semibold">
-            m44.io
-          </span>
+          <span className="ml-2 text-2xl font-semibold text-purple-600">m44.io</span> {/* Increased from text-xl to text-2xl */}
         </Link>
       </div>
 
@@ -56,11 +55,6 @@ const Hero = () => {
           <HeroButton />
         </div>
       </motion.div>
-
-      {/* Header Component */}
-      <Header />
     </section>
   );
-};
-
-export default Hero;
+}
