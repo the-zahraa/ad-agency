@@ -1,30 +1,20 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
+"use client";import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "../styles/Services.module.css";
-import { useScrollContext } from "./ScrollProvider";
-
-// Animation variants for Framer Motion
+import { useScrollContext } from "./ScrollProvider";// Animation variants for Framer Motion
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
-const contentVariants = {
+};const contentVariants = {
   hidden: { opacity: 0, x: -20 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
-};
-
-export function ServicesSection() {
+};export function ServicesSection() {
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
-  const { scrollToElement } = useScrollContext();
-
-  const services = [
+  const { scrollToElement } = useScrollContext();  const services = [
     {
       name: "SEO",
       icon: (
@@ -100,9 +90,7 @@ export function ServicesSection() {
       width: 400,
       height: 333,
     },
-  ];
-
-  const handleTabClick = (index: number) => {
+  ];  const handleTabClick = (index: number) => {
     setActiveTab(index);
     if (window.innerWidth <= 768 && titleRef.current && tabsRef.current) {
       setTimeout(() => {
@@ -114,9 +102,7 @@ export function ServicesSection() {
         }
       }, 200);
     }
-  };
-
-  // Handle URL hash changes to set active tab
+  };  // Handle URL hash changes to set active tab
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace("#", "");
@@ -128,13 +114,12 @@ export function ServicesSection() {
       }
     };
 
-    // Run on mount
-    setTimeout(handleHashChange, 100);
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [services]);
+// Run on mount
+setTimeout(handleHashChange, 100);
+window.addEventListener("hashchange", handleHashChange);
+return () => window.removeEventListener("hashchange", handleHashChange);
 
-  return (
+  }, [services]);  return (
     <section className="pt-8 pb-16 bg-white text-black w-full">
       <div className={styles.servicesContainer}>
         <div className={styles.contentWrapper}>
@@ -149,58 +134,60 @@ export function ServicesSection() {
             Services
           </motion.h2>
 
-          {/* Tabs */}
-          <motion.div
-            ref={tabsRef}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className={styles.tabs}
+      {/* Tabs */}
+      <motion.div
+        ref={tabsRef}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+        className={styles.tabs}
+      >
+        {services.map((service, index) => (
+          <div
+            key={index}
+            className={`${styles.tab} ${activeTab === index ? styles.active : ""}`}
+            onClick={() => handleTabClick(index)}
           >
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className={`${styles.tab} ${activeTab === index ? styles.active : ""}`}
-                onClick={() => handleTabClick(index)}
-              >
-                {service.icon}
-                <span className={styles.tabText}>{service.name}</span>
-              </div>
-            ))}
-          </motion.div>
+            {service.icon}
+            <span className={styles.tabText}>{service.name}</span>
+          </div>
+        ))}
+      </motion.div>
 
-          {/* Content */}
-          <motion.div
-            ref={contentRef}
-            key={activeTab}
-            initial="hidden"
-            animate="visible"
-            variants={contentVariants}
-            className={styles.content}
-            id={services[activeTab].name.toLowerCase().replace(/ & /g, "-").replace(" ", "-")}
-          >
-            <div className={styles.textContent}>
-              <h3 ref={titleRef} className={`${styles.serviceTitle} text-[#9000ff]`}>
-                {services[activeTab].title}
-              </h3>
-              <p className={styles.serviceDescription}>{services[activeTab].description}</p>
-              <h4 className={`${styles.whyTitle} text-[#9000ff]`}>{services[activeTab].whyTitle}</h4>
-              <p className={styles.whyDescription}>{services[activeTab].whyDescription}</p>
-            </div>
-            <div className={styles.imageContainer}>
-              <Image
-                src={services[activeTab].image}
-                alt={`${services[activeTab].name} illustration`}
- 
-                width={services[activeTab].width}
-                height={services[activeTab].height}
-                className="object-contain"
-              />
-            </div>
-          </motion.div>
+      {/* Content */}
+      <motion.div
+        ref={contentRef}
+        key={activeTab}
+        initial="hidden"
+        animate="visible"
+        variants={contentVariants}
+        className={styles.content}
+        id={services[activeTab].name.toLowerCase().replace(/ & /g, "-").replace(" ", "-")}
+      >
+        <div className={styles.textContent}>
+          <h3 ref={titleRef} className={`${styles.serviceTitle} text-[#9000ff]`}>
+            {services[activeTab].title}
+          </h3>
+          <p className={styles.serviceDescription}>{services[activeTab].description}</p>
+          <h4 className={`${styles.whyTitle} text-[#9000ff]`}>{services[activeTab].whyTitle}</h4>
+          <p className={styles.whyDescription}>{services[activeTab].whyDescription}</p>
         </div>
-      </div>
-    </section>
+        <div className={styles.imageContainer}>
+          <Image
+            src={services[activeTab].image}
+            alt={`${services[activeTab].name} illustration`}
+
+            width={services[activeTab].width}
+            height={services[activeTab].height}
+            className="object-contain"
+          />
+        </div>
+      </motion.div>
+    </div>
+  </div>
+</section>
+
   );
 }
+

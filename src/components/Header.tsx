@@ -142,7 +142,7 @@ export default function Header() {
           paddingBottom: paddingY,
           scale: scale,
         }}
-        className={`${styles.header} fixed top-4 left-1/2 -translate-x-1/2 z-50 mx-auto flex items-center justify-between rounded-full px-2 w-[60%] max-w-md md:w-[40%] md:max-w-5xl transition-all duration-300 ease-out`} // Reduced padding to px-2, adjusted widths
+        className={`${styles.header} fixed top-4 left-1/2 -translate-x-1/2 z-50 mx-auto flex items-center justify-between rounded-full px-2 w-[60%] max-w-md md:w-[70%] md:max-w-5xl transition-all duration-300 ease-out`} // Reduced padding to px-2, adjusted widths
       >
         {/* Mobile: Always visible logo and hamburger */}
         <div className="md:hidden flex items-center">

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "../styles/StepCard.module.css";
 
 // Animation variants for Framer Motion
@@ -24,22 +25,30 @@ export function ResultsStepsSection() {
     {
       number: "I.",
       title: "Consultation",
-      description: "Book a call with us. We'll learn about your business, goals, and challenges so we know exactly where you are and where you want to go.",
+      description:
+        "Book a call with us. We'll learn about your business, goals, and challenges so we know exactly where you are and where you want to go.",
+      icon: "/Asset12.png",
     },
     {
       number: "II.",
       title: "Onboarding",
-      description: "We set up access, gather assets, and get everything ready on our end—fast, clean, and frictionless.",
+      description:
+        "We set up access, gather assets, and get everything ready on our end—fast, clean, and frictionless.",
+      icon: "/Asset10.png",
     },
     {
       number: "III.",
       title: "Strategy & Launch",
-      description: "We craft your growth plan, build your campaign, and get you live—ads, creatives, tracking, and all.",
+      description:
+        "We craft your growth plan, build your campaign, and get you live—ads, creatives, tracking, and all.",
+      icon: "/Asset11.png",
     },
     {
       number: "IV.",
       title: "Review & Optimize",
-      description: "Once live, we monitor daily and optimize aggressively. You'll get regular updates, transparent data, and strategy adjustments to keep scaling.",
+      description:
+        "Once live, we monitor daily and optimize aggressively. You'll get regular updates, transparent data, and strategy adjustments to keep scaling.",
+      icon: "/Asset7.png",
     },
   ];
 
@@ -67,7 +76,7 @@ export function ResultsStepsSection() {
         </motion.h2>
 
         {/* Cards */}
-        <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto mb-16"> {/* Increased margin-bottom */}
+        <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto mb-16">
           {steps.map((step, index) => (
             <motion.div
               key={index}
@@ -85,6 +94,15 @@ export function ResultsStepsSection() {
                 <div className={styles.titleWrapper}>
                   <span className={styles.stepNumber}>{step.number}</span>
                   <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <div className={styles.iconWrapper}>
+                    <Image
+                      src={step.icon}
+                      alt={`${step.title} icon`}
+                      width={56} // Increased from 48 to 56
+                      height={56} // Increased from 48 to 56
+                      className={styles.stepIcon}
+                    />
+                  </div>
                 </div>
                 <p className={styles.stepDescription}>{step.description}</p>
               </div>
@@ -100,8 +118,8 @@ export function ResultsStepsSection() {
           variants={fadeInUp}
           className="text-center"
         >
-          <p className="text-2xl font-bold mb-4">Speed starts with you.</p> {/* Larger, bolder text */}
-          <p className="text-xl mb-6">The first step is in your control.</p> {/* Increased spacing */}
+          <p className="text-2xl font-bold mb-4">Speed starts with you.</p>
+          <p className="text-xl mb-6">The first step is in your control.</p>
           <Link
             href="/contact"
             className="inline-block px-8 py-3 bg-gradient-to-r from-[#8e26e2] to-[#f4b1fd] text-white font-semibold text-lg rounded-full hover:scale-105 transition-transform"

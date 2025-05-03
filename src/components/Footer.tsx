@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
 import { CustomXIcon } from "./icons/CustomXIcon";
 import styles from "../styles/Footer.module.css";
@@ -12,8 +13,21 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-const hoverEffect = {
-  hover: { scale: 1.1, color: "#9000ff", transition: { duration: 0.3 } },
+// Updated hover effect for nav links (no scale to prevent shift)
+const navHoverEffect = {
+  hover: {
+    color: "#9000ff",
+    transition: { duration: 0.3 },
+  },
+};
+
+// Hover effect for social icons (keeps scale for icons)
+const socialHoverEffect = {
+  hover: {
+    scale: 1.1,
+    boxShadow: "0 0 12px rgba(144, 0, 255, 0.5)",
+    transition: { duration: 0.3 },
+  },
 };
 
 export default function Footer() {
@@ -29,7 +43,7 @@ export default function Footer() {
         <div className={styles.grid}>
           {/* Logo and Tagline */}
           <div className={styles.logoSection}>
-            <h2 className={styles.logo}>
+            <Link href="/" className={styles.logo}>
               <Image
                 src="/logo.png"
                 alt="m44.io logo"
@@ -38,84 +52,67 @@ export default function Footer() {
                 className={styles.logoIcon}
               />
               m44.io
-            </h2>
+            </Link>
             <p className={styles.tagline}>
-              Crafting innovative ad solutions for your brand.
+              Igniting brands with bold ad solutions.
             </p>
-            <motion.a
-              href="mailto:sales@m44.io"
-              whileHover="hover"
-              variants={hoverEffect}
-              className={styles.connectLink}
-            >
-              Connect
-            </motion.a>
           </div>
 
-          {/* Services */}
-          <div className={styles.servicesSection}>
-            <h3 className={styles.servicesTitle}>Services</h3>
-            <ul className={styles.servicesList}>
-              {["Paid Media", "SEO", "Creative", "Tracking"].map((item) => (
+          {/* Navigation Links */}
+          <div className={styles.navSection}>
+            <h3 className={styles.navTitle}>Explore</h3>
+            <ul className={styles.navList}>
+              {[
+                { name: "Home", href: "/#home" },
+                { name: "Why M44", href: "/#why-m44" },
+                { name: "Services", href: "/#services" },
+                { name: "FAQ", href: "/#support" }, // Updated to Support
+              ].map((item) => (
                 <motion.li
-                  key={item}
+                  key={item.name}
                   whileHover="hover"
-                  variants={hoverEffect}
-                  className={styles.serviceItem}
+                  variants={navHoverEffect}
+                  className={styles.navItem}
                 >
-                  <a href={`#${item.toLowerCase().replace(" ", "-")}`}>
-                    {item}
-                  </a>
+                  <Link href={item.href}>{item.name}</Link>
                 </motion.li>
               ))}
             </ul>
           </div>
 
-          {/* Get in Touch */}
-          <div className={styles.getInTouchSection}>
-            <h3 className={styles.getInTouchTitle}>Get in Touch</h3>
-            <p className={styles.getInTouchEmail}>sales@m44.io</p>
+          {/* Social Media */}
+          <div className={styles.socialSection}>
+            <h3 className={styles.socialTitle}>Connect With Us</h3>
             <div className={styles.socialLinks}>
-              <motion.a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover="hover"
-                variants={hoverEffect}
-                className={styles.socialLink}
-              >
-                <CustomXIcon size={24} />
-              </motion.a>
-              <motion.a
-                href="https://whatsapp.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover="hover"
-                variants={hoverEffect}
-                className={styles.socialLink}
-              >
-                <FaWhatsapp size={24} />
-              </motion.a>
-              <motion.a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover="hover"
-                variants={hoverEffect}
-                className={styles.socialLink}
-              >
-                <FaInstagram size={24} />
-              </motion.a>
-              <motion.a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover="hover"
-                variants={hoverEffect}
-                className={styles.socialLink}
-              >
-                <FaFacebook size={24} />
-              </motion.a>
+              {[
+                {
+                  href: "https://twitter.com/PaidAds_?t=SkGBnA6Hz99u681WQ_dlZQ&s=09",
+                  icon: <CustomXIcon size={24} />,
+                },
+                {
+                  href: "https://wa.me/+66804444448",
+                  icon: <FaWhatsapp size={24} />,
+                },
+                {
+                  href: "https://instagram.com",
+                  icon: <FaInstagram size={24} />,
+                },
+                {
+                  href: "https://facebook.com",
+                  icon: <FaFacebook size={24} />,
+                },
+              ].map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={socialHoverEffect}
+                  className={styles.socialLink}
+                >
+                  {social.icon}
+                </motion.a>
+              ))}
             </div>
           </div>
         </div>

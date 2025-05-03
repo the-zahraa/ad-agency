@@ -24,11 +24,10 @@
 .cardContainer {
   position: relative;
   border-radius: 1em;
-  margin: 0; /* Remove margin to prevent clipping */
-  min-height: 240px;
-  max-height: 400px;
-  min-width: 300px;
-  max-width: 400px;
+  margin: 0;
+  height: 320px;
+  min-width: 380px;
+  max-width: 480px;
   width: 100%;
   container-type: inline-size;
   container-name: card-container;
@@ -81,32 +80,37 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 16px; /* Reduced from 20px to fit content better */
   flex: 1;
 }
 
 .listItem {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   font-size: 0.9rem;
   white-space: normal;
   overflow-wrap: break-word;
+  text-align: left;
 }
 
 .listItem span:nth-child(2) {
   color: #ffffff;
   font-weight: bold;
+  line-height: 1.2;
+  flex: 1;
 }
 
 .bullet {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 1.5rem;
   height: 1.5rem;
   color: #9000ff;
   font-size: 1.2rem;
+  line-height: 1.2;
+  flex-shrink: 0;
 }
 
 .spin {
@@ -164,24 +168,26 @@
   }
 }
 
-/* Neon glow effect for the icon */
-.neon-glow {
-  filter: drop-shadow(0 0 8px #9000ff) brightness(1.2);
-  transition: filter 0.3s ease;
+/* Icon container to control size */
+.iconContainer {
+  position: relative;
+  width: 48px;
+  height: 48px;
 }
 
-.neon-glow:hover {
-  filter: drop-shadow(0 0 12px #9000ff) brightness(1.5);
+/* Icon styles */
+.icon {
+  object-fit: contain;
 }
 
 /* CSS Container Queries for card content */
-@container card-container (max-width: 360px) {
+@container card-container (max-width: 430px) {
   .repoName {
     font-size: 1.125rem;
   }
 
   .listItem {
-    font-size: 0.875rem;
+    font-size: 0.85rem; /* Reduced to fit content */
   }
 
   .bullet {
@@ -189,15 +195,19 @@
     height: 1.25rem;
     font-size: 1.125rem;
   }
+
+  .list {
+    gap: 14px; /* Reduced to fit content */
+  }
 }
 
-@container card-container (max-width: 340px) {
+@container card-container (max-width: 410px) {
   .repoName {
     font-size: 1rem;
   }
 
   .listItem {
-    font-size: 0.8125rem;
+    font-size: 0.8rem; /* Reduced to fit content */
   }
 
   .bullet {
@@ -205,9 +215,13 @@
     height: 1.2rem;
     font-size: 1rem;
   }
+
+  .list {
+    gap: 12px; /* Reduced to fit content */
+  }
 }
 
-@container card-container (max-width: 300px) {
+@container card-container (max-width: 380px) {
   .repoName {
     font-size: 0.9375rem;
   }
@@ -220,6 +234,10 @@
     width: 1.1rem;
     height: 1.1rem;
     font-size: 0.9375rem;
+  }
+
+  .list {
+    gap: 10px; /* Reduced to fit content */
   }
 }
 
@@ -231,7 +249,8 @@
   }
 
   .cardContainer {
-    max-width: 360px;
+    max-width: 430px;
+    height: 300px;
   }
 
   .repoName {
@@ -239,13 +258,17 @@
   }
 
   .listItem {
-    font-size: 0.875rem;
+    font-size: 0.85rem;
   }
 
   .bullet {
     width: 1.25rem;
     height: 1.25rem;
     font-size: 1.125rem;
+  }
+
+  .list {
+    gap: 14px;
   }
 }
 
@@ -255,7 +278,8 @@
   }
 
   .cardContainer {
-    max-width: 340px;
+    max-width: 410px;
+    height: 280px;
   }
 
   .repoName {
@@ -263,7 +287,7 @@
   }
 
   .listItem {
-    font-size: 0.8125rem;
+    font-size: 0.8rem;
   }
 
   .bullet {
@@ -272,20 +296,8 @@
     font-size: 1rem;
   }
 
-  .spin::before {
-    inset: -10%;
-  }
-
-  .spinBlur {
-    filter: blur(4em) url(#unopaq);
-  }
-
-  .spinIntense {
-    filter: blur(0.75em) url(#unopaq2);
-  }
-
-  .spinInside {
-    filter: blur(3px) url(#unopaq3);
+  .list {
+    gap: 12px;
   }
 }
 
@@ -295,7 +307,8 @@
   }
 
   .cardContainer {
-    max-width: 300px;
+    max-width: 380px;
+    height: 260px;
   }
 
   .repoName {
@@ -312,23 +325,11 @@
     font-size: 0.9375rem;
   }
 
-  .spin::before {
-    inset: -5%;
+  .list {
+    gap: 10px;
   }
 
-  .spinBlur {
-    filter: blur(5em) url(#unopaq);
-  }
-
-  .spinIntense {
-    filter: blur(1em) url(#unopaq2);
-  }
-
-  .spinInside {
-    filter: blur(4px) url(#unopaq3);
-  }
-
-  .neon-glow {
+  .iconContainer {
     width: 40px;
     height: 40px;
   }

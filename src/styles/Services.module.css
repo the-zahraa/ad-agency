@@ -272,3 +272,12 @@
     margin-bottom: 0.5rem;
   }
 }
+
+/* Services.module.css */
+.activeContent {
+  display: flex;
+}
+
+.inactiveContent {
+  display: none;
+}

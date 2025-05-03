@@ -10,6 +10,7 @@
 .sliderTrack {
   display: flex;
   flex-wrap: nowrap;
+  width: 100%;
 }
 
 .slide {
@@ -53,25 +54,46 @@
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .sliderContainer {
     max-width: 100%;
   }
+}
 
-  /* Adjust slide widths on mobile */
-  .slide {
-    &.center {
-      width: 90% !important; /* Center slide takes up 90% of the container */
-    }
-    &.adjacent {
-      width: 20% !important; /* Adjacent slides take up 20% */
-    }
+@media (max-width: 768px) {
+  .sliderContainer {
+    max-width: 100%;
+    padding: 0 3rem; /* Increased padding to ensure slides are fully visible */
+  }
+
+  /* Ensure the slider track is wide enough to prevent cutoff */
+  .sliderTrack {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .slide.center {
+    width: 90% !important; /* Center slide takes up 90% of the container */
+  }
+  .slide.adjacent {
+    width: 20% !important; /* Adjacent slides take up 20% */
   }
 }
 
 @media (max-width: 480px) {
+  .sliderContainer {
+    padding: 0 2rem; /* Further adjust padding for very small screens */
+  }
+
   .arrow {
     width: 32px;
     height: 32px;
+  }
+
+  .slide.center {
+    width: 100% !important; /* Center slide takes up full width to prevent cutoff */
+  }
+  .slide.adjacent {
+    width: 5% !important; /* Further reduce adjacent slide width to ensure visibility */
   }
 }

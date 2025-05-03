@@ -60,9 +60,9 @@ export function WhyM44() {
     },
   ];
 
-  // State to store card dimensions
-  const [cardDimensions, setCardDimensions] = useState<{ width: number; height: number }[]>(
-    cards.map(() => ({ width: 400, height: 240 }))
+  // State to store card widths (height is now fixed in CSS)
+  const [cardWidths, setCardWidths] = useState<number[]>(
+    cards.map(() => 480) // Increased initial width to 480px
   );
 
   // State to store whether the layout should be single-column
@@ -75,35 +75,24 @@ export function WhyM44() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // ResizeObserver for cards
+    // ResizeObserver for cards (only for width)
     const cardObserver = new ResizeObserver((entries) => {
-      const newDimensions = [...cardDimensions];
+      const newWidths = [...cardWidths];
       entries.forEach((entry, index) => {
         const card = entry.target as HTMLDivElement;
-        const header = card.querySelector(`.${styles.header}`) as HTMLDivElement;
-        const content = card.querySelector(`.${styles.content}`) as HTMLDivElement;
-        const list = content.querySelector(`.${styles.list}`) as HTMLDivElement;
-
-        const headerHeight = header.getBoundingClientRect().height;
-        const contentHeight = list.getBoundingClientRect().height;
-        const totalHeight = headerHeight + contentHeight + 24;
-
         const title = card.querySelector(`.${styles.repoName}`) as HTMLSpanElement;
         const titleWidth = title.scrollWidth + 48;
 
-        newDimensions[index] = {
-          width: Math.max(titleWidth, 300),
-          height: Math.max(totalHeight, 240),
-        };
+        newWidths[index] = Math.max(titleWidth, 380); // Increased min width to 380px
       });
-      setCardDimensions(newDimensions);
+      setCardWidths(newWidths);
     });
 
     // ResizeObserver for the parent container
     const containerObserver = new ResizeObserver((entries) => {
       const container = entries[0].target as HTMLDivElement;
       const containerWidth = container.getBoundingClientRect().width;
-      const totalCardWidth = cardDimensions.reduce((sum, dim) => sum + dim.width, 0);
+      const totalCardWidth = cardWidths.reduce((sum, width) => sum + width, 0);
       const gapCount = cards.length - 1;
       const totalGapWidth = gapCount * 32;
       const requiredWidth = totalCardWidth + totalGapWidth;
@@ -124,7 +113,7 @@ export function WhyM44() {
       cardObserver.disconnect();
       containerObserver.disconnect();
     };
-  }, [cardDimensions]);
+  }, [cardWidths]);
 
   const scrollToBookCall = () => {
     const bookCallSection = document.getElementById("book-call");
@@ -218,8 +207,7 @@ export function WhyM44() {
               variants={cardVariants}
               className={`${styles.cardContainer}`}
               style={{
-                width: `min(${cardDimensions[index].width}px, 100%)`,
-                height: `${cardDimensions[index].height}px`,
+                width: `min(${cardWidths[index]}px, 100%)`,
               }}
               ref={(el: HTMLDivElement | null) => {
                 cardRefs.current[index] = { current: el };
@@ -234,37 +222,34 @@ export function WhyM44() {
                 <div className={styles.header}>
                   <div className="flex flex-col items-center">
                     {index === 0 && (
-                      <div className="relative mb-2">
+                      <div className={`${styles.iconContainer} mb-2`}>
                         <Image
                           src="/Asset3.png"
                           alt="Stopwatch Icon"
-                          width={48}
-                          height={48}
-                          className="neon-glow"
+                          layout="fill"
+                          objectFit="contain"
                           sizes="(max-width: 640px) 40px, 48px"
                         />
                       </div>
                     )}
                     {index === 1 && (
-                      <div className="relative mb-2">
+                      <div className={`${styles.iconContainer} mb-2`}>
                         <Image
                           src="/Asset5.png"
                           alt="Business Icon"
-                          width={48}
-                          height={48}
-                          className="neon-glow"
+                          layout="fill"
+                          objectFit="contain"
                           sizes="(max-width: 640px) 40px, 48px"
                         />
                       </div>
                     )}
                     {index === 2 && (
-                      <div className="relative mb-2">
+                      <div className={`${styles.iconContainer} mb-2`}>
                         <Image
                           src="/Asset4.png"
                           alt="Scale Icon"
-                          width={48}
-                          height={48}
-                          className="neon-glow"
+                          layout="fill"
+                          objectFit="contain"
                           sizes="(max-width: 640px) 40px, 48px"
                         />
                       </div>

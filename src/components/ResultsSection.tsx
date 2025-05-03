@@ -103,16 +103,27 @@ const resultsData: Result[] = [
 export function ResultsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [transformPercentage, setTransformPercentage] = useState(70);
+  const [sliderHeight, setSliderHeight] = useState(214); // Default height for mobile
 
-  // Set transform percentage based on window width after mount
+  // Set transform percentage and slider height based on window width after mount
   useEffect(() => {
-    const updateTransformPercentage = () => {
-      setTransformPercentage(window.innerWidth >= 768 ? 50 : 60);
+    const updateSliderSettings = () => {
+      // Update transform percentage
+      if (window.innerWidth >= 1024) {
+        setTransformPercentage(70); // Larger screens: more overlap for adjacent slides
+        setSliderHeight(380); // Larger screens: taller height
+      } else if (window.innerWidth >= 768) {
+        setTransformPercentage(60); // Medium screens: balanced overlap
+        setSliderHeight(320); // Medium screens: slightly shorter height
+      } else {
+        setTransformPercentage(120); // Small screens: increased to ensure full visibility
+        setSliderHeight(200); // Small screens: shorter height to prevent bottom cutoff
+      }
     };
 
-    updateTransformPercentage();
-    window.addEventListener("resize", updateTransformPercentage);
-    return () => window.removeEventListener("resize", updateTransformPercentage);
+    updateSliderSettings();
+    window.addEventListener("resize", updateSliderSettings);
+    return () => window.removeEventListener("resize", updateSliderSettings);
   }, []);
 
   const handlePrev = () => {
@@ -152,7 +163,7 @@ export function ResultsSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-4xl md:text-5xl font-bold text-center mb-4"
+          className="text-4xl md:text-5xl font-bold text-center mb-4 text-[#9000ff]"
         >
           The Results Behind the Work
         </motion.h2>
@@ -176,7 +187,10 @@ export function ResultsSection() {
         {/* Slider */}
         <div className="relative">
           {/* Image Row (Slider) */}
-          <div className="flex overflow-hidden justify-center h-[214px] md:h-[380px]">
+          <div
+            className="flex overflow-hidden justify-center"
+            style={{ height: `${sliderHeight}px` }}
+          >
             {resultsData.map((result: Result, index: number) => {
               const isCenter = index === currentSlide;
               const isAdjacent =
@@ -197,9 +211,9 @@ export function ResultsSection() {
                   key={index}
                   className={`flex-none transition-all duration-500 ease-in-out will-change-transform ${
                     isCenter
-                      ? "w-[90%] md:w-1/2 z-10"
+                      ? "w-[90%] md:w-[60%] lg:w-[50%] z-10"
                       : isAdjacent
-                      ? "w-[20%] md:w-1/6 z-0 cursor-pointer"
+                      ? "w-[20%] md:w-[20%] lg:w-[15%] z-0 cursor-pointer"
                       : "w-0 opacity-0"
                   }`}
                   style={{
@@ -207,16 +221,16 @@ export function ResultsSection() {
                   }}
                   onClick={() => handleSlideClick(index)}
                 >
-                  <div className="px-1">
+                  <div className="px-2 sm:px-1">
                     <div className="bg-gray-200 rounded-lg overflow-hidden aspect-[1536/777]">
                       <Image
                         src={result.imagePath}
                         alt={result.title}
-                        width={768} // Reduced for mobile performance
-                        height={389} // Maintain aspect ratio (1536/777)
-                        sizes="(max-width: 768px) 90vw, 50vw" // Responsive sizes
-                        className="w-full h-full object-cover"
-                        loading="lazy" // Lazy load images
+                        width={768}
+                        height={389}
+                        sizes="(max-width: 768px) 90vw, (max-width: 1024px) 60vw, 50vw"
+                        className="w-full h-full object-cover object-center"
+                        loading="lazy"
                       />
                     </div>
                   </div>
@@ -226,7 +240,7 @@ export function ResultsSection() {
           </div>
 
           {/* Navigation Arrows (Below the Slider) */}
-          <div className="flex justify-center mt-6 space-x-4">
+          <div className="flex justify-center mt-6 md:mt-4 lg:mt-3 space-x-4 lg:space-x-2">
             <button
               onClick={handlePrev}
               className={`${styles.arrow} ${styles.active}`}
@@ -270,7 +284,7 @@ export function ResultsSection() {
             exit="exit"
             className="max-w-xl mx-auto mt-8 p-4 bg-gray-100 rounded-lg min-h-[200px]"
           >
-            <h3 className="text-xl md:text-2xl font-bold text-black mb-4">
+            <h3 className="text-xl md:text-2xl font-bold text-[#9000ff] mb-4">
               {resultsData[currentSlide].title}
             </h3>
             <p className="text-gray-600 text-base md:text-lg">

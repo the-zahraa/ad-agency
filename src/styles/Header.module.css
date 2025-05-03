@@ -112,7 +112,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, #9000ff 0%, #b300ff 100%);
+  background: linear-gradient(135deg, #ffffff00 0%, #b300ff 100%);
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;

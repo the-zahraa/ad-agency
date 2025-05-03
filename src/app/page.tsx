@@ -1,3 +1,4 @@
+// src/app/page.tsx
 import { WhyM44 } from '@/components/WhyM44';
 import { PartneredSection } from '@/components/PartneredSection';
 import { ServicesSection } from '@/components/ServicesSection';
@@ -8,7 +9,6 @@ import { FAQSection } from '@/components/FAQSection';
 import { BookCallSection } from '@/components/BookCallSection';
 import Hero from '@/components/Hero';
 
-// Add a simple client component to log rendering
 function DebugSection({ id }: { id: string }) {
   if (typeof window !== "undefined") {
     console.log(`Section ${id} rendered`);

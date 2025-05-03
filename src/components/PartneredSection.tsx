@@ -21,7 +21,7 @@ export function PartneredSection() {
   const secondRowLogos = Array(14).fill(null); // Next 14 logos
 
   return (
-    <section className="pt-16 pb-8 bg-white text-white"> {/* Reduced bottom padding */}
+    <section className="pt-16 pb-8 bg-white text-white">
       <div className="container mx-auto px-4 text-center">
         {/* Headline */}
         <motion.div
@@ -60,7 +60,7 @@ export function PartneredSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-lg md:text-xl mb-6 text-[#9000ff]"
+          className="text-lg md:text-xl mb-6 text-[#9000ff] font-bold"
         >
           Companies we have grown with performance marketing
         </motion.p>
