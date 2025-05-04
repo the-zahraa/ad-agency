@@ -1,40 +1,26 @@
-/* Base header styles */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 9999px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  background: rgb(255, 255, 255); /* Solid white */
+  background: rgb(255, 255, 255);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
 }
 
-/* Book a Call button (desktop only) */
 .bookButton {
-  background: linear-gradient(45deg, #9000ff, #b300ff);
-  background-size: 200% 200%;
-  animation: gradientShift 3s ease infinite;
-  color: #ffffff;
-  font-weight: 500;
-  border-radius: 9999px;
-  box-shadow: 0 2px 8px rgba(144, 0, 255, 0.3);
+  display: none;
 }
 
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Hamburger menu button (mobile) */
 @media (max-width: 767px) {
+  .header {
+    width: 90%;
+    max-width: 500px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   .hamburger {
     display: flex;
     flex-direction: column;
@@ -71,7 +57,6 @@
   }
 }
 
-/* Close button (X) for mobile menu */
 .closeButton {
   position: absolute;
   top: 1rem;
@@ -105,7 +90,6 @@
   transform: rotate(-45deg);
 }
 
-/* Mobile full-screen menu */
 .mobileMenu {
   position: fixed;
   top: 0;
@@ -167,7 +151,6 @@
   width: 50%;
 }
 
-/* Simple purple button for mobile menu */
 .mobileBookButton {
   display: block;
   padding: 8px 16px;
@@ -189,4 +172,11 @@
 
 .mobileBookButton:active {
   transform: scale(0.95);
+}
+
+@media (min-width: 768px) {
+  .header {
+    padding-left: 0.75rem; /* Reduced from 1rem */
+    padding-right: 0.75rem;
+  }
 }

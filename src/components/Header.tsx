@@ -4,16 +4,15 @@ import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import CallButton from "../components/CallButton";
 import styles from "../styles/Header.module.css";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
-  const [withinHero, setWithinHero] = useState(true);
-  const [pastHero, setPastHero] = useState(false);
-  const heroRef = useRef<HTMLElement | null>(null);
+  const [pastHeroButton, setPastHeroButton] = useState(false);
+  const heroButtonRef = useRef<HTMLElement | null>(null);
 
-  // Handle window resize to determine screen size
   useEffect(() => {
     const handleResize = () => {
       const desktop = window.innerWidth >= 768;
@@ -27,84 +26,82 @@ export default function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Use Intersection Observer to detect when hero section is in view
   useEffect(() => {
-    const heroElement = document.getElementById("home");
-    if (heroElement) {
-      heroRef.current = heroElement;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setWithinHero(entry.isIntersecting);
-        setPastHero(!entry.isIntersecting);
-        console.log("WithinHero:", entry.isIntersecting, "PastHero:", !entry.isIntersecting);
-      },
-      {
-        root: null, // Viewport
-        threshold: 0, // Trigger when hero section is fully out of view
+    const setupObserver = () => {
+      const heroButtonElement = document.getElementById("hero-button");
+      console.log("HeroButton element found:", !!heroButtonElement);
+      if (heroButtonElement) {
+        heroButtonRef.current = heroButtonElement as HTMLElement;
+      } else {
+        console.error("HeroButton not found! Check selector or DOM.");
       }
-    );
 
-    if (heroRef.current) {
-      observer.observe(heroRef.current);
-    }
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          console.log("IntersectionObserver triggered:", {
+            isIntersecting: entry.isIntersecting,
+            pastHeroButton: !entry.isIntersecting,
+          });
+          setPastHeroButton(!entry.isIntersecting);
+        },
+        {
+          root: null,
+          threshold: 0,
+          rootMargin: "0px",
+        }
+      );
 
-    return () => {
-      if (heroRef.current) {
-        observer.unobserve(heroRef.current);
+      if (heroButtonRef.current) {
+        observer.observe(heroButtonRef.current);
+      } else {
+        console.error("heroButtonRef is null, observer not set up.");
       }
+
+      return () => {
+        if (heroButtonRef.current) {
+          observer.unobserve(heroButtonRef.current);
+        }
+      };
     };
+
+    const timeout = setTimeout(setupObserver, 500);
+
+    return () => clearTimeout(timeout);
   }, []);
 
-  // Use Framer Motion's useScroll and useSpring for smooth header shrink
   const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"], // From start of hero to when hero top leaves viewport
+    target: heroButtonRef,
+    offset: ["start start", "end start"],
   });
 
-  // Smooth spring animation for padding and scale with more gradual settings
-  const paddingY = useSpring(16, { stiffness: 50, damping: 40 }); // py-4 (16px) to py-2 (8px)
-  const scale = useSpring(1, { stiffness: 50, damping: 40 }); // scale-100 (1) to scale-[0.94] (0.94)
+  const paddingY = useSpring(12, { stiffness: 50, damping: 40 });
+  const scale = useSpring(1, { stiffness: 50, damping: 40 });
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.onChange((progress) => {
-      if (isDesktop && withinHero) {
-        // Apply an ease-out function for progressive shrinking
-        const easedProgress = 1 - Math.pow(1 - progress, 2); // Ease-out curve
-
-        // Map eased progress to padding (16px to 8px)
-        const newPadding = 16 - (16 - 8) * easedProgress; // 16px to 8px
+      if (isDesktop) {
+        const easedProgress = 1 - Math.pow(1 - progress, 2);
+        const newPadding = 12 - (12 - 6) * easedProgress;
         paddingY.set(newPadding);
-
-        // Map eased progress to scale (1 to 0.94)
-        const newScale = 1 - (1 - 0.94) * easedProgress; // 1 to 0.94
+        const newScale = 1 - (1 - 0.94) * easedProgress;
         scale.set(newScale);
-
-        console.log(
-          "ScrollProgress:", progress,
-          "EasedProgress:", easedProgress,
-          "PaddingY:", newPadding,
-          "Scale:", newScale
-        );
+        console.log("Scroll progress:", progress, "Padding:", newPadding, "Scale:", newScale);
       }
     });
 
     return () => unsubscribe();
-  }, [scrollYProgress, paddingY, scale, isDesktop, withinHero]);
+  }, [scrollYProgress, paddingY, scale, isDesktop]);
 
-  // Stop animation updates when past hero section and set smaller size
   useEffect(() => {
-    if (!withinHero && isDesktop) {
-      paddingY.set(8); // Lock at py-2 (8px)
-      scale.set(0.94); // Lock at scale-[0.94]
+    if (pastHeroButton && isDesktop) {
+      paddingY.set(6);
+      scale.set(0.94);
     } else if (!isDesktop) {
-      paddingY.set(16); // No shrink on mobile
+      paddingY.set(12);
       scale.set(1);
     }
-  }, [withinHero, isDesktop, paddingY, scale]);
+  }, [pastHeroButton, isDesktop, paddingY, scale]);
 
-  // Toggle body overflow for mobile menu
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -117,7 +114,6 @@ export default function Header() {
     };
   }, [isMobileMenuOpen]);
 
-  // Navigation links
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "Why m44", href: "#why-m44" },
@@ -125,7 +121,6 @@ export default function Header() {
     { name: "Support", href: "#support" },
   ];
 
-  // Toggle mobile menu
   const toggleMobileMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -142,9 +137,8 @@ export default function Header() {
           paddingBottom: paddingY,
           scale: scale,
         }}
-        className={`${styles.header} fixed top-4 left-1/2 -translate-x-1/2 z-50 mx-auto flex items-center justify-between rounded-full px-2 w-[60%] max-w-md md:w-[70%] md:max-w-5xl transition-all duration-300 ease-out`} // Reduced padding to px-2, adjusted widths
+        className={`${styles.header} fixed top-6 left-1/2 -translate-x-1/2 z-50 mx-auto flex items-center justify-between rounded-full px-3 w-[50%] max-w-3xl md:w-[50%] md:max-w-3xl lg:w-[40%] lg:max-w-2xl transition-all duration-300 ease-out`}
       >
-        {/* Mobile: Always visible logo and hamburger */}
         <div className="md:hidden flex items-center">
           <Link href="#home" className="flex items-center">
             <Image
@@ -160,28 +154,24 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Desktop: Navbar with logo, links, and button */}
-        <motion.nav
-          className="hidden md:flex items-center w-full"
-        >
-          {/* Logo (appears near "Home" with spacing) */}
+        <motion.nav className="hidden md:flex items-center justify-between w-full">
           <AnimatePresence>
-            {pastHero && isDesktop && (
+            {pastHeroButton && isDesktop && (
               <motion.div
                 key="desktop-logo"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="flex items-center mr-0" // Spacing between logo and "Home"
+                className="flex items-center"
               >
-                <Link href="#home" className="flex items-center">
+                <Link href="#home">
                   <Image
                     src="/logo.png"
                     alt="M44 Logo"
-                    width={36}
-                    height={36}
-                    sizes="36px"
+                    width={24}
+                    height={24}
+                    sizes="24px"
                     className="object-contain"
                     priority
                   />
@@ -190,8 +180,7 @@ export default function Header() {
             )}
           </AnimatePresence>
 
-          {/* Centered Navigation Links */}
-          <div className="flex items-center justify-center flex-grow gap-3">
+          <div className="flex items-center justify-center gap-2 flex-grow">
             {navLinks.map((link) => (
               <motion.div
                 key={link.name}
@@ -201,7 +190,9 @@ export default function Header() {
               >
                 <Link
                   href={link.href}
-                  className="text-gray-600 hover:text-purple-600 transition-colors duration-300 font-medium px-2 py-1 text-lg"
+                  className={`text-gray-600 hover:text-purple-600 transition-colors duration-300 font-medium px-1 py-1 ${
+                    pastHeroButton ? "text-sm" : "text-lg"
+                  }`}
                 >
                   {link.name}
                 </Link>
@@ -210,44 +201,23 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Book a Call Button (appears near "Support" with spacing) */}
           <AnimatePresence>
-            {pastHero && isDesktop && (
+            {pastHeroButton && isDesktop && (
               <motion.div
-                key="desktop-button"
+                key="desktop-callbutton"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow:
-                    "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.4), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.7), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
-                  transition: { duration: 0.3, ease: "easeOut" },
-                }}
-                whileTap={{
-                  scale: 0.95,
-                  transform: "translateY(2px)",
-                  boxShadow:
-                    "inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.5), inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.8), inset 0 -0.4rem 0.9rem rgba(255, 255, 255, 0.4), 0 1rem 1rem rgba(0, 0, 0, 0.3), 0 0.5rem 0.5rem -0.3rem rgba(0, 0, 0, 0.8)",
-                  transition: { duration: 0.2 },
-                }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className={`${styles.bookButton} rounded-full px-3 py-2 text-white font-medium text-lg ml-2`} // Spacing between "Support" and button
               >
-                <Link href="#book-call">
-                  <motion.p className="flex items-center gap-2 m-0">
-                    <span>Book a Call</span>
-                    <span>→</span>
-                  </motion.p>
-                </Link>
+                <CallButton />
               </motion.div>
             )}
           </AnimatePresence>
         </motion.nav>
 
-        {/* Hamburger Menu for Mobile (Right Side, static) */}
         <button
-          className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ""} md:hidden mr-1`} // Reduced spacing to mr-1
+          className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ""} md:hidden mr-1`}
           onClick={toggleMobileMenu}
           aria-label="Toggle mobile menu"
         >
@@ -257,7 +227,6 @@ export default function Header() {
         </button>
       </motion.header>
 
-      {/* Mobile Full-Screen Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div

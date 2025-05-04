@@ -2,33 +2,32 @@
 
 import { motion } from "framer-motion";
 import HeroButton from "./HeroButton";
+import CallButton from "./CallButton";
 import styles from "../styles/Hero.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center text-black relative">
-      {/* Radial Gradient Background Pattern */}
+    <section id="home" className="min-h-screen flex items-center justify-center text-black relative">
       <div className={styles.background} />
-
-      {/* Logo and m44.io Text in Left Corner (Bigger Screens Only) */}
       <div className="absolute top-6 left-[3%] hidden md:block">
         <Link href="#home" className="flex items-center">
           <Image
             src="/logo.png"
             alt="M44 Logo"
-            width={48} // Increased from 36 to 48
-            height={48} // Increased from 36 to 48
+            width={48}
+            height={48}
             sizes="48px"
             className="object-contain"
             priority
           />
-          <span className="ml-2 text-2xl font-semibold text-purple-600">m44.io</span> {/* Increased from text-xl to text-2xl */}
+          <span className="ml-2 text-2xl font-semibold text-purple-600">m44.io</span>
         </Link>
       </div>
-
-      {/* Content Layer */}
+      <div className="absolute top-6 right-[3%] hidden md:block">
+        <CallButton />
+      </div>
       <motion.div
         className="text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
@@ -52,7 +51,7 @@ export default function Hero() {
           Every dollar in gets you more out. Or we don’t get paid.
         </p>
         <div className="flex justify-center">
-          <HeroButton />
+          <HeroButton className="hero-button" id="hero-button" />
         </div>
       </motion.div>
     </section>

@@ -3,7 +3,12 @@
 import { motion } from "framer-motion";
 import styles from "../styles/HeroButton.module.css";
 
-export default function HeroButton() {
+interface HeroButtonProps {
+  className?: string;
+  id?: string;
+}
+
+export default function HeroButton({ className, id }: HeroButtonProps) {
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const bookCallSection = document.getElementById("book-call");
@@ -17,6 +22,8 @@ export default function HeroButton() {
 
   return (
     <motion.div
+      id={id} // Pass id to motion.div
+      className={className} // Pass className to motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
@@ -33,7 +40,6 @@ export default function HeroButton() {
         }}
       >
         <div className={styles.bg}></div>
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -109,7 +115,6 @@ export default function HeroButton() {
             d="M62.2941 145.984C62.2941 145.984 55.4671 161.167 40.4932 162.746C25.5194 164.326 23.7159 174.449 23.719 174.449"
           ></path>
         </svg>
-
         <div className={styles.wrap}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -139,36 +144,71 @@ export default function HeroButton() {
               </linearGradient>
             </defs>
           </svg>
-
           <div className={styles.outline}></div>
           <div className={styles.content}>
             <span className={`${styles.char} ${styles.charState1}`}>
-              <span data-label="B" style={{ "--i": 1 } as React.CSSProperties}>B</span>
-              <span data-label="o" style={{ "--i": 2 } as React.CSSProperties}>o</span>
-              <span data-label="o" style={{ "--i": 3 } as React.CSSProperties}>o</span>
-              <span data-label="k" style={{ "--i": 4 } as React.CSSProperties}>k</span>
-              <span data-label=" " style={{ "--i": 5 } as React.CSSProperties}> </span>
-              <span data-label="a" style={{ "--i": 6 } as React.CSSProperties}>a</span>
-              <span data-label=" " style={{ "--i": 7 } as React.CSSProperties}> </span>
-              <span data-label="C" style={{ "--i": 8 } as React.CSSProperties}>C</span>
-              <span data-label="a" style={{ "--i": 9 } as React.CSSProperties}>a</span>
-              <span data-label="l" style={{ "--i": 10 } as React.CSSProperties}>l</span>
-              <span data-label="l" style={{ "--i": 11 } as React.CSSProperties}>l</span>
+              <span data-label="B" style={{ "--i": 1 } as React.CSSProperties}>
+                B
+              </span>
+              <span data-label="o" style={{ "--i": 2 } as React.CSSProperties}>
+                o
+              </span>
+              <span data-label="o" style={{ "--i": 3 } as React.CSSProperties}>
+                o
+              </span>
+              <span data-label="k" style={{ "--i": 4 } as React.CSSProperties}>
+                k
+              </span>
+              <span data-label=" " style={{ "--i": 5 } as React.CSSProperties}>
+                {" "}
+              </span>
+              <span data-label="a" style={{ "--i": 6 } as React.CSSProperties}>
+                a
+              </span>
+              <span data-label=" " style={{ "--i": 7 } as React.CSSProperties}>
+                {" "}
+              </span>
+              <span data-label="C" style={{ "--i": 8 } as React.CSSProperties}>
+                C
+              </span>
+              <span data-label="a" style={{ "--i": 9 } as React.CSSProperties}>
+                a
+              </span>
+              <span data-label="l" style={{ "--i": 10 } as React.CSSProperties}>
+                l
+              </span>
+              <span data-label="l" style={{ "--i": 11 } as React.CSSProperties}>
+                l
+              </span>
             </span>
-
             <div className={styles.icon}>
               <div></div>
             </div>
-
             <span className={`${styles.char} ${styles.charState2}`}>
-              <span data-label="B" style={{ "--i": 1 } as React.CSSProperties}>B</span>
-              <span data-label="o" style={{ "--i": 2 } as React.CSSProperties}>o</span>
-              <span data-label="o" style={{ "--i": 3 } as React.CSSProperties}>o</span>
-              <span data-label="k" style={{ "--i": 4 } as React.CSSProperties}>k</span>
-              <span data-label=" " style={{ "--i": 5 } as React.CSSProperties}> </span>
-              <span data-label="N" style={{ "--i": 6 } as React.CSSProperties}>N</span>
-              <span data-label="o" style={{ "--i": 7 } as React.CSSProperties}>o</span>
-              <span data-label="w" style={{ "--i": 8 } as React.CSSProperties}>w</span>
+              <span data-label="B" style={{ "--i": 1 } as React.CSSProperties}>
+                B
+              </span>
+              <span data-label="o" style={{ "--i": 2 } as React.CSSProperties}>
+                o
+              </span>
+              <span data-label="o" style={{ "--i": 3 } as React.CSSProperties}>
+                o
+              </span>
+              <span data-label="k" style={{ "--i": 4 } as React.CSSProperties}>
+                k
+              </span>
+              <span data-label=" " style={{ "--i": 5 } as React.CSSProperties}>
+                {" "}
+              </span>
+              <span data-label="N" style={{ "--i": 6 } as React.CSSProperties}>
+                N
+              </span>
+              <span data-label="o" style={{ "--i": 7 } as React.CSSProperties}>
+                o
+              </span>
+              <span data-label="w" style={{ "--i": 8 } as React.CSSProperties}>
+                w
+              </span>
             </span>
           </div>
         </div>
