@@ -67,6 +67,6 @@ export default function Home() {
 }
 
 export const metadata = {
-  title: 'Home - Ad Agency',
+  title: 'm44',
   description: 'Welcome to our ad agency. Discover our services and book a call today.',
 };

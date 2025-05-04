@@ -4,9 +4,12 @@ import Footer from '../components/Footer';
 import ScrollProvider from '../components/ScrollProvider';
 
 export const metadata = {
-  title: 'Ad Agency Website',
-  description: 'A professional ad agency website built with Next.js',
+  title: 'm44',
+  icons: {
+    icon: '/logo.png',
+  },
 };
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
