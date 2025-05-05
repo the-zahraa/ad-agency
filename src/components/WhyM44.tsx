@@ -162,7 +162,7 @@ export function WhyM44() {
           className="font-bold mb-4 text-[#9000ff]"
           style={{ fontSize: "clamp(2rem, 5vw, 3.125rem)" }}
         >
-          why m44?
+          Why m44?
         </motion.h2>
 
         {/* Subheading */}
@@ -286,7 +286,7 @@ export function WhyM44() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="inline-block mt-8 sm:mt-12 mb-6 sm:mb-8 px-4 sm:px-6 py-2 sm:py-3 bg-[#9000ff] text-white font-semibold rounded-full hover:scale-105 transition-transform"
+          className="inline-block mt-8 sm:mt-12 mb-6 sm:mb-8 px-4 sm:px-6 py-2 sm:py-3 bg-[#9000ff] text-white font-semibold rounded-full hover:scale-105 transition-transform cursor-pointer"
           style={{ fontSize: "clamp(1rem, 2.5vw, 1.125rem)" }}
         >
           Let’s Talk Results.

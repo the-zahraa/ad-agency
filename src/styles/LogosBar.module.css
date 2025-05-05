@@ -73,7 +73,7 @@
 .logoPlaceholder {
   width: 120px;
   height: 60px;
-  background-color: transparent; /* Ensure no background */
+  background-color: transparent;
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -109,7 +109,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .logosRow {
     gap: 1.5rem;
   }
@@ -122,5 +122,26 @@
   .leftToRight,
   .rightToLeft {
     animation-duration: 40s;
+  }
+}
+
+@media (max-width: 480px) {
+  .logosRow {
+    gap: 1rem;
+  }
+
+  .logoPlaceholder {
+    width: 80px;
+    height: 40px;
+  }
+
+  .leftToRight,
+  .rightToLeft {
+    animation-duration: 30s;
+  }
+
+  /* Ensure the headline and logo stay inline on small screens */
+  .flex-row {
+    flex-wrap: nowrap;
   }
 }

@@ -5,6 +5,7 @@
   overflow: hidden;
   max-width: 1200px;
   margin: 0 auto;
+  padding-bottom: 12px; /* Reduced from 20px to tighten layout */
 }
 
 .sliderTrack {
@@ -18,14 +19,22 @@
   transition: all 0.5s ease-in-out;
 }
 
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
+.imageContainer {
+  border: 3px solid #9000ff;
+  padding: 8px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 8px; /* Reduced from 10px for tighter spacing */
 }
 
-/* Arrow Styles */
+.slideContent {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+}
+
 .arrow {
   background-color: white;
   border: 1px solid #e5e7eb;
@@ -57,32 +66,56 @@
 @media (max-width: 1024px) {
   .sliderContainer {
     max-width: 100%;
+    padding-bottom: 10px; /* Slightly reduced */
+  }
+
+  .imageContainer {
+    border: 2px solid #9000ff;
+    padding: 6px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 6px; /* Reduced for tighter spacing */
+  }
+
+  .slideContent {
+    padding: 1.25rem;
   }
 }
 
 @media (max-width: 768px) {
   .sliderContainer {
     max-width: 100%;
-    padding: 0 3rem; /* Increased padding to ensure slides are fully visible */
+    padding: 0 3rem 8px; /* Reduced bottom padding */
   }
 
-  /* Ensure the slider track is wide enough to prevent cutoff */
   .sliderTrack {
     width: 100%;
     justify-content: center;
   }
 
   .slide.center {
-    width: 90% !important; /* Center slide takes up 90% of the container */
+    width: 90% !important;
   }
   .slide.adjacent {
-    width: 20% !important; /* Adjacent slides take up 20% */
+    width: 20% !important;
+  }
+
+  .imageContainer {
+    border: 2px solid #9000ff;
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 4px; /* Further reduced */
+  }
+
+  .slideContent {
+    padding: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .sliderContainer {
-    padding: 0 2rem; /* Further adjust padding for very small screens */
+    padding: 0 2rem 6px; /* Minimal bottom padding */
   }
 
   .arrow {
@@ -91,9 +124,21 @@
   }
 
   .slide.center {
-    width: 100% !important; /* Center slide takes up full width to prevent cutoff */
+    width: 100% !important;
   }
   .slide.adjacent {
-    width: 5% !important; /* Further reduce adjacent slide width to ensure visibility */
+    width: 15% !important;
+  }
+
+  .imageContainer {
+    border: 2px solid #9000ff;
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 4px;
+  }
+
+  .slideContent {
+    padding: 0.75rem;
   }
 }

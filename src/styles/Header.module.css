@@ -1,12 +1,58 @@
+/* src/styles/Header.module.css */
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 9999px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  background: rgb(255, 255, 255);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+  height: 60px;
+}
+
+.heroHeader {
+  width: 50%;
+  max-width: 700px;
+}
+
+.defaultHeader {
+  width: 90%;
+  max-width: 1200px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .heroHeader {
+    width: 50%;
+    max-width: 600px;
+  }
+  .defaultHeader {
+    width: 80%;
+    max-width: 900px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .defaultHeader {
+    width: 60%;
+    max-width: 1152px;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    width: 95%;
+    max-width: 400px;
+    padding: 0 1rem;
+    height: 56px;
+  }
+  .heroHeader,
+  .defaultHeader {
+    width: 95%;
+    max-width: 400px;
+  }
 }
 
 .bookButton {
@@ -17,8 +63,8 @@
   .header {
     width: 90%;
     max-width: 500px;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 0 1rem;
+    height: 56px;
   }
 
   .hamburger {
@@ -124,6 +170,9 @@
   text-align: center;
   width: 100%;
   transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobileMenuLink:hover {
@@ -176,7 +225,87 @@
 
 @media (min-width: 768px) {
   .header {
-    padding-left: 0.75rem; /* Reduced from 1rem */
-    padding-right: 0.75rem;
+    padding: 0 1rem;
+    height: 60px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    width: 95%;
+    max-width: 400px;
+    height: 52px;
+  }
+
+  .mobileBookButton {
+    padding: 6px 14px;
+    font-size: 1.1rem;
+  }
+
+  .mobileMenuLink {
+    font-size: 1.25rem;
+  }
+}
+
+/* WhatsApp Button Styles */
+.whatsappButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px; /* Larger for bigger icon */
+  height: 36px;
+  border-radius: 50%;
+  background-color: #fff; /* Match header background */
+  transition: color 0.3s ease-in-out; /* Smooth color transition */
+}
+
+.whatsappButton:hover .whatsappIcon {
+  color: #9000ff !important; /* Icon turns purple on hover */
+  fill: #9000ff !important;
+}
+
+.whatsappIcon {
+  width: 24px; /* Larger icon for desktop */
+  height: 24px;
+  color: #4b5563 !important; /* Grey by default */
+  fill: #4b5563 !important;
+}
+
+/* Mobile Menu WhatsApp Button */
+@media (max-width: 767px) {
+  .mobileMenu .whatsappButton {
+    width: 44px; /* Larger for mobile */
+    height: 44px;
+    background-color: transparent; /* Blend with menu */
+  }
+
+  .mobileMenu .whatsappButton:hover .whatsappIcon {
+    color: #9000ff !important;
+    fill: #9000ff !important;
+  }
+
+  .mobileMenu .whatsappIcon {
+    width: 28px; /* Larger icon for mobile */
+    height: 28px;
+    color: #4b5563 !important;
+    fill: #4b5563 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileMenu .whatsappButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mobileMenu .whatsappIcon {
+    width: 24px;
+    height: 24px;
   }
 }

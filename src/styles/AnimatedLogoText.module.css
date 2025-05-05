@@ -1,0 +1,53 @@
+.button {
+    margin: 0;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    --border-right: 2px;
+    --text-stroke-color: #9000ff;
+    --animation-color: #9000ff; /* Purple color */
+    --fs-size: 1.5rem; /* Adjusted for logo text size */
+    letter-spacing: 2px;
+    text-decoration: none;
+    font-size: var(--fs-size);
+    font-family: 'Arial', sans-serif;
+    position: relative;
+    color:#9000ff;
+    -webkit-text-stroke: 1px var(--text-stroke-color);
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .hoverText {
+    position: absolute;
+    box-sizing: border-box;
+    content: attr(data-text);
+    color: var(--animation-color);
+    width: 0%;
+    inset: 0;
+    border-right: var(--border-right) solid var(--animation-color);
+    overflow: hidden;
+    transition: width 0.5s ease;
+    -webkit-text-stroke: 1px var(--animation-color);
+  }
+  
+  .button:hover .hoverText {
+    width: 100%;
+    filter: drop-shadow(0 0 15px var(--animation-color));
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 767px) {
+    .button {
+      --fs-size: 1.2rem; /* Smaller font size for mobile */
+      letter-spacing: 1.5px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .button {
+      --fs-size: 1rem; /* Further reduced for small screens */
+    }
+  }

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import HeroButton from "./HeroButton";
 import CallButton from "./CallButton";
+import AnimatedLogoText from "./AnimatedLogoText"; // Import the new component
 import styles from "../styles/Hero.module.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +12,7 @@ export default function Hero() {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center text-black relative">
       <div className={styles.background} />
-      <div className="absolute top-6 left-[3%] hidden md:block">
+      <div className="absolute top-8 left-[3%] hidden md:flex items-center">
         <Link href="#home" className="flex items-center">
           <Image
             src="/logo.png"
@@ -22,7 +23,7 @@ export default function Hero() {
             className="object-contain"
             priority
           />
-          <span className="ml-2 text-2xl font-semibold text-purple-600">m44.io</span>
+          <AnimatedLogoText />
         </Link>
       </div>
       <div className="absolute top-6 right-[3%] hidden md:block">
@@ -48,7 +49,7 @@ export default function Hero() {
           We build ad systems that print cash—not just clicks.
         </p>
         <p className="text-lg sm:text-xl lg:text-2xl mb-8 text-gray-600 max-w-3xl mx-auto">
-          Every dollar in gets you more out. Or we don’t get paid.
+          Every dollar in gets you more out.
         </p>
         <div className="flex justify-center">
           <HeroButton className="hero-button" id="hero-button" />

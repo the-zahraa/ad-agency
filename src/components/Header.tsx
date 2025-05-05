@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { BsWhatsapp } from "react-icons/bs";
 import CallButton from "../components/CallButton";
 import styles from "../styles/Header.module.css";
 
@@ -17,7 +18,6 @@ export default function Header() {
     const handleResize = () => {
       const desktop = window.innerWidth >= 768;
       setIsDesktop(desktop);
-      console.log("Window width:", window.innerWidth, "IsDesktop:", desktop);
     };
 
     handleResize();
@@ -29,19 +29,12 @@ export default function Header() {
   useEffect(() => {
     const setupObserver = () => {
       const heroButtonElement = document.getElementById("hero-button");
-      console.log("HeroButton element found:", !!heroButtonElement);
       if (heroButtonElement) {
         heroButtonRef.current = heroButtonElement as HTMLElement;
-      } else {
-        console.error("HeroButton not found! Check selector or DOM.");
       }
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          console.log("IntersectionObserver triggered:", {
-            isIntersecting: entry.isIntersecting,
-            pastHeroButton: !entry.isIntersecting,
-          });
           setPastHeroButton(!entry.isIntersecting);
         },
         {
@@ -53,8 +46,6 @@ export default function Header() {
 
       if (heroButtonRef.current) {
         observer.observe(heroButtonRef.current);
-      } else {
-        console.error("heroButtonRef is null, observer not set up.");
       }
 
       return () => {
@@ -85,7 +76,6 @@ export default function Header() {
         paddingY.set(newPadding);
         const newScale = 1 - (1 - 0.94) * easedProgress;
         scale.set(newScale);
-        console.log("Scroll progress:", progress, "Padding:", newPadding, "Scale:", newScale);
       }
     });
 
@@ -118,7 +108,7 @@ export default function Header() {
     { name: "Home", href: "#home" },
     { name: "Why m44", href: "#why-m44" },
     { name: "Services", href: "#services" },
-    { name: "Support", href: "#support" },
+    { name: "FAQ", href: "#support" },
   ];
 
   const toggleMobileMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -131,22 +121,21 @@ export default function Header() {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
         style={{
           paddingTop: paddingY,
           paddingBottom: paddingY,
-          scale: scale,
         }}
-        className={`${styles.header} fixed top-6 left-1/2 -translate-x-1/2 z-50 mx-auto flex items-center justify-between rounded-full px-3 w-[50%] max-w-3xl md:w-[50%] md:max-w-3xl lg:w-[40%] lg:max-w-2xl transition-all duration-300 ease-out`}
+        className={`${styles.header} ${pastHeroButton ? styles.defaultHeader : styles.heroHeader} fixed top-6 left-1/2 -translate-x-1/2 z-50 mx-auto flex items-center justify-between rounded-full px-4 transition-all duration-300 ease-out`}
       >
         <div className="md:hidden flex items-center">
           <Link href="#home" className="flex items-center">
             <Image
               src="/logo.png"
               alt="M44 Logo"
-              width={36}
-              height={36}
-              sizes="36px"
+              width={40}
+              height={40}
+              sizes="40px"
               className="object-contain"
               priority
             />
@@ -154,24 +143,27 @@ export default function Header() {
           </Link>
         </div>
 
-        <motion.nav className="hidden md:flex items-center justify-between w-full">
+        <motion.nav
+          className="hidden md:flex items-center justify-between w-full"
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
           <AnimatePresence>
             {pastHeroButton && isDesktop && (
               <motion.div
                 key="desktop-logo"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, position: "absolute" }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
                 className="flex items-center"
               >
                 <Link href="#home">
                   <Image
                     src="/logo.png"
                     alt="M44 Logo"
-                    width={24}
-                    height={24}
-                    sizes="24px"
+                    width={40}
+                    height={40}
+                    sizes="32px"
                     className="object-contain"
                     priority
                   />
@@ -180,18 +172,23 @@ export default function Header() {
             )}
           </AnimatePresence>
 
-          <div className="flex items-center justify-center gap-2 flex-grow">
+          <motion.div
+            className="flex items-center justify-center gap-4 flex-grow"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            style={{ maxWidth: "500px" }}
+          >
             {navLinks.map((link) => (
               <motion.div
                 key={link.name}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
                 whileHover={{ scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } }}
                 whileTap={{ scale: 0.95, transition: { duration: 0.2 } }}
                 className="relative group"
               >
                 <Link
                   href={link.href}
-                  className={`text-gray-600 hover:text-purple-600 transition-colors duration-300 font-medium px-1 py-1 ${
-                    pastHeroButton ? "text-sm" : "text-lg"
+                  className={`text-gray-600 hover:text-purple-600 transition-colors duration-300 font-medium px-2 py-1 ${
+                    pastHeroButton ? "text-base" : "text-base"
                   }`}
                 >
                   {link.name}
@@ -199,25 +196,40 @@ export default function Header() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-500 ease-out group-hover:w-full"></span>
               </motion.div>
             ))}
-          </div>
+            <motion.div
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              whileHover={{ scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } }}
+              whileTap={{ scale: 0.95, transition: { duration: 0.2 } }}
+              className="relative group"
+            >
+              <Link
+                href="https://wa.me/66804444448"
+                className={`${styles.whatsappButton} flex justify-center items-center`}
+                aria-label="WhatsApp"
+              >
+                <BsWhatsapp className={styles.whatsappIcon} />
+              </Link>
+            </motion.div>
+          </motion.div>
 
           <AnimatePresence>
             {pastHeroButton && isDesktop && (
               <motion.div
                 key="desktop-callbutton"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className={styles.headerCallButton}
               >
-                <CallButton />
+                <CallButton inHeader={pastHeroButton} />
               </motion.div>
             )}
           </AnimatePresence>
         </motion.nav>
 
         <button
-          className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ""} md:hidden mr-1`}
+          className={`${styles.hamburger} ${isMobileMenuOpen ? styles.open : ""} md:hidden mr-2`}
           onClick={toggleMobileMenu}
           aria-label="Toggle mobile menu"
         >
@@ -251,13 +263,28 @@ export default function Header() {
               >
                 <Link
                   href={link.href}
-                  className={styles.mobileMenuLink}
+                  className={`${styles.mobileMenuLink}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               </motion.div>
             ))}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, delay: navLinks.length * 0.1 }}
+            >
+              <Link
+                href="https://wa.me/66804444448"
+                className={`${styles.mobileMenuLink} ${styles.whatsappButton} flex justify-center items-center`}
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="WhatsApp"
+              >
+                <BsWhatsapp className={styles.whatsappIcon} />
+              </Link>
+            </motion.div>
             <Link
               href="#book-call"
               className={`${styles.mobileBookButton} mt-8`}

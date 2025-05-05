@@ -4,45 +4,34 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import styles from "../styles/CallButton.module.css";
 
-export default function CallButton() {
+interface CallButtonProps {
+  inHeader?: boolean;
+}
+
+export default function CallButton({ inHeader = false }: CallButtonProps) {
   return (
     <Link href="#book-call">
       <motion.button
-        className={`${styles.button} font-poppins`}
-        style={{ "--clr": "#7808d0" } as React.CSSProperties}
+        className={`${styles.button} ${inHeader ? styles.inHeader : styles.inHero} font-poppins`}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.05, transition: { duration: 0.15, ease: "easeInOut" } }}
+        whileTap={{ scale: 0.95, transition: { duration: 0.15, ease: "easeInOut" } }}
       >
-        <span className={styles.button__iconWrapper}>
-          <svg
-            viewBox="0 0 14 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className={styles.button__iconSvg}
-            width="10"
-          >
-            <path
-              d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-              fill="currentColor"
-            ></path>
-          </svg>
-
-          <svg
-            viewBox="0 0 14 15"
-            fill="none"
-            width="10"
-            xmlns="http://www.w3.org/2000/svg"
-            className={`${styles.button__iconSvg} ${styles.button__iconSvgCopy}`}
-          >
-            <path
-              d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-              fill="currentColor"
-            ></path>
-          </svg>
-        </span>
+        <svg
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          stroke="currentColor"
+          strokeWidth="2"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={styles.icon}
+        >
+          <path d="M6.62 10.79a15.77 15.77 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.22 11.88 11.88 0 003.74.6 1 1 0 011 1v3.5a1 1 0 01-1 1A19.93 19.93 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.88 11.88 0 00.6 3.74 1 1 0 01-.22 1.11l-2.2 2.2z" />
+        </svg>
         Book a Call
       </motion.button>
     </Link>

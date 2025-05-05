@@ -17,30 +17,34 @@ const cardVariants = {
 // Data for the cards
 const clientFitData = [
   {
-    title: "I. You've Got Product-Market Fit",
+    title: "You've Got Product-Market Fit",
     description:
       "You've got something people want and they're buying. Whether you're early-stage or scaling fast, we help turn demand into momentum.",
+    romanNumeral: "I",
   },
   {
-    title: "II. You Know Your Numbers (Or Want To)",
+    title: "You Know Your Numbers (Or Want To)",
     description:
       "You track (or want to track) your CAC, AOV, LTV, and margins. We use your numbers to make smarter ad decisions and drive real growth.",
+    romanNumeral: "II",
   },
   {
-    title: "III. You're Open to Testing What Works",
+    title: "You're Open to Testing What Works",
     description:
       "You're done guessing. You're open to running smart experiments, trying new angles, and scaling what actually performs.",
+    romanNumeral: "III",
   },
   {
-    title: "IV. You Move Fast",
+    title: "You Move Fast",
     description:
       "You make decisions, give feedback, and stay focused. That energy is how we hit goals quickly and why our best clients scale the fastest.",
+    romanNumeral: "IV",
   },
 ];
 
 export function ClientFitSection() {
   return (
-    <section className="bg-black py-16 text-white">
+    <section className="bg-white py-16 text-black">
       <div className="max-w-[1440px] mx-auto px-4">
         {/* Headline and Subheading */}
         <motion.h2
@@ -49,6 +53,7 @@ export function ClientFitSection() {
           viewport={{ once: true }}
           variants={fadeInUp}
           className="text-4xl md:text-5xl font-bold text-center mb-4"
+          style={{ color: "#9000ff" }}
         >
           We work best with brands who are ready to grow.
         </motion.h2>
@@ -57,7 +62,7 @@ export function ClientFitSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-lg md:text-xl text-center text-gray-400 mb-12"
+          className="text-lg md:text-xl text-center text-gray-600 mb-12"
         >
           If this sounds like you, we’ll probably do great things together:
         </motion.p>
@@ -71,12 +76,23 @@ export function ClientFitSection() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={cardVariants}
-              className={styles.card}
+              className={styles.parent}
             >
-              <div className={styles.card__border}></div>
-              <div className={styles.card_title__container}>
-                <span className={styles.card_title}>{item.title}</span>
-                <p className={styles.card_paragraph}>{item.description}</p>
+              <div className={styles.card}>
+                <div className={styles.logo}>
+                  <span className={styles.circle1}></span>
+                  <span className={styles.circle2}></span>
+                  <span className={styles.circle3}></span>
+                  <span className={styles.circle4}></span>
+                  <span className={styles.circle5}>
+                    <span className={styles.romanNumeral}>{item.romanNumeral}</span>
+                  </span>
+                </div>
+                <div className={styles.glass}></div>
+                <div className={styles.content}>
+                  <span className={styles.title}>{item.title}</span>
+                  <span className={styles.text}>{item.description}</span>
+                </div>
               </div>
             </motion.div>
           ))}

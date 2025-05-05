@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import styles from "../styles/FAQSection.module.css";
 
-// FAQ data
 const faqs = [
   {
     question: "Do you offer branding or creative services?",
@@ -49,36 +48,33 @@ const faqs = [
   },
 ];
 
-// Animation variants for Framer Motion
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-// Updated answerVariants for smoother and faster transitions
 const answerVariants = {
   hidden: {
     opacity: 0,
     height: 0,
-    marginTop: 0,
-    transition: { duration: 0.2, ease: "easeInOut" },
+    transition: {
+      opacity: { duration: 0.12, ease: "easeInOut" },
+      height: { duration: 0.12, ease: "easeInOut" },
+    },
   },
   visible: {
     opacity: 1,
     height: "auto",
-    marginTop: "0.5rem",
     transition: {
-      duration: 0.2,
-      ease: "easeInOut",
-      when: "beforeChildren", // Ensures height and opacity animate together
+      opacity: { duration: 0.12, ease: "easeInOut" },
+      height: { duration: 0.12, ease: "easeInOut" },
     },
   },
 };
 
-// Variants for the arrow fade transition
-const arrowVariants = {
-  hidden: { opacity: 0, y: 5, transition: { duration: 0.2, ease: "easeInOut" } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.2, ease: "easeInOut" } },
+const iconVariants = {
+  hidden: { opacity: 0, scale: 0.8, transition: { duration: 0.12, ease: "easeInOut" } },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.12, ease: "easeInOut" } },
 };
 
 export function FAQSection() {
@@ -91,7 +87,6 @@ export function FAQSection() {
   return (
     <section className="bg-white py-16 text-black">
       <div className={styles.sectionContainer}>
-        {/* Headline */}
         <motion.h2
           initial="hidden"
           whileInView="visible"
@@ -102,11 +97,9 @@ export function FAQSection() {
           Still Have Questions?
         </motion.h2>
 
-        {/* FAQ Container */}
         <div className={styles.faqContainer}>
           {faqs.map((faq, index) => (
             <div key={index} className={styles.faqItem}>
-              {/* Question Row */}
               <div
                 className={`${styles.faqQuestion} ${
                   openIndex === index ? styles.active : ""
@@ -114,34 +107,33 @@ export function FAQSection() {
                 onClick={() => toggleFAQ(index)}
               >
                 <h3>{faq.question}</h3>
-                <div className={styles.arrowContainer}>
+                <div className={styles.iconContainer}>
                   <AnimatePresence mode="wait">
                     {openIndex === index ? (
                       <motion.div
-                        key="up"
-                        variants={arrowVariants}
+                        key="minus"
+                        variants={iconVariants}
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
                       >
-                        <ChevronUpIcon className={styles.arrow} />
+                        <MinusIcon className={styles.icon} />
                       </motion.div>
                     ) : (
                       <motion.div
-                        key="down"
-                        variants={arrowVariants}
+                        key="plus"
+                        variants={iconVariants}
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
                       >
-                        <ChevronDownIcon className={styles.arrow} />
+                        <PlusIcon className={styles.icon} />
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
               </div>
 
-              {/* Answer */}
               <AnimatePresence>
                 {openIndex === index && (
                   <motion.div
@@ -149,7 +141,7 @@ export function FAQSection() {
                     initial="hidden"
                     animate="visible"
                     exit="hidden"
-                    className={styles.faqAnswer}
+                    className={`${styles.faqAnswer} ${openIndex === index ? styles.open : ""}`}
                   >
                     <p>{faq.answer}</p>
                   </motion.div>

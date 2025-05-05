@@ -29,17 +29,17 @@ export function PartneredSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="mb-4 flex flex-col items-center"
+          className="mb-4 flex flex-row items-center justify-center gap-4"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-2 text-[#9000ff]">
+          <h2 className="text-4xl md:text-5xl font-bold text-[#9000ff]">
             Partnered with
           </h2>
           <Image
             src="/convertCake.png"
             alt="Convert Cake Logo"
-            width={300}
-            height={80}
-            style={{ filter: "grayscale(100%)" }}
+            width={300} // Increased width for larger logo
+            height={90} // Increased height to maintain aspect ratio
+            className="max-w-[200px] md:max-w-[300px]" // Adjusted for responsiveness
           />
         </motion.div>
 
@@ -49,7 +49,7 @@ export function PartneredSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-2xl md:text-3xl font-semibold mb-8 text-black"
+          className="text-xl md:text-2xl font-semibold mb-8 text-black"
         >
           Bringing performance-driven marketing that prioritizes revenue growth over mere engagement.
         </motion.h3>

@@ -4,27 +4,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import styles from "../styles/ResultsSection.module.css";
 
-// Animation variants for Framer Motion
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
-// Animation variants for slide content
 const contentVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.3 } },
   exit: { opacity: 0, transition: { duration: 0.3 } },
 };
 
-// Interface for result items
 interface Result {
   title: string;
   description: string;
   imagePath: string;
 }
 
-// Data for the slides with image paths
 const resultsData: Result[] = [
   {
     title: "Achieving Milestones in a Bear Market",
@@ -103,21 +99,19 @@ const resultsData: Result[] = [
 export function ResultsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [transformPercentage, setTransformPercentage] = useState(70);
-  const [sliderHeight, setSliderHeight] = useState(214); // Default height for mobile
+  const [sliderHeight, setSliderHeight] = useState(214);
 
-  // Set transform percentage and slider height based on window width after mount
   useEffect(() => {
     const updateSliderSettings = () => {
-      // Update transform percentage
       if (window.innerWidth >= 1024) {
-        setTransformPercentage(70); // Larger screens: more overlap for adjacent slides
-        setSliderHeight(380); // Larger screens: taller height
+        setTransformPercentage(70);
+        setSliderHeight(380);
       } else if (window.innerWidth >= 768) {
-        setTransformPercentage(60); // Medium screens: balanced overlap
-        setSliderHeight(320); // Medium screens: slightly shorter height
+        setTransformPercentage(60);
+        setSliderHeight(340);
       } else {
-        setTransformPercentage(120); // Small screens: increased to ensure full visibility
-        setSliderHeight(200); // Small screens: shorter height to prevent bottom cutoff
+        setTransformPercentage(120);
+        setSliderHeight(240);
       }
     };
 
@@ -155,9 +149,8 @@ export function ResultsSection() {
   };
 
   return (
-    <section className="py-16 text-black bg-[#f7f7f7] rounded-lg">
+    <section className="py-16 text-black bg-white">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Headline */}
         <motion.h2
           initial="hidden"
           whileInView="visible"
@@ -168,7 +161,6 @@ export function ResultsSection() {
           The Results Behind the Work
         </motion.h2>
 
-        {/* Subheading */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -184,9 +176,7 @@ export function ResultsSection() {
           </p>
         </motion.div>
 
-        {/* Slider */}
         <div className="relative">
-          {/* Image Row (Slider) */}
           <div
             className="flex overflow-hidden justify-center"
             style={{ height: `${sliderHeight}px` }}
@@ -222,7 +212,7 @@ export function ResultsSection() {
                   onClick={() => handleSlideClick(index)}
                 >
                   <div className="px-2 sm:px-1">
-                    <div className="bg-gray-200 rounded-lg overflow-hidden aspect-[1536/777]">
+                    <div className={`${styles.imageContainer} bg-white overflow-hidden aspect-[1536/777]`}>
                       <Image
                         src={result.imagePath}
                         alt={result.title}
@@ -239,8 +229,7 @@ export function ResultsSection() {
             })}
           </div>
 
-          {/* Navigation Arrows (Below the Slider) */}
-          <div className="flex justify-center mt-6 md:mt-4 lg:mt-3 space-x-4 lg:space-x-2">
+          <div className="flex justify-center mt-3 md:mt-2 lg:mt-1 space-x-4 lg:space-x-2">
             <button
               onClick={handlePrev}
               className={`${styles.arrow} ${styles.active}`}
@@ -274,7 +263,6 @@ export function ResultsSection() {
           </div>
         </div>
 
-        {/* Content for the Current Slide */}
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -282,7 +270,7 @@ export function ResultsSection() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="max-w-xl mx-auto mt-8 p-4 bg-gray-100 rounded-lg min-h-[200px]"
+            className={`${styles.slideContent} max-w-xl mx-auto mt-4 min-h-[200px]`}
           >
             <h3 className="text-xl md:text-2xl font-bold text-[#9000ff] mb-4">
               {resultsData[currentSlide].title}

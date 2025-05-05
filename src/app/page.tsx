@@ -28,14 +28,17 @@ export default function Home() {
       {/* Other Sections */}
       <div className="flex flex-col w-full">
         <div className="w-full">
+          
+        <div id="partnered">
+            <DebugSection id="partnered" />
+            <PartneredSection />
+          </div>
+          
           <div id="why-m44">
             <DebugSection id="why-m44" />
             <WhyM44 />
           </div>
-          <div id="partnered">
-            <DebugSection id="partnered" />
-            <PartneredSection />
-          </div>
+         
           <div id="services">
             <DebugSection id="services" />
             <ServicesSection />

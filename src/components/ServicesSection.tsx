@@ -1,32 +1,40 @@
-"use client";import { useState, useRef, useEffect } from "react";
+"use client";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import styles from "../styles/Services.module.css";
-import { useScrollContext } from "./ScrollProvider";// Animation variants for Framer Motion
+import { useScrollContext } from "./ScrollProvider";
+
+// Animation variants for Framer Motion
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};const contentVariants = {
+};
+const contentVariants = {
   hidden: { opacity: 0, x: -20 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
-};export function ServicesSection() {
+};
+
+export function ServicesSection() {
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
-  const { scrollToElement } = useScrollContext();  const services = [
+  const { scrollToElement } = useScrollContext();
+
+  const services = [
     {
-      name: "SEO",
+      name: "Paid Media",
       icon: (
         <svg className={styles.tabIcon} viewBox="0 0 24 24" fill="currentColor">
-          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+          <path d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z" />
         </svg>
       ),
-      title: "SEO That Actually Ranks",
-      description: "We get you on page one of Google — no ads, no gimmicks. We find your buyers, create content that sells, and do it all for you.",
+      title: "Paid Media That Prints Money",
+      description: "We don’t just run ads — we grow brands. Facebook, TikTok, YouTube — we find your buyers and turn clicks into customers.",
       whyTitle: "Why It Works",
-      whyDescription: "We guarantee page one in 12 months — or you get your money back. No excuses. No fine print. Just results.",
-      image: "/s3.png",
+      whyDescription: "We focus on one thing: making you more money. If we’re not sure we can win, we don’t take the job.",
+      image: "/s1.png",
       width: 355,
       height: 296,
     },
@@ -46,17 +54,17 @@ const fadeInUp = {
       height: 296,
     },
     {
-      name: "Paid Media",
+      name: "SEO",
       icon: (
         <svg className={styles.tabIcon} viewBox="0 0 24 24" fill="currentColor">
-          <path d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm9-13H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4V6h16v12z" />
+          <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
         </svg>
       ),
-      title: "Paid Media That Prints Money",
-      description: "We don’t just run ads — we grow brands. Facebook, TikTok, YouTube — we find your buyers and turn clicks into customers.",
+      title: "SEO That Actually Ranks",
+      description: "We get you on page one of Google — no ads, no gimmicks. We find your buyers, create content that sells, and do it all for you.",
       whyTitle: "Why It Works",
-      whyDescription: "We focus on one thing: making you more money. If we’re not sure we can win, we don’t take the job.",
-      image: "/s1.png",
+      whyDescription: "We guarantee page one in 12 months — or you get your money back. No excuses. No fine print. Just results.",
+      image: "/s3.png",
       width: 355,
       height: 296,
     },
@@ -90,7 +98,24 @@ const fadeInUp = {
       width: 400,
       height: 333,
     },
-  ];  const handleTabClick = (index: number) => {
+    {
+      name: "Landing Page",
+      icon: (
+        <svg className={styles.tabIcon} viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 3h18v2H3V3zm0 4h12v2H3V7zm0 4h18v2H3v-2zm0 4h12v2H3v-2zm0 4h18v2H3v-2z" />
+        </svg>
+      ),
+      title: "Landing Pages That Convert",
+      description: "We build landing pages that turn visitors into customers. Optimized, fast, and designed to drive action.",
+      whyTitle: "Why It Works",
+      whyDescription: "Every page is crafted for conversions, with data-driven design and seamless user experience to maximize ROI.",
+      image: "/landing.jpg",
+      width: 355,
+      height: 296, // Kept same ratio as others (355:296 ≈ 1.2:1)
+    },
+  ];
+
+  const handleTabClick = (index: number) => {
     setActiveTab(index);
     if (window.innerWidth <= 768 && titleRef.current && tabsRef.current) {
       setTimeout(() => {
@@ -102,7 +127,9 @@ const fadeInUp = {
         }
       }, 200);
     }
-  };  // Handle URL hash changes to set active tab
+  };
+
+  // Handle URL hash changes to set active tab
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace("#", "");
@@ -114,12 +141,13 @@ const fadeInUp = {
       }
     };
 
-// Run on mount
-setTimeout(handleHashChange, 100);
-window.addEventListener("hashchange", handleHashChange);
-return () => window.removeEventListener("hashchange", handleHashChange);
+    // Run on mount
+    setTimeout(handleHashChange, 100);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [services]);
 
-  }, [services]);  return (
+  return (
     <section className="pt-8 pb-16 bg-white text-black w-full">
       <div className={styles.servicesContainer}>
         <div className={styles.contentWrapper}>
@@ -134,60 +162,57 @@ return () => window.removeEventListener("hashchange", handleHashChange);
             Services
           </motion.h2>
 
-      {/* Tabs */}
-      <motion.div
-        ref={tabsRef}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-        className={styles.tabs}
-      >
-        {services.map((service, index) => (
-          <div
-            key={index}
-            className={`${styles.tab} ${activeTab === index ? styles.active : ""}`}
-            onClick={() => handleTabClick(index)}
+          {/* Tabs */}
+          <motion.div
+            ref={tabsRef}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className={styles.tabs}
           >
-            {service.icon}
-            <span className={styles.tabText}>{service.name}</span>
-          </div>
-        ))}
-      </motion.div>
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className={`${styles.tab} ${activeTab === index ? styles.active : ""}`}
+                onClick={() => handleTabClick(index)}
+              >
+                {service.icon}
+                <span className={styles.tabText}>{service.name}</span>
+              </div>
+            ))}
+          </motion.div>
 
-      {/* Content */}
-      <motion.div
-        ref={contentRef}
-        key={activeTab}
-        initial="hidden"
-        animate="visible"
-        variants={contentVariants}
-        className={styles.content}
-        id={services[activeTab].name.toLowerCase().replace(/ & /g, "-").replace(" ", "-")}
-      >
-        <div className={styles.textContent}>
-          <h3 ref={titleRef} className={`${styles.serviceTitle} text-[#9000ff]`}>
-            {services[activeTab].title}
-          </h3>
-          <p className={styles.serviceDescription}>{services[activeTab].description}</p>
-          <h4 className={`${styles.whyTitle} text-[#9000ff]`}>{services[activeTab].whyTitle}</h4>
-          <p className={styles.whyDescription}>{services[activeTab].whyDescription}</p>
+          {/* Content */}
+          <motion.div
+            ref={contentRef}
+            key={activeTab}
+            initial="hidden"
+            animate="visible"
+            variants={contentVariants}
+            className={styles.content}
+            id={services[activeTab].name.toLowerCase().replace(/ & /g, "-").replace(" ", "-")}
+          >
+            <div className={styles.textContent}>
+              <h3 ref={titleRef} className={`${styles.serviceTitle} text-[#9000ff]`}>
+                {services[activeTab].title}
+              </h3>
+              <p className={styles.serviceDescription}>{services[activeTab].description}</p>
+              <h4 className={`${styles.whyTitle} text-[#9000ff]`}>{services[activeTab].whyTitle}</h4>
+              <p className={styles.whyDescription}>{services[activeTab].whyDescription}</p>
+            </div>
+            <div className={styles.imageContainer}>
+              <Image
+                src={services[activeTab].image}
+                alt={`${services[activeTab].name} illustration`}
+                width={services[activeTab].width}
+                height={services[activeTab].height}
+                className="object-contain"
+              />
+            </div>
+          </motion.div>
         </div>
-        <div className={styles.imageContainer}>
-          <Image
-            src={services[activeTab].image}
-            alt={`${services[activeTab].name} illustration`}
-
-            width={services[activeTab].width}
-            height={services[activeTab].height}
-            className="object-contain"
-          />
-        </div>
-      </motion.div>
-    </div>
-  </div>
-</section>
-
+      </div>
+    </section>
   );
 }
-

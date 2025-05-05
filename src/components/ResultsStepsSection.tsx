@@ -20,6 +20,13 @@ const cardVariants = {
   }),
 };
 
+const scrollToBookCall = () => {
+  const bookCallSection = document.getElementById("book-call");
+  if (bookCallSection) {
+    bookCallSection.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
 export function ResultsStepsSection() {
   const steps = [
     {
@@ -67,7 +74,7 @@ export function ResultsStepsSection() {
           <span
             style={{
               color: "#9000ff",
-              textShadow: "0 0 5px #9000ff, 0 0 10px #b266ff",
+              textShadow: "0 0 5px #9000ff, 0 0 15px rgba(178, 102, 255, 0.5)",
             }}
           >
             4
@@ -112,21 +119,25 @@ export function ResultsStepsSection() {
 
         {/* Footer Text */}
         <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="text-center"
-        >
-          <p className="text-2xl font-bold mb-4">Speed starts with you.</p>
-          <p className="text-xl mb-6">The first step is in your control.</p>
-          <Link
-            href="/contact"
-            className="inline-block px-8 py-3 bg-gradient-to-r from-[#8e26e2] to-[#f4b1fd] text-white font-semibold text-lg rounded-full hover:scale-105 transition-transform"
-          >
-            Book the call
-          </Link>
-        </motion.div>
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeInUp}
+      className="text-center"
+    >
+      <p className="text-2xl font-bold mb-4">Speed starts with you.</p>
+      <p className="text-xl mb-6">The first step is in your control.</p>
+      <motion.button
+        onClick={scrollToBookCall}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+        className="inline-block px-8 py-3 bg-[#9000ff] text-white font-semibold text-lg rounded-full hover:scale-105 transition-transform cursor-pointer"
+      >
+        Book the call
+      </motion.button>
+    </motion.div>
       </div>
     </section>
   );
