@@ -54,7 +54,7 @@ export default function Footer() {
               m44.io
             </Link>
             <p className={styles.tagline}>
-              Igniting brands with bold ad solutions.
+              Quality with speed.
             </p>
           </div>
 
@@ -64,7 +64,7 @@ export default function Footer() {
             <ul className={styles.navList}>
               {[
                 { name: "Home", href: "/#home" },
-                { name: "Why M44", href: "/#why-m44" },
+                { name: "Why m44", href: "/#why-m44" },
                 { name: "Services", href: "/#services" },
                 { name: "FAQ", href: "/#support" }, // Updated to Support
               ].map((item) => (

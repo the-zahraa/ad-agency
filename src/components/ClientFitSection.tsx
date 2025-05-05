@@ -29,7 +29,7 @@ const clientFitData = [
     romanNumeral: "II",
   },
   {
-    title: "You're Open to Testing What Works",
+    title: "You're Open To Testing What Works",
     description:
       "You're done guessing. You're open to running smart experiments, trying new angles, and scaling what actually performs.",
     romanNumeral: "III",
@@ -55,7 +55,7 @@ export function ClientFitSection() {
           className="text-4xl md:text-5xl font-bold text-center mb-4"
           style={{ color: "#9000ff" }}
         >
-          We work best with brands who are ready to grow.
+          We Work Best With Brands Who Are Ready To Grow.
         </motion.h2>
         <motion.p
           initial="hidden"
