@@ -8,6 +8,11 @@
   z-index: -10;
 }
 
+/* Hero Section */
+.heroSection {
+  /* Add any default styles if needed */
+}
+
 /* Hero Container */
 .heroContainer {
   padding-bottom: 2rem; /* Default padding for larger screens */
@@ -134,8 +139,8 @@
   }
 
   .heroButton {
-    margin-bottom: 0; /* No margin for phones */
-    padding: 0.5rem 1rem; /* Reduced button padding for tighter fit */
+    margin-bottom: 0.5rem; /* Some margin for phones */
+    padding: 0.5rem 1rem; /* Reduced button padding */
   }
 
   .heroContainer {
@@ -143,16 +148,20 @@
   }
 
   .heroContainer p {
-    margin-bottom: 0.1rem; /* Further reduced spacing for phones */
+    margin-bottom: 0.1rem; /* Minimal spacing for phones */
   }
 
   .background {
-    height: auto; /* Allow background to shrink with content */
-    min-height: 100%; /* Ensure it still covers the container */
+    background: #fff !important; /* White background for Hero content and Partnered headline/subheading */
+    height: auto;
+    min-height: 100%;
   }
 
-  /* Reduce section padding */
-  .section {
-    padding-bottom: 0.5rem; /* Minimal padding for phones */
+  /* Section adjustments */
+  .heroSection {
+    padding-top: 4rem; /* Top padding for mobile */
+    padding-bottom: 0; /* Minimal bottom padding */
+    min-height: auto; /* Shrink to content */
+    height: auto;
   }
 }

@@ -1,16 +1,27 @@
+// src/components/Hero.tsx
 "use client";
 
 import { motion } from "framer-motion";
 import HeroButton from "./HeroButton";
 import CallButton from "./CallButton";
 import AnimatedLogoText from "./AnimatedLogoText";
+import { PartneredSection } from "./PartneredSection";
 import styles from "../styles/Hero.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Hero() {
+interface HeroProps {
+  isMobile: boolean;
+}
+
+export default function Hero({ isMobile }: HeroProps) {
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center text-black relative">
+    <section
+      id="home"
+      className={`flex flex-col items-center justify-center text-black relative ${styles.heroSection} ${
+        isMobile ? "min-h-auto py-8" : "min-h-screen"
+      }`}
+    >
       <div className={styles.background} />
       <div className="absolute top-8 left-[3%] hidden md:flex items-center">
         <Link href="#home" className="flex items-center">
@@ -51,9 +62,10 @@ export default function Hero() {
         <p className="text-base sm:text-lg lg:text-2xl mb-4 text-gray-600 max-w-3xl mx-auto">
           Every dollar in gets you more out.
         </p>
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-4">
           <HeroButton className="hero-button" id="hero-button" />
         </div>
+        {isMobile && <PartneredSection isMobile={isMobile} />}
       </motion.div>
     </section>
   );
