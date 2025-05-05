@@ -6,7 +6,6 @@
   height: 100%;
   background: radial-gradient(125% 125% at 50% 10%, #fff 40%, #63e 100%) !important;
   z-index: -10;
-  padding-bottom: 0;
 }
 
 /* Hero Container */
@@ -55,10 +54,10 @@
 /* Animation for the underline */
 @keyframes growUnderline {
   0% {
-      width: 0;
+    width: 0;
   }
   100% {
-      width: 100%;
+    width: 100%;
   }
 }
 
@@ -75,80 +74,85 @@
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .heroTitle {
-      font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
   }
 
   .highlightedText::after {
-      height: 3.5px;
-      box-shadow: 0 0 5px rgba(144, 0, 255, 1), 0 0 10px rgba(144, 0, 255, 0.9), 0 0 15px rgba(144, 0, 255, 0.7);
+    height: 3.5px;
+    box-shadow: 0 0 5px rgba(144, 0, 255, 1), 0 0 10px rgba(144, 0, 255, 0.9), 0 0 15px rgba(144, 0, 255, 0.7);
   }
 
   .heroContainer {
-      padding-bottom: 1.5rem; /* Slightly reduced for tablets */
+    padding-bottom: 1.5rem; /* Slightly reduced for tablets */
   }
 }
 
 @media (max-width: 767px) {
   .heroTitle {
-      gap: 0.3rem;
-      font-size: clamp(2rem, 4vw, 3rem);
+    gap: 0.3rem;
+    font-size: clamp(2rem, 4vw, 3rem);
   }
 
   .titleLine {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .highlightedText::after {
-      height: 4px;
-      box-shadow: 0 0 4px rgba(144, 0, 255, 1), 0 0 8px rgba(144, 0, 255, 1), 0 0 12px rgba(144, 0, 255, 0.8);
+    height: 4px;
+    box-shadow: 0 0 4px rgba(144, 0, 255, 1), 0 0 8px rgba(144, 0, 255, 1), 0 0 12px rgba(144, 0, 255, 0.8);
   }
 
   .heroButton {
-      margin-bottom: 0.25rem; /* Reduced margin for tablets */
+    margin-bottom: 0.5rem; /* Reduced margin for tablets */
   }
 
   .heroContainer {
-      padding-bottom: 0; /* No padding for smaller screens */
+    padding-bottom: 0; /* No padding for smaller screens */
   }
 
   .heroContainer p {
-      margin-bottom: 0.25rem; /* Reduce spacing between subtitles and button */
+    margin-bottom: 0.25rem; /* Reduced spacing for tablets */
   }
 
   .background {
-      height: auto; /* CHANGED: Allow background to shrink with content */
-      min-height: 100%; /* Ensure it still covers the container */
+    height: auto; /* Allow background to shrink with content */
+    min-height: 100%; /* Ensure it still covers the container */
   }
 }
 
 @media (max-width: 480px) {
   .heroTitle {
-      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      gap: 0.2rem; /* CHANGED: Further reduce gap for phones */
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    gap: 0.1rem; /* Further reduced gap for phones */
   }
 
   .highlightedText::after {
-      height: 3.5px;
-      box-shadow: 0 0 3px rgba(144, 0, 255, 1), 0 0 6px rgba(144, 0, 255, 1), 0 0 10px rgba(144, 0, 255, 0.9);
+    height: 3.5px;
+    box-shadow: 0 0 3px rgba(144, 0, 255, 1), 0 0 6px rgba(144, 0, 255, 1), 0 0 10px rgba(144, 0, 255, 0.9);
   }
 
   .heroButton {
-      margin-bottom: 0; /* No margin for phones */
-      padding: 0.5rem 1rem; /* CHANGED: Reduce button padding for tighter fit */
+    margin-bottom: 0; /* No margin for phones */
+    padding: 0.5rem 1rem; /* Reduced button padding for tighter fit */
   }
 
   .heroContainer {
-      padding-bottom: 0; /* Ensure no padding for phones */
+    padding-bottom: 0; /* No padding for phones */
   }
 
   .heroContainer p {
-      margin-bottom: 0.2rem; /* CHANGED: Further reduce spacing for phones */
+    margin-bottom: 0.1rem; /* Further reduced spacing for phones */
   }
 
   .background {
-      height: auto; /* CHANGED: Allow background to shrink with content */
-      min-height: 100%; /* Ensure it still covers the container */
+    height: auto; /* Allow background to shrink with content */
+    min-height: 100%; /* Ensure it still covers the container */
+  }
+
+  /* Reduce section padding */
+  .section {
+    padding-bottom: 0.5rem; /* Minimal padding for phones */
   }
 }
