@@ -12,6 +12,7 @@
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
+  will-change: transform;
 }
 
 .slide {
@@ -135,10 +136,11 @@
     padding: 6px;
     border-radius: 8px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-    margin-bottom: 4px;
+    margin-bottom: 2px; /* Maintain for image-to-arrows gap */
   }
 
   .slideContent {
     padding: 0.75rem;
+    margin-top: 0.5rem; /* Reduced from implicit mt-4 (16px) to 8px */
   }
 }

@@ -5,7 +5,7 @@ import ScrollProvider from '../components/ScrollProvider';
 
 // Define metadata with Open Graph and Twitter Card tags
 export const metadata = {
-  title: 'm44.io',
+  title: 'm44 - Performance Marketing',
   description: 'Scale your brand with M44’s paid media strategies.',
   icons: {
     icon: '/logo.png',

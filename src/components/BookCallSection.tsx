@@ -22,7 +22,7 @@ export function BookCallSection() {
     try {
       const calApi = await getCalApi();
       calApi("ui", {
-        hideEventTypeDetails: true, // Minimize content height
+        hideEventTypeDetails: true,
         layout: "month_view",
       });
       console.log("Cal.com API initialized successfully");
@@ -42,8 +42,7 @@ export function BookCallSection() {
     const adjustCalendarScale = () => {
       if (calendarRef.current) {
         const cardHeight = calendarRef.current.offsetHeight;
-        // Assume calendar's intrinsic height is ~550px (adjusted based on testing)
-        const intrinsicHeight = 550; // Refined estimate
+        const intrinsicHeight = 550;
         const scale = Math.min(cardHeight / intrinsicHeight, 1);
         calendarRef.current.style.setProperty("--calendar-scale", scale.toString());
       }

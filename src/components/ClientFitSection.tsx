@@ -55,7 +55,8 @@ export function ClientFitSection() {
           className="text-4xl md:text-5xl font-bold text-center mb-4"
           style={{ color: "#9000ff" }}
         >
-          We Work Best With Brands Who Are Ready To Grow.
+          <span className={styles.headlinePart1}>We Work Best With Brands</span>{" "}
+          <span className={styles.headlinePart2}>Who Are Ready To Grow.</span>
         </motion.h2>
         <motion.p
           initial="hidden"
@@ -76,23 +77,20 @@ export function ClientFitSection() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={cardVariants}
-              className={styles.parent}
+              className={styles.outer}
             >
+              <div className={styles.dot}></div>
               <div className={styles.card}>
-                <div className={styles.logo}>
-                  <span className={styles.circle1}></span>
-                  <span className={styles.circle2}></span>
-                  <span className={styles.circle3}></span>
-                  <span className={styles.circle4}></span>
-                  <span className={styles.circle5}>
-                    <span className={styles.romanNumeral}>{item.romanNumeral}</span>
-                  </span>
-                </div>
-                <div className={styles.glass}></div>
+                <div className={styles.ray}></div>
                 <div className={styles.content}>
-                  <span className={styles.title}>{item.title}</span>
-                  <span className={styles.text}>{item.description}</span>
+                  <div className={styles.text}>{item.romanNumeral}</div>
+                  <div className={styles.title}>{item.title}</div>
+                  <div className={styles.description}>{item.description}</div>
                 </div>
+                <div className={styles.line + " " + styles.topl}></div>
+                <div className={styles.line + " " + styles.leftl}></div>
+                <div className={styles.line + " " + styles.bottoml}></div>
+                <div className={styles.line + " " + styles.rightl}></div>
               </div>
             </motion.div>
           ))}

@@ -48,11 +48,6 @@
   margin-top: 2rem;
 }
 
-.logosContainerMobile {
-  background: radial-gradient(125% 125% at 50% 10%, #fff 40%, #63e 100%) !important; /* Exact Hero background */
-  padding: 1rem 0;
-}
-
 .logosWrapper {
   display: flex;
   flex-direction: column;
@@ -114,7 +109,6 @@
   }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .logosRow {
     gap: 1.5rem;
@@ -146,9 +140,21 @@
     animation-duration: 30s;
   }
 
-  .partneredMobile {
-    background: #fff; /* White background for headline and subheading */
-    padding-top: 0;
-    margin-top: 0;
+  /* Ensure the headline and logo stay inline on small screens */
+  .flex-row {
+    flex-wrap: nowrap; /* Prevent wrapping */
+    align-items: center; /* Vertically center items */
+    gap: 0.5rem; /* Reduce gap for small screens */
+  }
+
+  /* Adjust the logo size on small screens */
+  .logoImageHeader {
+    max-width: 155px; /* Smaller logo size for phone screens */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Adjust the headline font size */
+  .headline {
+    font-size: 1.7rem; /* Smaller font size for phone screens */
   }
 }

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { FaInstagram, FaFacebook, FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 import { CustomXIcon } from "./icons/CustomXIcon";
 import styles from "../styles/Footer.module.css";
 
@@ -13,20 +13,26 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-// Updated hover effect for nav links (no scale to prevent shift)
+// Hover effect for nav links
 const navHoverEffect = {
   hover: {
     color: "#9000ff",
-    transition: { duration: 0.3 },
+    y: -2, // Slight upward lift
+    transition: { duration: 0.3, ease: "easeOut" },
   },
 };
 
-// Hover effect for social icons (keeps scale for icons)
+// Hover and tap effect for social icons
 const socialHoverEffect = {
   hover: {
+    scale: 1.2,
+    y: -4, // Bounce upward
+    transition: { duration: 0.3, ease: [0.6, -0.05, 0.01, 0.9] }, // Spring-like bounce
+  },
+  tap: {
     scale: 1.1,
-    boxShadow: "0 0 12px rgba(144, 0, 255, 0.5)",
-    transition: { duration: 0.3 },
+    boxShadow: "0 0 15px rgba(144, 0, 255, 0.7)", // Glow on click
+    transition: { duration: 0.2, ease: "easeIn" },
   },
 };
 
@@ -47,15 +53,13 @@ export default function Footer() {
               <Image
                 src="/logo.png"
                 alt="m44.io logo"
-                width={40}
-                height={40}
+                width={60}
+                height={60}
                 className={styles.logoIcon}
               />
               m44.io
             </Link>
-            <p className={styles.tagline}>
-              Quality with speed.
-            </p>
+            <p className={styles.tagline}>Quality with speed.</p>
           </div>
 
           {/* Navigation Links */}
@@ -66,7 +70,7 @@ export default function Footer() {
                 { name: "Home", href: "/#home" },
                 { name: "Why m44", href: "/#why-m44" },
                 { name: "Services", href: "/#services" },
-                { name: "FAQ", href: "/#support" }, // Updated to Support
+                { name: "FAQ", href: "/#support" },
               ].map((item) => (
                 <motion.li
                   key={item.name}
@@ -93,21 +97,15 @@ export default function Footer() {
                   href: "https://wa.me/+66804444448",
                   icon: <FaWhatsapp size={24} />,
                 },
-                {
-                  href: "https://instagram.com",
-                  icon: <FaInstagram size={24} />,
-                },
-                {
-                  href: "https://facebook.com",
-                  icon: <FaFacebook size={24} />,
-                },
               ].map((social, index) => (
                 <motion.a
                   key={index}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={socialHoverEffect}
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={socialHoverEffect}
                   className={styles.socialLink}
                 >
                   {social.icon}

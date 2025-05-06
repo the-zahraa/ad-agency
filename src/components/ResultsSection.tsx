@@ -156,7 +156,7 @@ export function ResultsSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-4xl md:text-5xl font-bold text-center mb-4 text-[#9000ff]"
+          className="text-3xl md:text-5xl font-bold text-center mb-4 text-[#9000ff]"
         >
           The Results Behind the Work
         </motion.h2>
@@ -169,10 +169,7 @@ export function ResultsSection() {
           className="text-center max-w-3xl mx-auto mb-12"
         >
           <p className="text-lg md:text-xl text-gray-600">
-            Partnered with Convert Cake, a battle-tested team trusted by global brands to execute performance campaigns across paid media, creatives, and funnels.
-          </p>
-          <p className="text-lg md:text-xl text-gray-600 mt-2">
-            They have scaled brands in e-commerce, SaaS, and retail and the results speak for themselves
+            Partnered with Convert Cake to make conversions a piece of cake, delivering proven results across e-commerce, SaaS, and retail.
           </p>
         </motion.div>
 
@@ -229,7 +226,7 @@ export function ResultsSection() {
             })}
           </div>
 
-          <div className="flex justify-center mt-3 md:mt-2 lg:mt-1 space-x-4 lg:space-x-2">
+          <div className="flex justify-center mt-1 md:mt-2 lg:mt-1 space-x-2 lg:space-x-2 mb-2">
             <button
               onClick={handlePrev}
               className={`${styles.arrow} ${styles.active}`}
@@ -261,25 +258,25 @@ export function ResultsSection() {
               </svg>
             </button>
           </div>
-        </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            variants={contentVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            className={`${styles.slideContent} max-w-xl mx-auto mt-4 min-h-[200px]`}
-          >
-            <h3 className="text-xl md:text-2xl font-bold text-[#9000ff] mb-4">
-              {resultsData[currentSlide].title}
-            </h3>
-            <p className="text-gray-600 text-base md:text-lg">
-              {resultsData[currentSlide].description}
-            </p>
-          </motion.div>
-        </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              variants={contentVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className={`${styles.slideContent} max-w-xl mx-auto min-h-[200px]`}
+            >
+              <h3 className="text-xl md:text-2xl font-bold text-[#9000ff] mb-4">
+                {resultsData[currentSlide].title}
+              </h3>
+              <p className="text-gray-600 text-base md:text-lg">
+                {resultsData[currentSlide].description}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

@@ -31,7 +31,7 @@ export function ServicesSection() {
         </svg>
       ),
       title: "Paid Media That Prints Money",
-      description: "We don’t just run ads — we grow brands. Facebook, TikTok, YouTube — we find your buyers and turn clicks into customers.",
+      description: "We don’t just run ads. We grow brands. We find your buyers on Facebook, TikTok, and YouTube, and turn clicks into customers.",
       whyTitle: "Why It Works",
       whyDescription: "We focus on one thing: making you more money. If we’re not sure we can win, we don’t take the job.",
       image: "/s1.png",
@@ -46,9 +46,9 @@ export function ServicesSection() {
         </svg>
       ),
       title: "Creative That Sells",
-      description: "We don’t just make you look good — we make people buy. From idea to execution, we turn attention into revenue.",
+      description: "We don’t just make you look good. We make people buy. From idea to execution, we turn attention into revenue.",
       whyTitle: "Why It Works",
-      whyDescription: "We build creative that’s designed to drive action — not just admiration. Pretty is optional. Profitable is mandatory.",
+      whyDescription: "We build creative that’s designed to drive action, not just admiration. Pretty is optional. Profitable is mandatory.",
       image: "/s2.png",
       width: 355,
       height: 296,
@@ -61,9 +61,9 @@ export function ServicesSection() {
         </svg>
       ),
       title: "SEO That Actually Ranks",
-      description: "We get you on page one of Google — no ads, no gimmicks. We find your buyers, create content that sells, and do it all for you.",
+      description: "We get you on page one of Google. No ads, no gimmicks. We find your buyers, create content that sells, and do it all for you.",
       whyTitle: "Why It Works",
-      whyDescription: "We guarantee page one in 12 months — or you get your money back. No excuses. No fine print. Just results.",
+      whyDescription: "We guarantee page one in 12 months. Or you get your money back. No excuses. No fine print. Just results",
       image: "/s3.png",
       width: 355,
       height: 296,
@@ -76,9 +76,9 @@ export function ServicesSection() {
         </svg>
       ),
       title: "Tracking That Tells the Truth",
-      description: "We track what matters — not just what looks good. From online clicks to offline sales, we show you exactly which channels drive real revenue.",
+      description: "We track what matters, not just what looks good. From online clicks to offline sales, we show you exactly which channels drive real revenue.",
       whyTitle: "Why It Works",
-      whyDescription: "You get 24/7 access to a live dashboard — real numbers, real ROI, in real time. Stay in control. Stay ahead.",
+      whyDescription: "You get 24/7 access to a live dashboard with real numbers, real ROI, in real time. Stay in control. Stay ahead.",
       image: "/s4.png",
       width: 355,
       height: 296,
@@ -91,9 +91,9 @@ export function ServicesSection() {
         </svg>
       ),
       title: "Influence That Moves Markets",
-      description: "We don’t chase fame — we find real influence. We connect your brand with voices that drive buyers.",
+      description: "We don’t chase fame. We find real influence. We connect your brand with voices that drive buyers.",
       whyTitle: "Why It Works",
-      whyDescription: "We custom-build every influencer strategy from scratch — no recycled lists, no wasted budget.",
+      whyDescription: "We custom-build every influencer strategy from scratch. No recycled lists. No wasted budget.",
       image: "/s5.jpg",
       width: 400,
       height: 333,
@@ -148,7 +148,7 @@ export function ServicesSection() {
   }, [services]);
 
   return (
-    <section className="pt-8 pb-16 bg-white text-black w-full">
+    <section className="pt-8 pb-4 bg-white text-black w-full"> {/* Changed pb-16 to pb-8 */}
       <div className={styles.servicesContainer}>
         <div className={styles.contentWrapper}>
           {/* Headline */}

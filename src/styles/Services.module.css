@@ -131,7 +131,7 @@
   height: 100%;
   object-fit: contain;
   border-radius: 16px; /* Ensure the image itself has rounded corners */
-  display: block; /* Ensure border-radius is respected in all browsers */
+  display: block; /* Ensure(border-radius is respected in all browsers */
   max-width: 355px; /* Enforce consistent max-width to match other images */
   max-height: 296px; /* Enforce consistent max-height to match other images */
 }
@@ -147,7 +147,7 @@
 /* Vertical stacking for smaller screens */
 @media (max-width: 768px) {
   .contentWrapper {
-    padding: 2rem 1rem; /* Reduced padding for mobile */
+    padding: 2rem 1rem 1rem; /* Reduced bottom padding from 2rem to 1rem */
   }
 
   .tabs {
@@ -255,8 +255,8 @@
 
   .imageContainer {
     height: 350px;
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem; /* Reduced from 0.5rem to 0.25rem */
     border-radius: 16px; /* Ensure rounded corners on mobile */
     overflow: hidden; /* Reinforce clipping */
   }
@@ -285,6 +285,7 @@
   .whyTitle {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
+    margin-top: 0.5rem; /* Added to fine-tune spacing */
   }
 }
 

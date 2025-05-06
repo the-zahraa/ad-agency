@@ -1,5 +1,5 @@
 .sectionBackground {
-  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 30%, #111111ee 60%); /* Increased opacity for better visibility */
+  background: radial-gradient(circle at 50% 50%, #0000 0, #0000 30%, #111111ee 60%);
   background-size: 3px 3px;
   width: 100%;
   margin: 0;
@@ -139,7 +139,7 @@
   position: absolute;
   inset: 0;
   z-index: -2;
-  overflow: hidden; /* Kept to control glow extent */
+  overflow: hidden;
 }
 
 .spinBlur {
@@ -167,7 +167,7 @@
 }
 
 .spinBlur::before {
-  background: linear-gradient(-45deg, #9000ffdd, #0000 46% 54%, #9000ffdd); /* Increased opacity for shinier glow */
+  background: linear-gradient(-45deg, #9000ffdd, #0000 46% 54%, #9000ffdd);
 }
 
 .spinIntense::before {
@@ -219,19 +219,25 @@
 @media (max-width: 768px) {
   .cardContainer {
     max-width: 100%;
-    height: calc(60vh - 130px); /* Reduced height to remove empty space */
-    min-height: 340px; /* Adjusted min-height */
+    height: 700px; /* Increased height to fit full calendar */
+    min-height: 650px; /* Ensure enough space */
     margin: 0 !important;
     margin-bottom: 1rem;
   }
   .calendarEmbed {
-    zoom: 0.82;
+    zoom: 1; /* Remove zoom to ensure full size */
+  }
+  .calendarEmbed [data-cal-view="month"] {
+    transform: scale(var(--calendar-scale, 1)); /* No scaling to maximize fit */
+    transform-origin: top left;
+    width: calc(100% / var(--calendar-scale, 1)) !important;
+    height: calc(100% / var(--calendar-scale, 1)) !important;
   }
   .spin::before {
-    inset: -5%; /* Reduced to 19.5px on a 390px card to fit within clipped area */
+    inset: -5%;
   }
   .spinBlur {
-    filter: blur(6em) url(#unopaq); /* Increased to 96px for shinier glow */
+    filter: blur(6em) url(#unopaq);
   }
   .spinIntense {
     filter: blur(1.5em) url(#unopaq2);
@@ -244,11 +250,17 @@
 @media (max-width: 480px) {
   .cardContainer {
     max-width: 100%;
-    height: calc(55vh - 120px);
-    min-height: 300px;
+    height: 650px; /* Adjusted for smaller screens */
+    min-height: 600px;
     margin-bottom: 1rem;
   }
   .calendarEmbed {
-    zoom: 0.78;
+    zoom: 1;
+  }
+  .calendarEmbed [data-cal-view="month"] {
+    transform: scale(var(--calendar-scale, 0.95)); /* Slight scaling for smaller screens */
+    transform-origin: top left;
+    width: calc(100% / var(--calendar-scale, 0.95)) !important;
+    height: calc(100% / var(--calendar-scale, 0.95)) !important;
   }
 }

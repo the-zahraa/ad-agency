@@ -60,16 +60,21 @@
   font-weight: 700;
   display: flex;
   align-items: center;
-  color: white;
+  color: #9000ff; /* Purple text */
   text-decoration: none;
 }
 
 .logoIcon {
   margin-right: 0.75rem;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
-  filter: brightness(1.2) drop-shadow(0 0 8px rgba(144, 0, 255, 0.3));
+  filter: drop-shadow(0 0 8px rgba(144, 0, 255, 0.3)); /* Subtle shadow to enhance visibility */
+  transition: filter 0.3s ease;
+}
+
+.logo:hover .logoIcon {
+  filter: drop-shadow(0 0 10px rgba(144, 0, 255, 0.5)); /* Stronger shadow on hover */
 }
 
 .tagline {
@@ -104,31 +109,28 @@
 .navItem a {
   color: white;
   text-decoration: none;
-  transition: color 0.3s ease, text-shadow 0.3s ease, letter-spacing 0.3s ease;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-.navItem:hover::before {
+.navItem:hover a {
+  color: #9000ff;
+  text-shadow: 0 0 5px rgba(144, 0, 255, 0.5); /* Subtle glow */
+}
+
+.navItem::after {
   content: "";
   position: absolute;
-  top: 50%;
+  bottom: -4px;
   left: 50%;
-  width: 20px;
-  height: 20px;
-  background: radial-gradient(circle, rgba(184, 51, 255, 0.3) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  animation: particlePulse 0.5s ease-out;
-  pointer-events: none;
+  width: 0;
+  height: 2px;
+  background-color: #9000ff;
+  transition: width 0.3s ease, left 0.3s ease;
 }
 
-@keyframes particlePulse {
-  0% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(0.5);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.5);
-  }
+.navItem:hover::after {
+  width: 100%;
+  left: 0; /* Smoothly expands from center */
 }
 
 .socialSection {
@@ -155,12 +157,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .socialLink:hover {
-  background: rgba(144, 0, 255, 0.2);
-  box-shadow: 0 0 12px rgba(144, 0, 255, 0.5);
+  background: rgba(144, 0, 255, 0.3);
 }
 
 .bottomRow {
@@ -187,9 +188,5 @@
   }
   .navList {
     align-items: center;
-  }
-  .navItem:hover::before {
-    width: 16px;
-    height: 16px; /* Smaller particle effect on mobile */
   }
 }

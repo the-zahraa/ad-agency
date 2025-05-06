@@ -180,6 +180,35 @@
   object-fit: contain;
 }
 
+/* Styles for subheading and description on phone screens */
+@media (max-width: 480px) {
+  .subheadingPart1,
+  .subheadingPart2 {
+    display: block; /* Each part on its own line */
+    margin: 0; /* Remove default margins */
+    line-height: 1.2; /* Tighten line spacing */
+  }
+
+  .subheadingPart1 {
+    margin-bottom: 0.25rem; /* Small gap between lines */
+  }
+
+  .subheadingPart2 {
+    font-size: 1.4rem; /* Smaller size for phone screens, adjust as needed */
+  }
+
+  .descriptionPart1,
+  .descriptionPart2 {
+    display: block; /* Each part on its own line */
+    margin: 0; /* Remove default margins */
+    line-height: 1.2; /* Tighten line spacing */
+  }
+
+  .descriptionPart1 {
+    margin-bottom: 0.25rem; /* Small gap between lines */
+  }
+}
+
 /* CSS Container Queries for card content */
 @container card-container (max-width: 430px) {
   .repoName {

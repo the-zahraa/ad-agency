@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 // Animation variants for Framer Motion
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  visible: { opacity:1, y: 0, transition: { duration: 0.6 } },
 };
 
 const cardVariants = {
@@ -32,12 +32,12 @@ const containerVariants = {
 export function WhyM44() {
   const cards = [
     {
-      title: "Tired of Wasting Time and Money?",
+      title: "Tired Of Wasting Time And Money?",
       items: [
         "Most agencies move slow and miss deadlines.",
         "Freelancers disappear the moment things get hard.",
         "Internal teams don’t know how to scale profitably.",
-        "You don’t need more ads — you need more money.",
+        "You don’t need more ads, you need more money.",
       ],
     },
     {
@@ -174,7 +174,8 @@ export function WhyM44() {
           className="font-semibold mb-2"
           style={{ fontSize: "clamp(1.5rem, 3vw, 1.875rem)" }}
         >
-          Not Another Agency. A Performance-Obsessed Partner.
+          <span className={styles.subheadingPart1}>Not Another Agency.</span>{" "}
+          <span className={styles.subheadingPart2}>A Performance Obsessed Partner.</span>
         </motion.h3>
 
         {/* Description */}
@@ -186,7 +187,8 @@ export function WhyM44() {
           className="mb-8 sm:mb-12 max-w-3xl mx-auto"
           style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)" }}
         >
-          Most agencies care about impressions. We care about outcomes.
+          <span className={styles.descriptionPart1}>Most agencies care about impressions.</span>{" "}
+          <span className={styles.descriptionPart2}>We care about outcomes.</span>
         </motion.p>
 
         {/* Cards */}
@@ -209,7 +211,7 @@ export function WhyM44() {
               style={{
                 width: `min(${cardWidths[index]}px, 100%)`,
               }}
-              ref={(el: HTMLDivElement | null) => {
+              ref={(el: HTMLDivElement |null) => {
                 cardRefs.current[index] = { current: el };
               }}
             >

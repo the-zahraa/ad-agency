@@ -39,14 +39,14 @@ export function ResultsStepsSection() {
       number: "II.",
       title: "Onboarding",
       description:
-        "We set up access, gather assets, and get everything ready on our end—fast, clean, and frictionless.",
+        "We set up access, gather assets, and get everything ready on our end. Fast, clean, and frictionless.",
       icon: "/Asset10.png",
     },
     {
       number: "III.",
       title: "Strategy & Launch",
       description:
-        "We craft your growth plan, build your campaign, and get you live—ads, creatives, tracking, and all.",
+        "We craft your growth plan, build your campaign, and get you live. Ads, creatives, tracking, and all.",
       icon: "/Asset11.png",
     },
     {
