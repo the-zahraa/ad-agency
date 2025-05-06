@@ -66,8 +66,8 @@
 .subtitleContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem; /* Small gap for mobile screens */
-  margin-bottom: 0.5rem; /* Space before the third line */
+  gap: 0.15rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Subtitle Line */
@@ -174,10 +174,6 @@
     display: block; /* Single line for larger screens */
   }
 
-  .subtitleLine:first-child::after {
-    content: " — "; /* Add dash between phrases */
-  }
-
   .subtitleLine:last-child {
     display: inline; /* Keep both lines inline */
   }
@@ -252,12 +248,12 @@
   }
 
   .subtitleContainer {
-    gap: 0.15rem; /* Small gap for mobile */
-    margin-bottom: 0.25rem; /* Reduced to tighten spacing */
+    gap: 0.15rem;
+    margin-bottom: 0.25rem;
   }
 
   .subtitleLine {
-    margin-bottom: 0; /* Remove default margin */
+    margin-bottom: 0;
   }
 
   .background {
@@ -311,8 +307,8 @@
   }
 
   .subtitleContainer {
-    gap: 0.1rem; /* Even smaller gap for smaller phones */
-    margin-bottom: 0.2rem; /* Further reduced */
+    gap: 0.1rem;
+    margin-bottom: 0.2rem;
   }
 
   .subtitleLine {
