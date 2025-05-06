@@ -54,7 +54,7 @@ export function ResultsStepsSection() {
       title: "Review & Optimize",
       description:
         "Once live, we monitor daily and optimize aggressively. You'll get regular updates, transparent data, and strategy adjustments to keep scaling.",
-      icon: "/Asset7.png",
+      icon: "/Asset23.png",
     },
   ];
 

@@ -11,8 +11,8 @@ export const metadata = {
     icon: '/logo.png',
   },
   openGraph: {
-    title: 'M44 - Performance Marketing Experts',
-    description: 'Scale your brand with M44’s paid media strategies.',
+    title: 'm44 - Quality With Speed',
+    description: 'Your trusted partner in performance marketing.',
     url: 'https://www.m44.io',
     siteName: 'M44',
     images: [
@@ -24,12 +24,15 @@ export const metadata = {
       },
     ],
     type: 'website',
+    locale: 'en_US', // Added for better compatibility
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'M44 - Performance Marketing Experts',
-    description: 'Scale your brand with M44’s paid media strategies.',
+    title: 'm44 - Quality With Speed',
+    description: 'Your trusted partner in performance marketing.',
     images: ['https://www.m44.io/og-image.jpg'],
+    site: '@m44_io', // Optional: Replace with your X handle if applicable
+    creator: '@m44_io', // Optional: Replace with your X handle if applicable
   },
 };
 

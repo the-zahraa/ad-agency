@@ -9,28 +9,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
-  const scrollToSection = () => {
-    const section = document.querySelector("#partnered");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-      const start = window.scrollY;
-      const target = section.getBoundingClientRect().top + window.scrollY;
-      const duration = 2000;
-      const startTime = performance.now();
-
-      const animateScroll = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const ease = progress * (2 - progress);
-        window.scrollTo(0, start + (target - start) * ease);
-        if (progress < 1) {
-          requestAnimationFrame(animateScroll);
-        }
-      };
-      requestAnimationFrame(animateScroll);
-    }
-  };
-
   return (
     <section id="home" className="min-h-screen flex items-center justify-center text-black relative">
       <div className={styles.background} />
@@ -67,27 +45,29 @@ export default function Hero() {
             <span className={styles.highlightedText}>Budget</span>
           </div>
         </h1>
-        <p className={`text-lg sm:text-xl lg:text-2xl mb-4 text-gray-600 max-w-3xl mx-auto ${styles.subtitle} ${styles.subtitleFirst}`}>
-          We build ad systems that print cash,
-        </p>
-        <p className={`text-lg sm:text-xl lg:text-2xl mb-4 text-gray-600 max-w-3xl mx-auto ${styles.subtitle}`}>
-          not just clicks.
-        </p>
-        <p className={`text-lg sm:text-xl lg:text-2xl mb-8 text-gray-600 max-w-3xl mx-auto ${styles.subtitle}`}>
+        <div className={styles.subtitleContainer}>
+          <p className={`text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto ${styles.subtitleLine}`}>
+            We build ad systems that print cash,
+          </p>
+          <p className={`text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto ${styles.subtitleLine}`}>
+            not just clicks.
+          </p>
+        </div>
+        <p className="text-lg sm:text-xl lg:text-2xl mb-8 text-gray-600 max-w-3xl mx-auto">
           Every dollar in gets you more out.
         </p>
         <div className="flex justify-center">
           <HeroButton className="hero-button" id="hero-button" />
         </div>
       </motion.div>
-      <div className={styles.scrollDownContainer}>
-        <div className={styles.scrolldown} style={{ "--color": "#9000ff" } as React.CSSProperties} onClick={scrollToSection}>
+      <Link href="#next-section" className="absolute bottom-8 flex justify-center">
+        <div className={styles.scrolldown}>
           <div className={styles.chevrons}>
             <div className={styles.chevrondown}></div>
             <div className={styles.chevrondown}></div>
           </div>
         </div>
-      </div>
+      </Link>
     </section>
   );
 }
