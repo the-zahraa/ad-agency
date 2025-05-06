@@ -156,7 +156,7 @@ export function ResultsSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="text-3xl md:text-5xl font-bold text-center mb-4 text-[#9000ff]"
+          className="text-2xl sm:text-2xl md:text-5xl font-bold text-center mb-4 text-[#9000ff]"
         >
           The Results Behind the Work
         </motion.h2>
