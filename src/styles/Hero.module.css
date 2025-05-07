@@ -19,60 +19,24 @@
 
 /* Hero Title */
 .heroTitle {
-  font-size: clamp(3rem, 6vw, 5rem);
-  line-height: 1.2;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-/* Each line container */
-.titleLine {
-  display: block;
-  white-space: nowrap;
-}
-
-/* Highlight effect for "Profit" and "Budget" */
-.highlightedText {
-  position: relative;
-  display: inline-block;
-  color: #000;
-}
-
-/* Underline effect with animation and enhanced lighting */
-.highlightedText::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 3px;
-  background: #9000ff;
-  box-shadow: 0 0 6px rgba(144, 0, 255, 1), 0 0 12px rgba(144, 0, 255, 0.8), 0 0 18px rgba(144, 0, 255, 0.6);
-  animation: growUnderline 1s ease-out forwards;
-}
-
-/* Animation for the underline */
-@keyframes growUnderline {
-  0% {
-      width: 0;
-  }
-  100% {
-      width: 100%;
-  }
+  font-size: clamp(3rem, 8vw, 4rem);
+  font-weight: 900; /* Extra heavy for bulky look */
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: -0.02em; /* Tighten spacing for boldness */
 }
 
 /* Subtitle Container */
 .subtitleContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-/* Subtitle Line */
-.subtitleLine {
+/* Subtitle */
+.subtitle {
   display: block;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  line-height: 1.4;
+  text-align: center;
 }
 
 /* Scroll Down Indicator */
@@ -171,31 +135,21 @@
 /* Responsive adjustments */
 @media (min-width: 768px) {
   .subtitleContainer {
-    display: block; /* Single line for larger screens */
-  }
-
-  .subtitleLine:last-child {
-    display: inline; /* Keep both lines inline */
-  }
-
-  .subtitleContainer {
-    margin-bottom: 0.5rem; /* Match original spacing */
+    margin-bottom: 3rem;
   }
 }
 
 @media (max-width: 1024px) {
   .heroTitle {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      gap: 0.25rem;
+    font-size: clamp(1.75rem, 5vw, 3rem);
   }
 
-  .highlightedText::after {
-      height: 3.5px;
-      box-shadow: 0 0 5px rgba(144, 0, 255, 1), 0 0 10px rgba(144, 0, 255, 0.9), 0 0 15px rgba(144, 0, 255, 0.7);
+  .subtitle {
+    font-size: clamp(0.9rem, 2.2vw, 1.3rem);
   }
 
   .heroContainer {
-      padding-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   .scrolldown {
@@ -224,41 +178,28 @@
 
 @media (max-width: 767px) {
   .heroTitle {
-      gap: 0.2rem;
-      font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2.5rem, 6vw, 3rem);
   }
 
-  .titleLine {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-  }
-
-  .highlightedText::after {
-      height: 4px;
-      box-shadow: 0 0 4px rgba(144, 0, 255, 1), 0 0 8px rgba(144, 0, 255, 1), 0 0 12px rgba(144, 0, 255, 0.8);
+  .subtitle {
+    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
   }
 
   .heroButton {
-      margin-bottom: 0.25rem;
+    margin-bottom: 2rem;
   }
 
   .heroContainer {
-      padding-bottom: 0;
+    padding-bottom: 0;
   }
 
   .subtitleContainer {
-    gap: 0.15rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .subtitleLine {
-    margin-bottom: 0;
+    margin-bottom: 4rem;
   }
 
   .background {
-      height: auto;
-      min-height: 100%;
+    height: auto;
+    min-height: 100%;
   }
 
   .scrolldown {
@@ -288,36 +229,29 @@
 
 @media (max-width: 480px) {
   .heroTitle {
-      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      gap: 0.15rem;
+    font-size: clamp(2.5rem, 6vw, 3rem);
   }
 
-  .highlightedText::after {
-      height: 3.5px;
-      box-shadow: 0 0 3px rgba(144, 0, 255, 1), 0 0 6px rgba(144, 0, 255, 1), 0 0 10px rgba(144, 0, 255, 0.9);
+  .subtitle {
+    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
   }
 
   .heroButton {
-      margin-bottom: 0;
-      padding: 0.5rem 1rem;
+    margin-bottom: 0;
+    padding: 0.5rem 1rem;
   }
 
   .heroContainer {
-      padding-bottom: 0;
+    padding-bottom: 0;
   }
 
   .subtitleContainer {
-    gap: 0.1rem;
-    margin-bottom: 0.2rem;
-  }
-
-  .subtitleLine {
-    margin-bottom: 0;
+    margin-bottom: 4rem;
   }
 
   .background {
-      height: auto;
-      min-height: 100%;
+    height: auto;
+    min-height: 100%;
   }
 
   .scrolldown {
@@ -330,12 +264,13 @@
     bottom: 24px;
     width: 5px;
     height: 5px;
-    margin-left: -2.5px;
+    margin-left: -2.8px;
   }
 
   .chevrons {
     margin-top: 36px;
     width: 24px;
+    margin-left: -2.8px;
   }
 
   .chevrondown {

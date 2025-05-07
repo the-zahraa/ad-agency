@@ -374,3 +374,16 @@
     height: 24px;
   }
 }
+
+/* Ensure nav links and WhatsApp icon are centered in initial state */
+@media (min-width: 768px) {
+  .header nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .header nav > div {
+    flex-grow: 0; /* Prevent nav links container from growing excessively */
+  }
+}

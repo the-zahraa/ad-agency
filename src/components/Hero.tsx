@@ -26,7 +26,7 @@ export default function Hero() {
           <AnimatedLogoText />
         </Link>
       </div>
-      <div className="absolute top-6 right-[3%] hidden md:block">
+      <div className="absolute top-8 right-[3%] hidden md:block">
         <CallButton />
       </div>
       <motion.div
@@ -35,32 +35,19 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <h1 className={`font-bold mb-6 text-black ${styles.heroTitle}`}>
-          <div className={styles.titleLine}>
-            <span>Your Ads Should Print </span>
-            <span className={styles.highlightedText}>Profit</span>
-          </div>
-          <div className={styles.titleLine}>
-            <span>Not Burn </span>
-            <span className={styles.highlightedText}>Budget</span>
-          </div>
+        <h1 className={`font-extrabold mb-6 text-black ${styles.heroTitle}`}>
+          DO YOU WANT TO TRIPLE YOUR SALES IN 90 DAYS?
         </h1>
         <div className={styles.subtitleContainer}>
-          <p className={`text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto ${styles.subtitleLine}`}>
-            We build ad systems that print cash,
-          </p>
-          <p className={`text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto ${styles.subtitleLine}`}>
-            not just clicks.
+          <p className={`text-lg sm:text-xl lg:text-2xl text-gray-800 max-w-3xl mx-auto ${styles.subtitle}`}>
+            Partner with the paid media team behind $73M+ in sales for DTC and tech brands, driving 3-6x ROAS, fast.
           </p>
         </div>
-        <p className="text-lg sm:text-xl lg:text-2xl mb-8 text-gray-600 max-w-3xl mx-auto">
-          Every dollar in gets you more out.
-        </p>
         <div className="flex justify-center">
           <HeroButton className="hero-button" id="hero-button" />
         </div>
       </motion.div>
-      <Link href="#next-section" className="absolute bottom-8 flex justify-center">
+      <Link href="#partnered" className="absolute bottom-8 flex justify-center">
         <div className={styles.scrolldown}>
           <div className={styles.chevrons}>
             <div className={styles.chevrondown}></div>
