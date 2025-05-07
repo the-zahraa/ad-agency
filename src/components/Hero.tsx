@@ -40,7 +40,7 @@ export default function Hero() {
         </h1>
         <div className={styles.subtitleContainer}>
           <p className={`text-lg sm:text-xl lg:text-2xl text-gray-800 max-w-3xl mx-auto ${styles.subtitle}`}>
-            Partner with the paid media team behind $73M+ in sales for DTC and tech brands, driving 3-6x ROAS, fast.
+          Partner with the paid media team trusted by leading billion dollar brands to drive 3 to 6x ROAS, fast.
           </p>
         </div>
         <div className="flex justify-center">
