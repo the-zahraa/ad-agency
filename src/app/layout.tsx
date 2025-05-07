@@ -2,6 +2,8 @@ import './globals.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ScrollProvider from '../components/ScrollProvider';
+import { Analytics } from "@vercel/analytics/react";
+
 
 // Define metadata with Open Graph and Twitter Card tags
 export const metadata = {
@@ -45,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <Footer />
         </ScrollProvider>
+        <Analytics />
       </body>
     </html>
   );
