@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ScrollProvider from '../components/ScrollProvider';
 import { Analytics } from "@vercel/analytics/react";
+import Script from 'next/script';
 
 // Define metadata with Open Graph and Twitter Card tags
 export const metadata = {
@@ -41,17 +42,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2GBKK2RGWC"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-2GBKK2RGWC');
-            `,
-          }}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-2GBKK2RGWC`}
+          strategy="afterInteractive"
         />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-2GBKK2RGWC');
+          `}
+        </Script>
       </head>
       <body className="antialiased">
         <ScrollProvider>
