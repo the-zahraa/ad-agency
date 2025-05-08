@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import * as gtag from "../lib/gtag"; // Import gtag
 import styles from "../styles/CallButton.module.css";
 
 interface CallButtonProps {
@@ -9,8 +10,17 @@ interface CallButtonProps {
 }
 
 export default function CallButton({ inHeader = false }: CallButtonProps) {
+  const handleClick = () => {
+    // Track GA4 event
+    gtag.event({
+      action: "click",
+      category: "CTA",
+      label: inHeader ? "Header CTA" : "Hero Right CTA",
+    });
+  };
+
   return (
-    <Link href="#book-call">
+    <Link href="#book-call" onClick={handleClick}>
       <motion.button
         className={`${styles.button} ${inHeader ? styles.inHeader : styles.inHero} font-poppins`}
         initial={{ opacity: 0, x: 20 }}

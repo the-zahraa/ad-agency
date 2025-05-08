@@ -12,6 +12,7 @@
     "@calcom/atoms": "^1.0.101-booker",
     "@calcom/embed-react": "^1.5.3",
     "@heroicons/react": "^2.2.0",
+    "@next/third-parties": "^15.3.2",
     "@phosphor-icons/react": "^2.1.7",
     "@react-three/drei": "^10.0.7",
     "@react-three/fiber": "^9.1.2",

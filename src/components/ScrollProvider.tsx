@@ -1,14 +1,26 @@
-"use client";import { createContext, useContext, useEffect, useRef, ReactNode } from "react";type ScrollContextType = {
+"use client";
+
+import { createContext, useContext, useEffect, useRef, ReactNode } from "react";
+
+type ScrollContextType = {
   scrollToSection: (sectionId: string) => void;
   scrollToElement: (element: HTMLElement, extraOffset?: number) => void;
-};const ScrollContext = createContext<ScrollContextType | undefined>(undefined);export function useScrollContext() {
+};
+
+const ScrollContext = createContext<ScrollContextType | undefined>(undefined);
+
+export function useScrollContext() {
   const context = useContext(ScrollContext);
   if (!context) {
     throw new Error("useScrollContext must be used within a ScrollProvider");
   }
   return context;
-}export default function ScrollProvider({ children }: { children: ReactNode }) {
-  const headerRef = useRef<HTMLElement>(null);  // Handle scrolling to a section by ID
+}
+
+export default function ScrollProvider({ children }: { children: ReactNode }) {
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Handle scrolling to a section by ID
   const scrollToSection = (sectionId: string) => {
     console.log("[ScrollProvider] scrollToSection called with ID:", sectionId);
     const targetElement = document.getElementById(sectionId);
@@ -41,7 +53,9 @@
         }
       }, 1000);
     }
-  };  // Handle scrolling to a specific element
+  };
+
+  // Handle scrolling to a specific element
   const scrollToElement = (element: HTMLElement, extraOffset: number = 0) => {
     console.log("[ScrollProvider] scrollToElement called with element:", element);
     if (element) {
@@ -54,9 +68,18 @@
         behavior: "smooth",
       });
     }
-  };  // Handle hash changes on page load or navigation
+  };
+
+  // Handle hash changes on navigation, but skip on page reload
   useEffect(() => {
     const handleHashChange = () => {
+      // Explicitly cast to PerformanceNavigationTiming
+      const navigationEntry = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
+      if (navigationEntry.type === "reload") {
+        window.location.hash = ""; // Clear hash to prevent scrolling
+        window.scrollTo({ top: 0, behavior: "auto" }); // Ensure top of page
+        return;
+      }
       const hash = window.location.hash;
       if (hash) {
         const sectionId = hash.replace("#", "");
@@ -64,20 +87,22 @@
       }
     };
 
-handleHashChange();
-window.addEventListener("hashchange", handleHashChange);
-return () => window.removeEventListener("hashchange", handleHashChange);
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
-  }, []);  // Find the header element after mount
+  // Find the header element after mount
   useEffect(() => {
     const header = document.querySelector("header") as HTMLElement;
     if (header && headerRef.current !== header) {
       headerRef.current = header;
     }
-  }, []);  return (
+  }, []);
+
+  return (
     <ScrollContext.Provider value={{ scrollToSection, scrollToElement }}>
       {children}
     </ScrollContext.Provider>
   );
 }
-
