@@ -37,7 +37,6 @@ export function WhyM44() {
         "Most agencies move slow and miss deadlines.",
         "Freelancers disappear the moment things get hard.",
         "Internal teams don’t know how to scale profitably.",
-        "You don’t need more ads, you need more money.",
       ],
     },
     {
@@ -49,7 +48,7 @@ export function WhyM44() {
       ],
     },
     {
-      title: "Just Starting Or Been In The Game? We’ll Help You Grow",
+      title: "We'll Help At Any Stage",
       items: [
         "Curious if ads can actually boost your sales? We’ll show you how.",
         "Spending 5 figures a month and still stuck? We’ll fix what’s not working.",
