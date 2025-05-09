@@ -49,7 +49,7 @@ export function WhyM44() {
       ],
     },
     {
-      title: "Just Starting or Been in the Game? We’ll Help You Grow",
+      title: "Just Starting Or Been In The Game? We’ll Help You Grow",
       items: [
         "Curious if ads can actually boost your sales? We’ll show you how.",
         "Spending 5 figures a month and still stuck? We’ll fix what’s not working.",
