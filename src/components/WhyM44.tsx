@@ -41,21 +41,19 @@ export function WhyM44() {
       ],
     },
     {
-      title: "Why Businesses Choose m44?",
+      title: "Why m44?",
       items: [
-        "We measure success by dollars in your bank, not likes on your post.",
-        "Speed is our default. Strategy is baked in.",
-        "We write ads that convert, not just attract.",
-        "We’re not an ad agency. We’re a growth partner",
+        "We optimize for revenue, not for likes.",
+        "We improve what matters: how many people click and buy.",
+        "We take time to understand your brand, product, and goals before we run a single ad.",
       ],
     },
     {
-      title: "Wherever You Are, We Scale You Fast",
+      title: "Just Starting or Been in the Game? We’ll Help You Grow",
       items: [
-        "Just getting started? We’ll help you hit profit quickly.",
-        "Already spending? We’ll squeeze more from every dollar.",
-        "No guesswork. No fluff. Just proven, scalable growth.",
-        "We don’t sell marketing. We sell results.",
+        "Curious if ads can actually boost your sales? We’ll show you how.",
+        "Spending 5 figures a month and still stuck? We’ll fix what’s not working.",
+        "Want to take your brand global? We’ll help you scale across borders.",
       ],
     },
   ];
@@ -237,7 +235,7 @@ export function WhyM44() {
                     {index === 1 && (
                       <div className={`${styles.iconContainer} mb-2`}>
                         <Image
-                          src="/Asset5.png"
+                          src="/logo44.png"
                           alt="Business Icon"
                           layout="fill"
                           objectFit="contain"
