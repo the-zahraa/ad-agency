@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa"; // Added FaTelegramPlane
 import { CustomXIcon } from "./icons/CustomXIcon";
 import styles from "../styles/Footer.module.css";
 
@@ -96,6 +96,10 @@ export default function Footer() {
                 {
                   href: "https://wa.me/+66804444448",
                   icon: <FaWhatsapp size={24} />,
+                },
+                {
+                  href: "https://t.me/m44io",
+                  icon: <FaTelegramPlane size={24} />, // Added Telegram icon
                 },
               ].map((social, index) => (
                 <motion.a
