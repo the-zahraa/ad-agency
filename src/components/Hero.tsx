@@ -36,7 +36,7 @@ export default function Hero() {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <h1 className={`font-extrabold mb-6 text-black ${styles.heroTitle}`}>
-          DO YOU WANT TO TRIPLE YOUR SALES IN 90 DAYS?
+          DO YOU WANT TO SCALE YOUR BUSINESS WITH PAID ADS?
         </h1>
         <div className={styles.subtitleContainer}>
           <p className={`text-lg sm:text-xl lg:text-2xl text-gray-800 max-w-3xl mx-auto ${styles.subtitle}`}>
