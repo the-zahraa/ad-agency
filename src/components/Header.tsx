@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { BsWhatsapp } from "react-icons/bs";
 import CallButton from "../components/CallButton";
 import * as gtag from "../lib/gtag";

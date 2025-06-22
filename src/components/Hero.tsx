@@ -5,7 +5,7 @@ import HeroButton from "./HeroButton";
 import CallButton from "./CallButton";
 import AnimatedLogoText from "./AnimatedLogoText";
 import styles from "../styles/Hero.module.css";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 
 export default function Hero() {

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import styles from "../styles/ResultsSection.module.css";
 
 const fadeInUp = {
