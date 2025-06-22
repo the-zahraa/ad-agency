@@ -29,17 +29,17 @@ export function PartneredSection() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
-          className="mb-2 flex flex-row items-center justify-center gap-4"
+          className="mb-2 flex flex-row items-center justify-center gap-4 max-w-[500px] mx-auto md:max-w-[680px]" // Increased max-width for larger screens
         >
-          <h2 className={`${styles.headline} text-4xl md:text-5xl font-bold text-[#9000ff]`}>
+          <h2 className={`${styles.headline} text-4xl md:text-5xl font-bold text-[#9000ff] whitespace-nowrap`}>
             Partnered with
           </h2>
           <Image
             src="/convertCake.png"
             alt="Convert Cake Logo"
-            width={300}
-            height={90}
-            className={`${styles.logoImageHeader} max-w-[200px] md:max-w-[300px]`}
+            width={400} // Increased base width for larger potential size
+            height={120} // Increased base height to match aspect ratio
+            className={`${styles.logoImageHeader} object-contain max-w-[300px] sm:max-w-[350px] md:max-w-[400px]`} // Responsive max-width
             style={{ filter: "grayscale(100%)" }}
           />
         </motion.div>
