@@ -36,59 +36,39 @@ export const metadata = {
     site: '@m44_io',
     creator: '@m44_io',
   },
-  // Add JSON-LD structured data
+  // Add JSON-LD structured data to suggest sections
   other: {
     'application/ld+json': {
       '@context': 'https://schema.org',
-      '@type': 'Organization',
+      '@type': 'WebSite',
       'name': 'm44',
       'url': 'https://www.m44.io',
-      'sameAs': [
-        'https://www.facebook.com/m44.io',
-        'https://twitter.com/m44_io',
-        'https://www.linkedin.com/company/m44-io',
-      ],
-      'potentialAction': [
+      'potentialAction': {
+        '@type': 'SearchAction',
+        'target': 'https://www.m44.io/search?q={search_term_string}',
+        'query-input': 'required name=search_term_string',
+      },
+      'description': 'Ads performing so well, you’ll have to mute your phone to rest.',
+      'hasPart': [
         {
-          '@type': 'SearchAction',
-          'target': 'https://www.m44.io/search?q={search_term_string}',
-          'query-input': 'required name=search_term_string',
+          '@type': 'WebPage',
+          'name': 'About',
+          'url': 'https://www.m44.io/#why-m44',
+          'description': 'Learn more about m44 and our mission.',
+        },
+        {
+          '@type': 'WebPage',
+          'name': 'Services',
+          'url': 'https://www.m44.io/#services',
+          'description': 'Explore our range of services.',
+        },
+        {
+          '@type': 'WebPage',
+          'name': 'Contact Us',
+          'url': 'https://www.m44.io/#book-call',
+          'description': 'Get in touch with our team.',
         },
       ],
-      'description': 'Ads performing so well, you’ll have to mute your phone to rest.',
-      'hasOfferCatalog': {
-        '@type': 'OfferCatalog',
-        'name': 'm44 Services',
-        'itemListElement': [
-          {
-            '@type': 'Offer',
-            'itemOffered': {
-              '@type': 'Service',
-              'name': 'About',
-              'description': 'Learn more about m44 and our mission.',
-              'url': 'https://www.m44.io/#why-m44',
-            },
-          },
-          {
-            '@type': 'Offer',
-            'itemOffered': {
-              '@type': 'Service',
-              'name': 'Services',
-              'description': 'Explore our range of services.',
-              'url': 'https://www.m44.io/#services',
-            },
-          },
-          {
-            '@type': 'Offer',
-            'itemOffered': {
-              '@type': 'Service',
-              'name': 'Contact Us',
-              'description': 'Get in touch with our team.',
-              'url': 'https://www.m44.io/#book-call',
-            },
-          },
-        ],
-      },
     },
   },
 };
