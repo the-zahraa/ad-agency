@@ -10,7 +10,7 @@ import { ClientFitSection } from "@/components/ClientFitSection";
 import { FAQSection } from "@/components/FAQSection";
 import { BookCallSection } from "@/components/BookCallSection";
 import Hero from "@/components/Hero";
-import * as gtag from "../lib/gtag"; // Import gtag
+import * as gtag from "../lib/gtag";
 
 function DebugSection({ id }: { id: string }) {
   if (typeof window !== "undefined") {
@@ -40,45 +40,43 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div id="home" className="relative w-full">
-        <DebugSection id="home" />
-        <Hero />
-      </div>
+    <div className="flex flex-col min-h-screen max-w-[100vw] overflow-x-hidden"> {/* Added max-w and overflow-x */}
       <div className="flex flex-col w-full">
-        <div className="w-full">
-          <div id="partnered">
-            <DebugSection id="partnered" />
-            <PartneredSection />
-          </div>
-          <div id="why-m44">
-            <DebugSection id="why-m44" />
-            <WhyM44 />
-          </div>
-          <div id="services">
-            <DebugSection id="services" />
-            <ServicesSection />
-          </div>
-          <div id="results-steps">
-            <DebugSection id="results-steps" />
-            <ResultsStepsSection />
-          </div>
-          <div id="results">
-            <DebugSection id="results" />
-            <ResultsSection />
-          </div>
-          <div id="client-fit">
-            <DebugSection id="client-fit" />
-            <ClientFitSection />
-          </div>
-          <div id="support">
-            <DebugSection id="support" />
-            <FAQSection />
-          </div>
-          <div id="book-call">
-            <DebugSection id="book-call" />
-            <BookCallSection />
-          </div>
+        <div id="home">
+          <DebugSection id="home" />
+          <Hero />
+        </div>
+        <div id="partnered">
+          <DebugSection id="partnered" />
+          <PartneredSection />
+        </div>
+        <div id="why-m44">
+          <DebugSection id="why-m44" />
+          <WhyM44 />
+        </div>
+        <div id="services">
+          <DebugSection id="services" />
+          <ServicesSection />
+        </div>
+        <div id="results-steps">
+          <DebugSection id="results-steps" />
+          <ResultsStepsSection />
+        </div>
+        <div id="results">
+          <DebugSection id="results" />
+          <ResultsSection />
+        </div>
+        <div id="client-fit">
+          <DebugSection id="client-fit" />
+          <ClientFitSection />
+        </div>
+        <div id="support">
+          <DebugSection id="support" />
+          <FAQSection />
+        </div>
+        <div id="book-call">
+          <DebugSection id="book-call" />
+          <BookCallSection />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-/* From Uiverse.io by muhammad_1180 */
+/* Background */
 .background {
   position: absolute;
   inset: 0;
@@ -6,278 +6,242 @@
   height: 100%;
   background: radial-gradient(125% 125% at 50% 10%, #fff 40%, #63e 100%) !important;
   z-index: -10;
-  padding-bottom: 0;
 }
 
-/* Hero Container */
-.heroContainer {
-  padding-bottom: 2rem;
+/* Hero Section */
+.heroSection {
+  background-size: auto;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  max-width: 100vw;
+}
+
+/* Text Container */
+.textContainer {
+  margin-bottom: 0.5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.1rem;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  max-width: 80%;
 }
 
 /* Hero Title */
 .heroTitle {
-  font-size: clamp(3rem, 8vw, 4rem);
-  font-weight: 900; /* Extra heavy for bulky look */
-  line-height: 1.1;
-  text-align: center;
-  letter-spacing: -0.02em; /* Tighten spacing for boldness */
-}
-
-/* Subtitle Container */
-.subtitleContainer {
-  margin-bottom: 1rem;
+  font-family: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+  font-size: 2.84rem;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  max-width: 95vw;
+  border: none;
+  outline: none;
+  white-space: normal;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
 }
 
 /* Subtitle */
 .subtitle {
-  display: block;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  line-height: 1.4;
-  text-align: center;
-}
-
-/* Scroll Down Indicator */
-.scrolldown {
-  --color: #9000ff;
-  --sizeX: 30px;
-  --sizeY: 50px;
-  position: relative;
-  width: var(--sizeX);
-  height: var(--sizeY);
-  border: calc(var(--sizeX) / 10) solid var(--color);
-  border-radius: 50px;
+  font-size: clamp(1.125rem, 3.5vw, 1.375rem); /* Kept smaller for larger screens */
+  line-height: 1.5;
+  text-align: left;
+  margin-bottom: 0.5rem;
+  border: none;
+  outline: none;
   box-sizing: border-box;
-  cursor: pointer;
-  z-index: 10;
+  white-space: normal;
+  max-width: 95vw;
 }
 
-.scrolldown::before {
-  content: "";
+/* Breakpoint Styles */
+.mobileBreak {
+  display: inline;
+}
+
+.desktopBreak {
+  display: none;
+}
+
+/* Image Container (Desktop) */
+.imageContainer {
   position: absolute;
-  bottom: 30px;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  margin-left: -3px;
-  background-color: var(--color);
-  border-radius: 100%;
-  animation: scrolldown-anim 2s infinite;
-  box-sizing: border-box;
-  box-shadow: 0px -5px 3px 1px rgba(144, 0, 255, 0.4);
+  bottom: 0;
+  right: 0;
+  width: 564px;
+  height: 564px;
+  overflow: hidden;
+  z-index: 1;
 }
 
-@keyframes scrolldown-anim {
-  0% {
-    opacity: 0;
-    height: 6px;
-  }
-  40% {
-    opacity: 1;
-    height: 10px;
-  }
-  80% {
-    transform: translate(0, 20px);
-    height: 10px;
-    opacity: 0;
-  }
-  100% {
-    height: 3px;
-    opacity: 0;
-  }
+/* Mobile Image Container */
+.mobileImageContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.chevrons {
-  padding: 6px 0 0 0;
-  margin-left: -3px;
-  margin-top: 48px;
-  width: 30px;
+/* Mobile Content Wrapper */
+.mobileContentWrapper {
   display: flex;
   flex-direction: column;
+}
+
+/* Logo Link (Top Left) */
+.logoLink {
+  padding: 0.75rem; /* Increased padding for larger appearance */
+  z-index: 10; /* Fixed typo 'Shooter' to valid z-index */
+  display: flex;
   align-items: center;
 }
 
-.chevrondown {
-  margin-top: -6px;
-  position: relative;
-  border: solid var(--color);
-  border-width: 0 3px 3px 0;
+/* Call Button (Top Right) */
+.callButton {
+  padding: 0.75rem; /* Increased padding for larger appearance */
+  z-index: 10;
+  display: block;
+}
+
+/* Animated Logo Text */
+.animatedLogoText {
   display: inline-block;
-  width: 10px;
-  height: 10px;
-  transform: rotate(45deg);
 }
 
-.chevrondown:nth-child(odd) {
-  animation: pulse54012 500ms ease infinite alternate;
-}
-
-.chevrondown:nth-child(even) {
-  animation: pulse54012 500ms ease infinite alternate 250ms;
-}
-
-@keyframes pulse54012 {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.5;
-  }
-}
-
-/* Button styles */
-.heroButton {
-  margin-bottom: 2rem;
-}
-
-/* Responsive adjustments */
+/* Responsive Adjustments */
 @media (min-width: 768px) {
-  .subtitleContainer {
-    margin-bottom: 3rem;
+  .textContainer {
+    margin-bottom: 0.75rem;
+    gap: 0.15rem;
+  }
+  .logoLink img {
+    width: 56px !important; /* Increased logo size */
+    height: 56px !important; /* Increased logo size */
+  }
+  .animatedLogoText {
+    font-size: 1.25rem; /* Slightly larger logo text */
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroTitle {
+    font-size: 2.84rem;
+    max-width: 1500px;
+    white-space: normal;
+  }
+  .subtitle {
+    max-width: 600px;
+  }
+  .mobileBreak {
+    display: none;
+  }
+  .desktopBreak {
+    display: inline;
+  }
+  .mobileImageContainer {
+    display: none !important;
+  }
+  .mobileContentWrapper {
+    justify-content: flex-start;
   }
 }
 
 @media (max-width: 1024px) {
   .heroTitle {
-    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-size: 2.77rem;
+    font-weight: 950;
+    line-height: 1.3;
+    max-width: 100vw;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+    white-space: nowrap;
   }
-
   .subtitle {
-    font-size: clamp(0.9rem, 2.2vw, 1.3rem);
+    font-size: clamp(1.125rem, 3.5vw, 1.375rem); /* Slightly smaller for smaller screens */
+    margin-bottom: 0.4rem;
+    text-align: center;
+    max-width: 90vw;
   }
-
-  .heroContainer {
-    padding-bottom: 1.5rem;
+  .textContainer {
+    max-width: 100%;
+    align-items: center;
   }
-
-  .scrolldown {
-    --sizeX: 26px;
-    --sizeY: 44px;
+  .imageContainer {
+    display: none;
   }
-
-  .scrolldown::before {
-    bottom: 26px;
-    width: 5px;
-    height: 5px;
-    margin-left: -2.5px;
+  .mobileImageContainer {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
-
-  .chevrons {
-    margin-top: 42px;
-    width: 26px;
-    
+  .mobileContentWrapper {
+    justify-content: flex-start;
+    padding-bottom: 310px; /* Space for 300px image */
   }
-
-  .chevrondown {
-    width: 8px;
-    height: 8px;
-    border-width: 0 2.5px 2.5px 0;
+  .desktopBreak {
+    display: none;
   }
 }
 
 @media (max-width: 767px) {
   .heroTitle {
-    font-size: clamp(2.5rem, 6vw, 3rem);
+    font-size: 2.43rem;
+    font-weight: 950;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    max-width: 100vw;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+    white-space: nowrap;
   }
-
   .subtitle {
-    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+    font-size: clamp(1.125rem, 3.5vw, 1.375rem); /* Slightly smaller for smaller screens */
+    margin-bottom: 0.3rem;
+    text-align: center;
+    max-width: 85vw;
   }
-
-  .heroButton {
-    margin-bottom: 2rem;
+  .textContainer {
+    gap: 0.1rem;
+    max-width: 100%;
+    align-items: center;
   }
-
-  .heroContainer {
-    padding-bottom: 0;
-  }
-
-  .subtitleContainer {
-    margin-bottom: 4rem;
-  }
-
-  .background {
-    height: auto;
-    min-height: 100%;
-  }
-
-  .scrolldown {
-    --sizeX: 22px;
-    --sizeY: 38px;
-    margin-bottom: 12px;
-  }
-
-  .scrolldown::before {
-    bottom: 22px;
-    width: 4px;
-    height: 4px;
-    margin-left: -2px;
-  }
-
-  .chevrons {
-    margin-top: 36px;
-    width: 22px;
-    margin-left: -2px;
-  }
-
-  .chevrondown {
-    width: 7px;
-    height: 7px;
-    border-width: 0 2px 2px 0;
+  .logoLink,
+  .callButton {
+    display: none !important;
   }
 }
 
 @media (max-width: 480px) {
   .heroTitle {
-    font-size: clamp(2.5rem, 6vw, 3rem);
+    font-size: 2.08rem;
+    font-weight: 950;
+    letter-spacing: -0.04em;
+    line-height: 1.3;
+    max-width: 100vw;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+    white-space: nowrap;
   }
-
   .subtitle {
-    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+    font-size: clamp(1rem, 3vw, 1.25rem); /* Slightly smaller for smallest screens */
+    margin-bottom: 0.2rem;
+    text-align: center;
+    max-width: 80vw;
   }
-
-  .heroButton {
-    margin-bottom: 0;
-    padding: 0.5rem 1rem;
-  }
-
-  .heroContainer {
-    padding-bottom: 0;
-  }
-
-  .subtitleContainer {
-    margin-bottom: 4rem;
-  }
-
-  .background {
-    height: auto;
-    min-height: 100%;
-  }
-
-  .scrolldown {
-    --sizeX: 24px;
-    --sizeY: 40px;
-    margin-bottom: 8px;
-  }
-
-  .scrolldown::before {
-    bottom: 24px;
-    width: 5px;
-    height: 5px;
-    margin-left: -2.8px;
-  }
-
-  .chevrons {
-    margin-top: 36px;
-    width: 24px;
-    margin-left: -2.8px;
-  }
-
-  .chevrondown {
-    width: 8px;
-    height: 8px;
-    border-width: 0 2.5px 2.5px 0;
+  .mobileImageContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 }

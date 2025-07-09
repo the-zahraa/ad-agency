@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import ScrollProvider from '../components/ScrollProvider';
 import { Analytics } from "@vercel/analytics/react";
 import Script from 'next/script';
+import WhatsAppButton from '../components/WhatsAppButton';
 
 // Define metadata with Open Graph, Twitter Card tags, and structured data
 export const metadata = {
@@ -36,7 +37,6 @@ export const metadata = {
     site: '@m44_io',
     creator: '@m44_io',
   },
-  // Add JSON-LD structured data to suggest sections
   other: {
     'application/ld+json': {
       '@context': 'https://schema.org',
@@ -97,6 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </ScrollProvider>
         <Analytics />
+        <WhatsAppButton />
       </body>
     </html>
   );

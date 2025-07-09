@@ -139,22 +139,4 @@
   .rightToLeft {
     animation-duration: 30s;
   }
-
-  /* Ensure the headline and logo stay inline on small screens */
-  .flex-row {
-    flex-wrap: nowrap; /* Prevent wrapping */
-    align-items: center; /* Vertically center items */
-    gap: 0.5rem; /* Reduce gap for small screens */
-  }
-
-  /* Adjust the logo size on small screens */
-  .logoImageHeader {
-    max-width: 155px; /* Smaller logo size for phone screens */
-    height: auto; /* Maintain aspect ratio */
-  }
-
-  /* Adjust the headline font size */
-  .headline {
-    font-size: 1.7rem; /* Smaller font size for phone screens */
-  }
 }
