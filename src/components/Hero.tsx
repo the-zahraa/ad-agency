@@ -12,77 +12,79 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className={`relative bg-[#f0f0ef] pt-12 pb-0 overflow-visible ${styles.heroSection}`}
-      style={{ minHeight: "100dvh", height: "auto", boxSizing: "border-box", display: "flex", flexDirection: "column" }}
+      className={`relative bg-[#f0f0ef] pt-12 pb-0 overflow-visible ${styles.heroSection} flex flex-col`}
+      style={{ height: "auto", boxSizing: "border-box" }}
     >
       <div className={styles.background} />
-      <div className={`absolute top-8 left-[3%] hidden md:flex items-center ${styles.logoLink}`}>
-        <Link href="#home" className="flex items-center">
-          <Image
-            src="/logo.png"
-            alt="M44 Logo"
-            width={48}
-            height={48}
-            sizes="48px"
-            className="object-contain"
-            priority
-          />
-          <AnimatedLogoText />
-        </Link>
-      </div>
-      <div className={`absolute top-8 right-[3%] hidden md:block ${styles.callButton}`}>
-        <CallButton />
-      </div>
-      <div className="relative lg:left-[3%] lg:mx-0 lg:px-0 flex-grow">
-        <motion.div
-          className="text-left max-w-4xl pt-20 md:pt-28"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <div className={`text-center lg:text-left ${styles.mobileContentWrapper}`}>
-            <div className={styles.textContainer}>
-              <h1 className={`font-extrabold text-black ${styles.heroTitle}`}>
-                <span> DO YOU WANT TO SCALE</span>
-                <br className={styles.mobileBreak} />
-                <span> YOUR BUSINESS WITH</span>
-                <br className={styles.mobileBreak} />
-                <span> PAID ADS?</span>
-                <br className={styles.desktopBreak} />
-              </h1>
-              <p className={`text-gray-800 max-w-2xl ${styles.subtitle}`}>
-                <span>Partner with the paid media team trusted by leading</span><br />
-                <span>billion-dollar brands to drive 3 to 6x ROAS, fast.</span>
-              </p>
-            </div>
-            <div className="flex justify-center lg:justify-start mt-4 md:mt-6 mb-8">
-              <HeroButton className="hero-button" id="hero-button" />
-            </div>
-            <div className={`lg:hidden ${styles.mobileImageContainer}`}>
+      <div className="flex-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full relative">
+          <div className={`absolute -top-7 left-7 hidden md:flex items-center ${styles.logoLink}`}>
+            <Link href="#home" className="flex items-center">
               <Image
-                src="/l44w.png"
-                alt="Hero Image Mobile"
-                width={300}
-                height={300}
-                style={{ width: "300px", height: "300px", objectFit: "contain" }}
+                src="/logo.png"
+                alt="M44 Logo"
+                width={64}
+                height={64}
+                sizes="64px"
                 className="object-contain"
                 priority
               />
+              <AnimatedLogoText />
+            </Link>
+          </div>
+          <div className={`absolute -top-7 right-7 hidden md:block ${styles.callButton}`}>
+            <CallButton />
+          </div>
+          <div className="lg:grid lg:grid-cols-[2fr_1fr] lg:gap-4 h-full">
+            <div className="lg:col-span-1 lg:pl-12 mx-auto">
+              <motion.div
+                className="text-left pt-20 md:pt-28 max-w-[90vw] mx-auto lg:max-w-none lg:mx-0"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <div className="block lg:hidden">
+                  <h1 className={`font-extrabold text-black ${styles.heroTitle}`}>
+                    DO YOU WANT TO SCALE YOUR BUSINESS WITH PAID ADS?
+                  </h1>
+                </div>
+                <div className="hidden lg:block">
+                  <h1 className={`font-extrabold text-black ${styles.heroTitle}`}>
+                    DO YOU WANT TO SCALE YOUR BUSINESS WITH PAID ADS?
+                  </h1>
+                </div>
+                <p className={`text-gray-800 ${styles.subtitle}`}>
+                  Partner with the paid media team trusted by leading <br className="lg:hidden" /> <br className="hidden lg:inline" /> billion-dollar brands to drive 3 to 6x ROAS, fast.
+                </p>
+              </motion.div>
+              <div className="flex justify-center lg:justify-start mt-4 md:mt-6 mb-8">
+                <HeroButton className="hero-button" id="hero-button" />
+              </div>
+            </div>
+            <div className="hidden lg:block self-end">
+              <div className={styles.imageContainer}>
+                <Image
+                  src="/l44w.png"
+                  alt="Hero Image"
+                  width={564}
+                  height={564}
+                  layout="responsive"
+                  priority
+                />
+              </div>
             </div>
           </div>
-        </motion.div>
-      </div>
-      <div className="absolute bottom-0 right-0" style={{ zIndex: 1, overflow: "visible" }}>
-        <div className={`hidden lg:block ${styles.imageContainer}`}>
-          <Image
-            src="/l44w.png"
-            alt="Hero Image"
-            width={564}
-            height={564}
-            style={{ width: "564px", height: "564px", objectFit: "contain" }}
-            className="object-contain"
-            priority
-          />
+          <div className={`lg:hidden ${styles.mobileImageContainer}`}>
+            <Image
+              src="/l44w.png"
+              alt="Hero Image Mobile"
+              width={300}
+              height={300}
+              style={{ width: "100%", maxWidth: "300px", height: "auto", objectFit: "contain" }}
+              className="object-contain"
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>
