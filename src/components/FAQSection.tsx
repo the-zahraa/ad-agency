@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import styles from "../styles/FAQSection.module.css";
 
 const faqs = [
@@ -12,7 +11,7 @@ const faqs = [
       "Yes, while we specialize in paid media, we also provide high-converting creatives including static ads, video ads, UGC, and landing page design tweaks.",
   },
   {
-    question: "Do you work with service-based businesses or only ecom?",
+    question: "Do you work with service-based businesses or ecom?",
     answer:
       "Both. We work with e-commerce, SaaS, and high-ticket service brands that need more sales, booked calls, or client acquisition through paid ads.",
   },
@@ -48,109 +47,82 @@ const faqs = [
   },
 ];
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
+const FAQSection: React.FC = () => {
+  const [activeFAQ, setActiveFAQ] = useState<string | null>(null);
 
-const answerVariants = {
-  hidden: {
-    opacity: 0,
-    height: 0,
-    transition: {
-      opacity: { duration: 0.12, ease: "easeInOut" },
-      height: { duration: 0.12, ease: "easeInOut" },
-    },
-  },
-  visible: {
-    opacity: 1,
-    height: "auto",
-    transition: {
-      opacity: { duration: 0.12, ease: "easeInOut" },
-      height: { duration: 0.12, ease: "easeInOut" },
-    },
-  },
-};
-
-const iconVariants = {
-  hidden: { opacity: 0, scale: 0.8, transition: { duration: 0.12, ease: "easeInOut" } },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.12, ease: "easeInOut" } },
-};
-
-export function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
+  const handleToggle = (question: string) => {
+    setActiveFAQ((prev) => (prev === question ? null : question));
   };
 
   return (
-    <section className="bg-white py-16 text-black">
+    <section className={styles.faqSection}>
       <div className={styles.sectionContainer}>
         <motion.h2
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          variants={fadeInUp}
-          className="text-4xl md:text-5xl font-bold text-center mb-12 text-[#9000ff]"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className={styles.sectionTitle}
         >
           Still Have Questions?
         </motion.h2>
-
         <div className={styles.faqContainer}>
-          {faqs.map((faq, index) => (
-            <div key={index} className={styles.faqItem}>
-              <div
-                className={`${styles.faqQuestion} ${
-                  openIndex === index ? styles.active : ""
-                }`}
-                onClick={() => toggleFAQ(index)}
-              >
-                <h3>{faq.question}</h3>
-                <div className={styles.iconContainer}>
-                  <AnimatePresence mode="wait">
-                    {openIndex === index ? (
-                      <motion.div
-                        key="minus"
-                        variants={iconVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                      >
-                        <MinusIcon className={styles.icon} />
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="plus"
-                        variants={iconVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                      >
-                        <PlusIcon className={styles.icon} />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+          <div className={styles.faqContent}>
+            {faqs.map((faq) => (
+              <div key={faq.question} className={styles.faqItem}>
+                <div
+                  className={styles.faqHeader}
+                  onClick={() => handleToggle(faq.question)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      handleToggle(faq.question);
+                    }
+                  }}
+                >
+                  <span className={styles.faqQuestion}>{faq.question}</span>
+                  <div className={styles.arrowContainer}>
+                    <motion.svg
+                      className={styles.arrow}
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      style={{ width: "100%", height: "100%" }}
+                      initial={{ rotate: 0 }}
+                      animate={{ rotate: activeFAQ === faq.question ? 180 : 0 }}
+                      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                    >
+                      <path
+                        d="M2 4 L6 8 L10 4"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        stroke="currentColor"
+                      />
+                    </motion.svg>
+                  </div>
                 </div>
+                <AnimatePresence>
+                  {activeFAQ === faq.question && (
+                    <motion.div
+                      className={styles.faqAnswer}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                    >
+                      <div className={styles.faqAnswerText}>{faq.answer}</div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-
-              <AnimatePresence>
-                {openIndex === index && (
-                  <motion.div
-                    variants={answerVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    className={`${styles.faqAnswer} ${openIndex === index ? styles.open : ""}`}
-                  >
-                    <p>{faq.answer}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export { FAQSection }; // Named export to match page.tsx

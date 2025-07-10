@@ -15,7 +15,6 @@ export default function Hero() {
       className={`relative bg-[#f0f0ef] pt-12 pb-0 overflow-visible ${styles.heroSection} flex flex-col`}
       style={{ height: "auto", boxSizing: "border-box" }}
     >
-      <div className={styles.background} />
       <div className="flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full relative">
           <div className={`absolute -top-7 left-7 hidden md:flex items-center ${styles.logoLink}`}>
