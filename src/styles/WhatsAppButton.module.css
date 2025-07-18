@@ -33,7 +33,7 @@
   visibility: hidden;
   font-size: 14px;
   transition: all 0.3s ease;
-  background-color: #9000ff;
+  background-color: #25D366; /* WhatsApp green */
 }
 
 .iconContent:hover .tooltip {
@@ -78,7 +78,7 @@
   left: 0;
   width: 100%;
   height: 0;
-  background-color: #9000ff;
+  background-color: #25D366; /* WhatsApp green */
   transition: all 0.3s ease-in-out;
 }
 
