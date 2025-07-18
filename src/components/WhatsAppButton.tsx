@@ -2,19 +2,21 @@ import styles from "../styles/WhatsAppButton.module.css";
 
 export default function WhatsAppButton({ isMobileMenuOpen }: { isMobileMenuOpen: boolean }) {
   return (
-    !isMobileMenuOpen && ( // Only render if mobile menu is not open
+    !isMobileMenuOpen && (
       <ul className={`${styles.list} ${styles.example2}`}>
         <li className={styles.iconContent}>
           <a
             data-social="whatsapp"
             aria-label="WhatsApp"
             href="https://wa.me/+66804444448"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <div className={styles.filled}></div>
             <svg
               xmlSpace="preserve"
               viewBox="0 0 24 24"
-              className="bi bi-whatsapp"
+              className={styles.whatsappIcon}
               fill="currentColor"
               height="24"
               width="24"

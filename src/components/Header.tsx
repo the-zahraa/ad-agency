@@ -8,7 +8,7 @@ import { BsWhatsapp } from "react-icons/bs";
 import CallButton from "../components/CallButton";
 import * as gtag from "../lib/gtag";
 import styles from "../styles/Header.module.css";
-import WhatsAppButton from "../components/WhatsAppButton"; // Ensure this import exists
+import WhatsAppButton from "../components/WhatsAppButton";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -96,16 +96,24 @@ export default function Header() {
 
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.classList.add("mobile-menu-open");
-      document.body.style.overflow = "hidden";
+      const scrollY = window.scrollY;
+      document.body.style.cssText = `
+        overflow: hidden;
+        position: fixed;
+        top: -${scrollY}px;
+        width: 100%;
+      `;
+      document.documentElement.style.scrollBehavior = "auto";
     } else {
-      document.body.classList.remove("mobile-menu-open");
-      document.body.style.overflow = "auto";
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      document.documentElement.style.scrollBehavior = "";
+      window.scrollTo(0, parseInt(scrollY || "0") * -1);
     }
 
     return () => {
-      document.body.classList.remove("mobile-menu-open");
-      document.body.style.overflow = "auto";
+      document.body.style.cssText = "";
+      document.documentElement.style.scrollBehavior = "";
     };
   }, [isMobileMenuOpen]);
 
@@ -260,16 +268,24 @@ export default function Header() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className={`${styles.mobileMenu} fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-8 top-0 md:hidden`}
+            className={`${styles.mobileMenu} fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center z-100 p-8 top-0 md:hidden`}
             initial={{ y: "-100%" }}
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
+            // Debug attribute to check rendering
+            data-debug="mobile-menu"
           >
+            <div
+              className={styles.overlay}
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ zIndex: 99 }}
+            />
             <button
               className={styles.closeButton}
               onClick={toggleMobileMenu}
               aria-label="Close mobile menu"
+              data-debug="close-button"
             />
             {navLinks.map((link, index) => (
               <motion.div
@@ -278,11 +294,13 @@ export default function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
+                data-debug="link-container"
               >
                 <Link
                   href={link.href}
                   className={`${styles.mobileMenuLink}`}
                   onClick={() => setIsMobileMenuOpen(false)}
+                  data-debug="link"
                 >
                   {link.name}
                 </Link>
@@ -293,6 +311,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.3, delay: navLinks.length * 0.1 }}
+              data-debug="whatsapp-container"
             >
               <Link
                 href="https://wa.me/66804444448"
@@ -300,8 +319,9 @@ export default function Header() {
                   handleWhatsAppClick();
                   setIsMobileMenuOpen(false);
                 }}
+                data-debug="whatsapp-link"
               >
-                <button className={styles.customWhatsappButton}>
+                <button className={styles.customWhatsappButton} data-debug="whatsapp-button">
                   <div className={styles.sign}>
                     <svg className={styles.socialSvg} viewBox="0 0 16 16">
                       <path
@@ -324,13 +344,14 @@ export default function Header() {
                 });
                 setIsMobileMenuOpen(false);
               }}
+              data-debug="book-button"
             >
               Book a Call
             </Link>
           </motion.div>
         )}
       </AnimatePresence>
-      <WhatsAppButton isMobileMenuOpen={isMobileMenuOpen} /> {/* Ensure this is the only instance */}
+      <WhatsAppButton isMobileMenuOpen={isMobileMenuOpen} />
     </>
   );
 }

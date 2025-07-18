@@ -115,6 +115,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 101; /* Above overlay */
+  pointer-events: auto; /* Ensure clickable */
 }
 
 .closeButton::before,
@@ -148,11 +150,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: auto;
+  overflow: hidden;
   padding: 2rem;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
   will-change: transform;
+  z-index: 100;
+  touch-action: none;
 }
 
 @supports not (backdrop-filter: blur(10px)) {
@@ -173,6 +177,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: auto; /* Ensure links are clickable */
+  z-index: 101; /* Above overlay */
 }
 
 .mobileMenuLink:hover {
@@ -212,6 +218,8 @@
   text-decoration: none;
   transition: transform 0.2s ease, background-color 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: auto; /* Ensure button is clickable */
+  z-index: 101; /* Above overlay */
 }
 
 .mobileBookButton:hover {
@@ -268,6 +276,8 @@
   transition-duration: 0.3s;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
   background-color: #00d757;
+  pointer-events: auto; /* Ensure this button is clickable */
+  z-index: 101; /* Above overlay */
 }
 
 .sign {
@@ -325,29 +335,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 36px; /* Larger for bigger icon */
+  width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #fff; /* Match header background */
-  transition: color 0.3s ease-in-out; /* Smooth color transition */
+  background-color: #fff;
+  transition: color 0.3s ease-in-out;
 }
 
 .whatsappButton:hover .whatsappIcon {
-  color: #9000ff !important; /* Icon turns purple on hover */
+  color: #9000ff !important;
   fill: #9000ff !important;
 }
 
 .whatsappIcon {
-  width: 24px; /* Larger icon for desktop */
+  width: 24px;
   height: 24px;
-  color: #4b5563 !important; /* Grey by default */
+  color: #4b5563 !important;
   fill: #4b5563 !important;
 }
 
 /* Mobile Menu WhatsApp Button (Override to Avoid Conflicts) */
 @media (max-width: 767px) {
   .mobileMenu .whatsappButton {
-    display: none; /* Hide the old WhatsApp button in mobile menu */
+    display: none;
   }
 
   .mobileMenu .whatsappButton:hover .whatsappIcon {
@@ -356,7 +366,7 @@
   }
 
   .mobileMenu .whatsappIcon {
-    width: 28px; /* Larger icon for mobile */
+    width: 28px;
     height: 28px;
     color: #4b5563 !important;
     fill: #4b5563 !important;
@@ -384,6 +394,19 @@
   }
 
   .header nav > div {
-    flex-grow: 0; /* Prevent nav links container from growing excessively */
+    flex-grow: 0;
   }
+}
+
+/* Updated overlay style */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 99; /* Below menu content */
+  pointer-events: auto; /* Capture background events */
+  touch-action: none; /* Disable touch scrolling on overlay */
 }
