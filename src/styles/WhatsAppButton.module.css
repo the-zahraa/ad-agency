@@ -33,7 +33,7 @@
   visibility: hidden;
   font-size: 14px;
   transition: all 0.3s ease;
-  background-color: #25D366; /* WhatsApp green */
+  background-color: #25D366;
 }
 
 .iconContent:hover .tooltip {
@@ -78,7 +78,7 @@
   left: 0;
   width: 100%;
   height: 0;
-  background-color: #25D366; /* WhatsApp green */
+  background-color: #25D366;
   transition: all 0.3s ease-in-out;
 }
 
@@ -90,4 +90,9 @@
   .example2 {
     display: none;
   }
+}
+
+/* Enhanced rule to hide when mobile menu is open */
+body.mobile-menu-open .example2 {
+  display: none !important; /* Override any other styles */
 }

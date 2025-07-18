@@ -8,6 +8,7 @@ import { BsWhatsapp } from "react-icons/bs";
 import CallButton from "../components/CallButton";
 import * as gtag from "../lib/gtag";
 import styles from "../styles/Header.module.css";
+import WhatsAppButton from "../components/WhatsAppButton"; // Ensure this import exists
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -95,12 +96,15 @@ export default function Header() {
 
   useEffect(() => {
     if (isMobileMenuOpen) {
+      document.body.classList.add("mobile-menu-open");
       document.body.style.overflow = "hidden";
     } else {
+      document.body.classList.remove("mobile-menu-open");
       document.body.style.overflow = "auto";
     }
 
     return () => {
+      document.body.classList.remove("mobile-menu-open");
       document.body.style.overflow = "auto";
     };
   }, [isMobileMenuOpen]);
@@ -326,6 +330,7 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+      <WhatsAppButton isMobileMenuOpen={isMobileMenuOpen} /> {/* Ensure this is the only instance */}
     </>
   );
 }
