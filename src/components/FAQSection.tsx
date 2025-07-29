@@ -88,7 +88,8 @@ const FAQSection: React.FC = () => {
                       viewBox="0 0 12 12"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      style={{ width: "100%", height: "100%" }}
+                      width="24"
+                      height="24"
                       initial={{ rotate: 0 }}
                       animate={{ rotate: activeFAQ === faq.question ? 180 : 0 }}
                       transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}

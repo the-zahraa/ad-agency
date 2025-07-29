@@ -57,7 +57,7 @@
 
 .faqHeader {
   display: flex;
-  align-items: flex-start; /* Align items at the top */
+  align-items: center; /* Ensure vertical centering */
   justify-content: space-between; /* Center question, right-align arrow */
   gap: 12px; /* Reduced gap to prevent wrapping */
   padding: 16px 1rem; /* Consistent left/right spacing */
@@ -82,16 +82,42 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0; /* Prevent shrinking */
   transition: transform 0.1s ease;
+}
+
+.arrow {
+  width: 100%;
+  height: 100%;
 }
 
 .arrow path {
   stroke: #333;
+  stroke-width: 1.5; /* Consistent stroke width */
   transition: stroke 0.1s ease;
 }
 
 .faqHeader:hover .arrow path {
   stroke: #666;
+}
+
+/* Disable hover effects on small screens */
+@media (max-width: 767px) {
+  .faqHeader:hover {
+    background-color: transparent;
+  }
+
+  .faqHeader:hover .faqQuestion {
+    color: #333; /* Revert to default color */
+  }
+
+  .faqHeader:hover .arrowContainer {
+    transform: none; /* Remove translateY on hover */
+  }
+
+  .faqHeader:hover .arrow path {
+    stroke: #333; /* Revert to default stroke color */
+  }
 }
 
 .faqQuestion {
