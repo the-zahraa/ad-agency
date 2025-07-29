@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/legacy/image";
 import Link from "next/link";
-import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa"; // Added FaTelegramPlane
+import { FaWhatsapp, FaTelegramPlane, FaInstagram, FaFacebook } from "react-icons/fa"; // Added FaInstagram, FaFacebook
 import { CustomXIcon } from "./icons/CustomXIcon";
 import styles from "../styles/Footer.module.css";
 
@@ -99,7 +99,15 @@ export default function Footer() {
                 },
                 {
                   href: "https://t.me/m44io",
-                  icon: <FaTelegramPlane size={24} />, // Added Telegram icon
+                  icon: <FaTelegramPlane size={24} />,
+                },
+                {
+                  href: "https://www.instagram.com/m44collective?igsh=OTd1NDl6eGx4OWcx&utm_source=qr",
+                  icon: <FaInstagram size={24} />,
+                },
+                {
+                  href: "https://www.facebook.com/share/1HRhWKbrye/?mibextid=wwXIfr",
+                  icon: <FaFacebook size={24} />,
                 },
               ].map((social, index) => (
                 <motion.a
