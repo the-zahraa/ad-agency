@@ -14,7 +14,9 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   const [pastHeroButton, setPastHeroButton] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const heroButtonRef = useRef<HTMLElement | null>(null);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleResize = () => {
@@ -62,27 +64,33 @@ export default function Header() {
     return () => clearTimeout(timeout);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: heroButtonRef,
-    offset: ["start start", "end start"],
-  });
-
+  const { scrollY } = useScroll();
   const paddingY = useSpring(12, { stiffness: 50, damping: 40 });
   const scale = useSpring(1, { stiffness: 50, damping: 40 });
 
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (progress) => {
+    const unsubscribe = scrollY.on("change", (currentScrollY) => {
+      const scrollDirection = currentScrollY > lastScrollY.current ? "down" : "up";
+      lastScrollY.current = currentScrollY;
+
       if (isDesktop) {
-        const easedProgress = 1 - Math.pow(1 - progress, 2);
+        const easedProgress = Math.min(currentScrollY / 500, 1);
         const newPadding = 12 - (12 - 6) * easedProgress;
         paddingY.set(newPadding);
         const newScale = 1 - (1 - 0.94) * easedProgress;
         scale.set(newScale);
+
+        // Show header if near top (less than 100px) or scrolling up
+        if (currentScrollY < 100 || scrollDirection === "up") {
+          setIsHeaderVisible(true);
+        } else if (scrollDirection === "down" && currentScrollY > 100) {
+          setIsHeaderVisible(false);
+        }
       }
     });
 
     return () => unsubscribe();
-  }, [scrollYProgress, paddingY, scale, isDesktop]);
+  }, [scrollY, paddingY, scale, isDesktop]);
 
   useEffect(() => {
     if (pastHeroButton && isDesktop) {
@@ -140,9 +148,8 @@ export default function Header() {
   return (
     <>
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
+        animate={{ y: isHeaderVisible ? 0 : -100 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
         style={{
           paddingTop: paddingY,
           paddingBottom: paddingY,
@@ -273,7 +280,6 @@ export default function Header() {
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            // Debug attribute to check rendering
             data-debug="mobile-menu"
           >
             <div
