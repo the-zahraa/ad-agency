@@ -22,7 +22,7 @@ export function BookCallSection() {
     try {
       const calApi = await getCalApi();
       calApi("ui", {
-        hideEventTypeDetails: true,
+        hideEventTypeDetails: false, // Updated to match new embed code
         layout: "month_view",
       });
       console.log("Cal.com API initialized successfully");
@@ -130,7 +130,7 @@ export function BookCallSection() {
                   <Cal
                     key={calKey}
                     namespace="30min"
-                    calLink="iveymeet/30min"
+                    calLink="ivm44/30min" // Updated to new Cal.com link
                     className={styles.calendarEmbed}
                     config={{ layout: "month_view" }}
                   />
