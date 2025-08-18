@@ -53,7 +53,7 @@ export default function Hero() {
                   </h1>
                 </div>
                 <p className={`text-gray-800 ${styles.subtitle}`}>
-                  Partner with the team trusted by leading   <br className="lg:hidden" /> <br className="hidden lg:inline" /> billion-dollar brands to drive results, fast.
+                  Partner with the team trusted by billion   <br className="lg:hidden" /> <br className="hidden lg:inline" /> dollar brands to drive results, fast.
                 </p>
               </motion.div>
               <div className="flex justify-center lg:justify-start mt-4 md:mt-6 mb-8">

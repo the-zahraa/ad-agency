@@ -8,7 +8,7 @@ import Script from 'next/script';
 
 // Define metadata with Open Graph, Twitter Card tags, and structured data
 export const metadata = {
-  title: 'm44 - Same ad budget, better results.',
+  title: 'm44 - Strategic Marketing. Quality With Speed',
   description: 'Ads performing so well, you’ll have to mute your phone to rest.',
   icons: {
     icon: '/logo.png',
