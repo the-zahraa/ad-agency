@@ -94,7 +94,7 @@ export default function Footer() {
                   icon: <CustomXIcon size={24} />,
                 },
                 {
-                  href: "https://wa.me/+66804444448",
+                  href: "https://wa.me/6583444444",
                   icon: <FaWhatsapp size={24} />,
                 },
                 {
