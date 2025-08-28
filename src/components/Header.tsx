@@ -235,7 +235,7 @@ export default function Header() {
               className="relative group"
             >
               <Link
-                href="https://wa.me/66804444448"
+                href="https://wa.me/6583444444"
                 className={`${styles.whatsappButton} flex justify-center items-center`}
                 aria-label="WhatsApp"
                 onClick={handleWhatsAppClick}
@@ -320,7 +320,7 @@ export default function Header() {
               data-debug="whatsapp-container"
             >
               <Link
-                href="https://wa.me/66804444448"
+                href="https://wa.me/6583444444"
                 onClick={() => {
                   handleWhatsAppClick();
                   setIsMobileMenuOpen(false);
