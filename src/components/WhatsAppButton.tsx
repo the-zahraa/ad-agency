@@ -8,7 +8,7 @@ export default function WhatsAppButton({ isMobileMenuOpen }: { isMobileMenuOpen:
           <a
             data-social="whatsapp"
             aria-label="WhatsApp"
-            href="https://wa.me/+66804444448"
+            href="https://wa.me/6583444444"
             target="_blank"
             rel="noopener noreferrer"
           >
