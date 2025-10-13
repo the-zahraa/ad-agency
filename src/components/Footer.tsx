@@ -71,6 +71,7 @@ export default function Footer() {
                 { name: "Why m44", href: "/#why-m44" },
                 { name: "Services", href: "/#services" },
                 { name: "FAQ", href: "/#support" },
+                { name: "Privacy Policy", href: "/privacy" }, // ← added
               ].map((item) => (
                 <motion.li
                   key={item.name}

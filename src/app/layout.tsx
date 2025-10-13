@@ -3,8 +3,9 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ScrollProvider from '../components/ScrollProvider';
 import { Analytics } from "@vercel/analytics/react";
-import Script from 'next/script';
 
+// ⬇️ NEW: consent components
+import CookieConsent, { AnalyticsScripts, ConsentGate } from '../components/CookieConsent';
 
 // Define metadata with Open Graph, Twitter Card tags, and structured data
 export const metadata = {
@@ -76,50 +77,25 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=G-2GBKK2RGWC`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-2GBKK2RGWC');
-          `}
-        </Script>
-        {/* Meta Pixel Code */}
-        <Script id="meta-pixel" strategy="afterInteractive">
-          {`!function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1538557934185142');
-          fbq('track', 'PageView');`}
-        </Script>
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=1538557934185142&ev=PageView&noscript=1"
-          />
-        </noscript>
-        {/* End Meta Pixel Code */}
-      </head>
+      {/* ⛔️ Removed GA/Meta scripts from <head> so they don't run before consent */}
+      <head />
       <body className="antialiased">
         <ScrollProvider>
           <Header />
           <main>{children}</main>
           <Footer />
         </ScrollProvider>
-        <Analytics />
-        
+
+        {/* Vercel Analytics only when Analytics consent is granted */}
+        <ConsentGate category="analytics">
+          <Analytics />
+        </ConsentGate>
+
+        {/* GA4 + Meta pixels (load only after consent) */}
+        <AnalyticsScripts />
+
+        {/* Cookie banner (blocks until a choice) */}
+        <CookieConsent />
       </body>
     </html>
   );
