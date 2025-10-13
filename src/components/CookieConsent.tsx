@@ -211,7 +211,7 @@ export default function CookieConsent() {
             <div className="p-4 md:p-5">
               <h2 className="text-lg md:text-xl font-extrabold tracking-tight">We value your privacy</h2>
               <p className="mt-2 text-sm opacity-90">
-                Cookies help improve speed, security, and relevance on M44. Learn more in{' '}
+                Cookies help improve speed, security, and relevance on m44. Learn more in{' '}
                 <a href="/privacy" className="underline" style={{ color: BRAND }}>Privacy & Cookies</a>.
               </p>
 
