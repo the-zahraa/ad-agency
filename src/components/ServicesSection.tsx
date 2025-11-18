@@ -49,7 +49,7 @@ export function ServicesSection() {
       description: "We don’t just make you look good. We make people buy. From idea to execution, we turn attention into revenue.",
       whyTitle: "Why It Works",
       whyDescription: "We build creative that’s designed to drive action, not just admiration. Pretty is optional. Profitable is mandatory.",
-      image: "/s2.png",
+      image: "/s2.jpg",
       width: 355,
       height: 296,
     },
