@@ -45,22 +45,36 @@ export function PartneredSection() {
           <div className={styles.logosWrapper}>
             {/* First row: Left to Right */}
             <div className={`${styles.logosRow} ${styles.leftToRight}`}>
-              {[...firstRowLogos, ...firstRowLogos].map((_, index) => (
-                <div key={`first-${index}`} className={styles.logoPlaceholder}>
-                  <Image
-                    src={`/${(index % 14) + 1}.png`}
-                    alt={`Logo ${(index % 14) + 1}`}
-                    width={120}
-                    height={60}
-                    className={styles.logoImage}
-                  />
-                </div>
-              ))}
+              {[...firstRowLogos, ...firstRowLogos].map((_, index) => {
+                const num = (index % 14) + 1; // 1..14 repeated
+
+                return (
+                  <div
+                    key={`first-${index}`}
+                    className={styles.logoPlaceholder}
+                  >
+                    {/* 🔥 Skip 1.png and 2.png so they are never requested */}
+                    {num > 2 && (
+                      <Image
+                        src={`/${num}.png`}
+                        alt={`Logo ${num}`}
+                        width={120}
+                        height={60}
+                        className={styles.logoImage}
+                      />
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            {/* Second row: Right to Left */}
+
+            {/* Second row: Right to Left (unchanged, starts at 15.png) */}
             <div className={`${styles.logosRow} ${styles.rightToLeft}`}>
               {[...secondRowLogos, ...secondRowLogos].map((_, index) => (
-                <div key={`second-${index}`} className={styles.logoPlaceholder}>
+                <div
+                  key={`second-${index}`}
+                  className={styles.logoPlaceholder}
+                >
                   <Image
                     src={`/${(index % 14) + 15}.png`}
                     alt={`Logo ${(index % 14) + 15}`}

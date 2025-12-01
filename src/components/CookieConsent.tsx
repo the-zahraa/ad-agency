@@ -184,7 +184,7 @@ export default function CookieConsent() {
                 Accept all
               </button>
               <button onClick={rejectAll} className="text-sm" style={{ ...btnGhost, color: '#111', border: '1px solid rgba(0,0,0,0.15)' }}>
-                Essential only
+                Essentials only
               </button>
               <button
                 onClick={() => { setShowCustomize(true); setOpen(true); setTimeout(() => firstButtonRef.current?.focus(), 0) }}
@@ -218,7 +218,7 @@ export default function CookieConsent() {
               {!showCustomize && (
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button ref={firstButtonRef} onClick={acceptAll} style={btnPrimary}>Accept all</button>
-                  <button onClick={rejectAll} style={btnGhost}>Essential only</button>
+                  <button onClick={rejectAll} style={btnGhost}>Essentials only</button>
                   <button onClick={() => { setShowCustomize(true); setTimeout(() => firstButtonRef.current?.focus(), 0) }} style={btnGhost}>Customize</button>
                 </div>
               )}
@@ -226,7 +226,7 @@ export default function CookieConsent() {
               {showCustomize && (
                 <div className="mt-4 border-t border-white/10 pt-4">
                   <fieldset className="space-y-2 text-sm">
-                    <label className="flex items-center gap-3"><input type="checkbox" checked disabled /> <span>Essential (always on)</span></label>
+                    <label className="flex items-center gap-3"><input type="checkbox" checked disabled /> <span>Essentials (always on)</span></label>
                     <label className="flex items-center gap-3"><input type="checkbox" checked={prefs.analytics} onChange={() => toggle('analytics')} /> <span>Analytics (GA4, etc.)</span></label>
                     <label className="flex items-center gap-3"><input type="checkbox" checked={prefs.marketing} onChange={() => toggle('marketing')} /> <span>Marketing pixels (Meta, TikTok)</span></label>
                     <label className="flex items-center gap-3"><input type="checkbox" checked={prefs.functional} onChange={() => toggle('functional')} /> <span>Functional embeds (calendars/forms)</span></label>
@@ -234,7 +234,7 @@ export default function CookieConsent() {
                   <div className="mt-4 flex flex-wrap gap-2">
                     {/* Order: Accept all, Essential only, Save preferences */}
                     <button onClick={acceptAll} style={btnGhost}>Accept all</button>
-                    <button onClick={rejectAll} style={btnGhost}>Essential only</button>
+                    <button onClick={rejectAll} style={btnGhost}>Essentials only</button>
                     <button onClick={() => save(prefs)} style={btnPrimary}>Save preferences</button>
                   </div>
                 </div>

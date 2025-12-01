@@ -11,37 +11,44 @@
 }
 
 .dot {
-  width: 5px;
-  aspect-ratio: 1;
+  width: 6px;
+  height: 6px;
   position: absolute;
   background-color: #fff;
   box-shadow: 0 0 10px #ffffff;
-  border-radius: 100px;
+  border-radius: 999px;
   z-index: 2;
-  right: 10%;
+  /* start at top-left corner of the “track” */
   top: 10%;
+  left: 10%;
+  transform: translate(-50%, -50%);
   animation: moveDot 6s linear infinite;
 }
 
+
 @keyframes moveDot {
-  0%,
-  100% {
+  0% {
     top: 10%;
-    right: 10%;
+    left: 10%;
   }
   25% {
     top: 10%;
-    right: calc(100% - 35px);
+    left: 90%;    /* 100% - 10% → matches right line */
   }
   50% {
-    top: calc(100% - 30px);
-    right: calc(100% - 35px);
+    top: 90%;     /* 100% - 10% → matches bottom line */
+    left: 90%;
   }
   75% {
-    top: calc(100% - 30px);
-    right: 10%;
+    top: 90%;
+    left: 10%;
+  }
+  100% {
+    top: 10%;
+    left: 10%;
   }
 }
+
 
 .card {
   z-index: 1;

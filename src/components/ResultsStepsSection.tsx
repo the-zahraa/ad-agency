@@ -4,19 +4,9 @@ import { motion } from "framer-motion";
 import Image from "next/legacy/image";
 import styles from "../styles/StepCard.module.css";
 
-// Animation variants for Framer Motion
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.95 },
-  visible: (i: number) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.6, delay: i * 0.2 },
-  }),
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 const scrollToBookCall = () => {
@@ -65,7 +55,7 @@ export function ResultsStepsSection() {
         <motion.h2
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.4 }}
           variants={fadeInUp}
           className="text-5xl md:text-6xl font-bold text-center mb-12"
         >
@@ -81,18 +71,16 @@ export function ResultsStepsSection() {
           Simple Steps
         </motion.h2>
 
-        {/* Cards */}
-        <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto mb-16">
+        {/* Cards: animate the whole block, not each card */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInUp}
+          className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto mb-16"
+        >
           {steps.map((step, index) => (
-            <motion.div
-              key={index}
-              custom={index}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={cardVariants}
-              className={styles.outer}
-            >
+            <div key={index} className={styles.outer}>
               <div className={styles.a}></div>
               <div className={styles.b}></div>
               <div className={styles.c}></div>
@@ -104,39 +92,37 @@ export function ResultsStepsSection() {
                     <Image
                       src={step.icon}
                       alt={`${step.title} icon`}
-                      width={56} // Increased from 48 to 56
-                      height={56} // Increased from 48 to 56
+                      width={56}
+                      height={56}
                       className={styles.stepIcon}
                     />
                   </div>
                 </div>
                 <p className={styles.stepDescription}>{step.description}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Footer Text */}
         <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeInUp}
-      className="text-center"
-    >
-      <p className="text-2xl font-bold mb-4">Speed starts with you.</p>
-      <p className="text-xl mb-6">The first step is in your control.</p>
-      <motion.button
-        onClick={scrollToBookCall}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-        className="inline-block px-8 py-3 bg-[#9000ff] text-white font-semibold text-lg rounded-full hover:scale-105 transition-transform cursor-pointer"
-      >
-        Book the call
-      </motion.button>
-    </motion.div>
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInUp}
+          className="text-center"
+        >
+          <p className="text-2xl font-bold mb-4">Speed starts with you.</p>
+          <p className="text-xl mb-6">The first step is in your control.</p>
+          <motion.button
+            onClick={scrollToBookCall}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.15 }}
+            className="inline-block px-8 py-3 bg-[#9000ff] text-white font-semibold text-lg rounded-full transition-transform cursor-pointer"
+          >
+            Book the call
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );

@@ -97,21 +97,35 @@ const resultsData: Result[] = [
 ];
 
 export function ResultsSection() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // virtual index for infinite loop on desktop/tablet
+  const [virtualIndex, setVirtualIndex] = useState(0);
   const [transformPercentage, setTransformPercentage] = useState(70);
-  const [sliderHeight, setSliderHeight] = useState(214);
+  const [sliderHeight, setSliderHeight] = useState(260);
+  const [isMobile, setIsMobile] = useState(false);
+  const [direction, setDirection] = useState<1 | -1>(1); // for mobile slide direction
+
+  const total = resultsData.length;
+  const currentSlide = ((virtualIndex % total) + total) % total;
 
   useEffect(() => {
     const updateSliderSettings = () => {
-      if (window.innerWidth >= 1024) {
-        setTransformPercentage(70);
+      const width = window.innerWidth;
+
+      if (width >= 1024) {
+        // desktop
+        setIsMobile(false);
+        setTransformPercentage(60); // slightly smaller step so neighbors fit
         setSliderHeight(380);
-      } else if (window.innerWidth >= 768) {
-        setTransformPercentage(60);
+      } else if (width >= 768) {
+        // tablet
+        setIsMobile(false);
+        setTransformPercentage(55);
         setSliderHeight(340);
       } else {
-        setTransformPercentage(120);
-        setSliderHeight(240);
+        // mobile
+        setIsMobile(true);
+        setTransformPercentage(0);
+        setSliderHeight(260);
       }
     };
 
@@ -121,29 +135,21 @@ export function ResultsSection() {
   }, []);
 
   const handlePrev = () => {
-    setCurrentSlide((prev) => {
-      const newIndex = prev - 1;
-      if (newIndex < 0) {
-        return resultsData.length - 1;
-      }
-      return newIndex;
-    });
+    setDirection(-1);
+    setVirtualIndex((v) => v - 1);
   };
 
   const handleNext = () => {
-    setCurrentSlide((prev) => {
-      const newIndex = prev + 1;
-      if (newIndex >= resultsData.length) {
-        return 0;
-      }
-      return newIndex;
-    });
+    setDirection(1);
+    setVirtualIndex((v) => v + 1);
   };
 
   const handleSlideClick = (index: number) => {
-    if (index === (currentSlide - 1 + resultsData.length) % resultsData.length) {
+    if (isMobile) return; // mobile uses single slide, click doesn’t move via neighbors
+
+    if (index === (currentSlide - 1 + total) % total) {
       handlePrev();
-    } else if (index === (currentSlide + 1) % resultsData.length) {
+    } else if (index === (currentSlide + 1) % total) {
       handleNext();
     }
   };
@@ -168,7 +174,7 @@ export function ResultsSection() {
           variants={fadeInUp}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <p className="text-lg md:text-xl text-gray-600">
+          <p className="text-lg md:text-XL text-gray-600">
             Partnered with Convert Cake to make conversions a piece of cake, delivering proven results across e-commerce, SaaS, and retail.
           </p>
         </motion.div>
@@ -178,54 +184,86 @@ export function ResultsSection() {
             className="flex overflow-hidden justify-center"
             style={{ height: `${sliderHeight}px` }}
           >
-            {resultsData.map((result: Result, index: number) => {
-              const isCenter = index === currentSlide;
-              const isAdjacent =
-                index === (currentSlide - 1 + resultsData.length) % resultsData.length ||
-                index === (currentSlide + 1) % resultsData.length;
-
-              if (
-                !isCenter &&
-                !isAdjacent &&
-                index !== (currentSlide - 2 + resultsData.length) % resultsData.length &&
-                index !== (currentSlide + 2) % resultsData.length
-              ) {
-                return null;
-              }
-
-              return (
-                <div
-                  key={index}
-                  className={`flex-none transition-all duration-500 ease-in-out will-change-transform ${
-                    isCenter
-                      ? "w-[90%] md:w-[60%] lg:w-[50%] z-10"
-                      : isAdjacent
-                      ? "w-[20%] md:w-[20%] lg:w-[15%] z-0 cursor-pointer"
-                      : "w-0 opacity-0"
-                  }`}
-                  style={{
-                    transform: `translateX(${(index - currentSlide) * transformPercentage}%)`,
-                  }}
-                  onClick={() => handleSlideClick(index)}
+            {/* MOBILE: single slide with horizontal motion */}
+            {isMobile ? (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ x: direction === 1 ? 60 : -60, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: direction === 1 ? -60 : 60, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="flex-none w-full max-w-[95%]"
                 >
-                  <div className="px-2 sm:px-1">
-                    <div className={`${styles.imageContainer} bg-white overflow-hidden aspect-[1536/777]`}>
+                  <div className="px-2">
+                    <div
+                      className={`${styles.imageContainer} bg-white overflow-hidden aspect-[1536/777]`}
+                    >
                       <Image
-                        src={result.imagePath}
-                        alt={result.title}
+                        src={resultsData[currentSlide].imagePath}
+                        alt={resultsData[currentSlide].title}
                         width={768}
                         height={389}
-                        sizes="(max-width: 768px) 90vw, (max-width: 1024px) 60vw, 50vw"
+                        sizes="100vw"
                         className="w-full h-full object-cover object-center"
                         loading="lazy"
                       />
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                </motion.div>
+              </AnimatePresence>
+            ) : (
+              // DESKTOP / TABLET: center + two neighbors, infinite loop
+              resultsData.map((result: Result, index: number) => {
+                const base = index; // logical 0..total-1
+                const k = Math.round((virtualIndex - base) / total);
+                const position = base + k * total;
+                const offset = position - virtualIndex; // 0 is center
+
+                const isCenter = offset === 0;
+                const isAdjacent = Math.abs(offset) === 1;
+                const isNear = Math.abs(offset) <= 1; // ✅ only center + neighbors visible
+
+                return (
+                  <div
+                    key={index}
+                    className={`flex-none transition-all duration-500 ease-in-out will-change-transform
+                      ${
+                        isCenter
+                          ? "w-[70%] md:w-[60%] lg:w-[55%] z-10"
+                          : isAdjacent
+                          ? "w-[32%] md:w-[18%] lg:w-[18%] z-0 cursor-pointer"
+                          : "w-0"
+                      }
+                      ${isNear ? "opacity-100" : "opacity-0 pointer-events-none"}
+                    `}
+                    style={{
+                      transform: `translateX(${offset * transformPercentage}%)`,
+                    }}
+                    onClick={isAdjacent ? () => handleSlideClick(index) : undefined}
+                  >
+                    <div className="px-2 sm:px-1">
+                      <div
+                        className={`${styles.imageContainer} bg-white overflow-hidden aspect-[1536/777]`}
+                      >
+                        <Image
+                          src={result.imagePath}
+                          alt={result.title}
+                          width={768}
+                          height={389}
+                          sizes="(max-width: 1024px) 60vw, 50vw"
+                          className="w-full h-full object-cover object-center"
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
 
+          {/* Arrows */}
           <div className="flex justify-center mt-1 md:mt-2 lg:mt-1 space-x-2 lg:space-x-2 mb-2">
             <button
               onClick={handlePrev}
@@ -259,6 +297,7 @@ export function ResultsSection() {
             </button>
           </div>
 
+          {/* Text content under slider */}
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
