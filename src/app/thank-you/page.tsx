@@ -1,11 +1,9 @@
-// app/thank-you/page.tsx
 "use client";
 
 import { useEffect } from "react";
-import * as gtag from "../../lib/gtag"; // path: from app/thank-you/page.tsx up to src/lib
-import { getConsentClient } from "../../components/CookieConsent"; // path: to src/components
+import * as gtag from "../../lib/gtag";
 
-// Extend window so TypeScript knows about fbq + dataLayer
+// Let TypeScript know fbq + dataLayer may exist on window
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
@@ -15,19 +13,16 @@ declare global {
 
 export default function ThankYouPage() {
   useEffect(() => {
-    const consent = getConsentClient();
+    // Google Analytics conversion
+    gtag.event({
+      action: "book_call_success",
+      category: "Conversion",
+      label: "Booked Strategy Call (Thank You Page)",
+      value: 1,
+    });
 
-    // ✅ Analytics: GA4 + GTM event
-    if (consent.analytics && typeof window !== "undefined") {
-      // Google Analytics conversion
-      gtag.event({
-        action: "book_call_success",
-        category: "Conversion",
-        label: "Booked Strategy Call (Thank You Page)",
-        value: 1,
-      });
-
-      // Push event to GTM dataLayer for tags
+    // GTM custom event
+    if (typeof window !== "undefined") {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: "book_call_success",
@@ -35,12 +30,8 @@ export default function ThankYouPage() {
       });
     }
 
-    // ✅ Marketing: Meta Pixel Lead conversion
-    if (
-      consent.marketing &&
-      typeof window !== "undefined" &&
-      typeof window.fbq === "function"
-    ) {
+    // Facebook Pixel Lead conversion
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
       window.fbq("track", "Lead");
     }
   }, []);
@@ -62,7 +53,7 @@ export default function ThankYouPage() {
         style={{ boxShadow: "0 0 60px rgba(144, 0, 255, 0.35)" }}
       >
         {/* Header with responsive text + tick right next to it */}
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 inline-flex items-center gap-2 whitespace-nowrap">
+        <h2 className="text-2xl md:text-3xl font-bold text.white mb-6 inline-flex items-center gap-2 whitespace-nowrap">
           {/* Shorter text on mobile so it fits with the icon */}
           <span className="inline md:hidden">Session confirmed.</span>
           {/* Full sentence on tablet/desktop */}
@@ -104,7 +95,7 @@ export default function ThankYouPage() {
             </p>
           </div>
 
-          <div className="bg-[#1A1AE] p-5 rounded-xl text-gray-300">
+          <div className="bg-[#1A1A1E] p-5 rounded-xl text-gray-300">
             <p className="font-semibold mb-1">02 · Your product</p>
             <p className="text-sm">
               What you&apos;re selling, who it&apos;s for, and your current
