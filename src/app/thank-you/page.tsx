@@ -1,27 +1,46 @@
+// app/thank-you/page.tsx
 "use client";
 
 import { useEffect } from "react";
-import * as gtag from "../../lib/gtag";
+import * as gtag from "../../lib/gtag"; // path: from app/thank-you/page.tsx up to src/lib
+import { getConsentClient } from "../../components/CookieConsent"; // path: to src/components
 
-// Let TypeScript know fbq may exist on window
+// Extend window so TypeScript knows about fbq + dataLayer
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
+    dataLayer?: Record<string, unknown>[];
   }
 }
 
 export default function ThankYouPage() {
   useEffect(() => {
-    // Google Analytics conversion
-    gtag.event({
-      action: "book_call_success",
-      category: "Conversion",
-      label: "Booked Strategy Call (Thank You Page)",
-      value: 1,
-    });
+    const consent = getConsentClient();
 
-    // Facebook Pixel Lead conversion
-    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+    // ✅ Analytics: GA4 + GTM event
+    if (consent.analytics && typeof window !== "undefined") {
+      // Google Analytics conversion
+      gtag.event({
+        action: "book_call_success",
+        category: "Conversion",
+        label: "Booked Strategy Call (Thank You Page)",
+        value: 1,
+      });
+
+      // Push event to GTM dataLayer for tags
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "book_call_success",
+        conversion_type: "strategy_call",
+      });
+    }
+
+    // ✅ Marketing: Meta Pixel Lead conversion
+    if (
+      consent.marketing &&
+      typeof window !== "undefined" &&
+      typeof window.fbq === "function"
+    ) {
       window.fbq("track", "Lead");
     }
   }, []);
@@ -85,7 +104,7 @@ export default function ThankYouPage() {
             </p>
           </div>
 
-          <div className="bg-[#1A1A1E] p-5 rounded-xl text-gray-300">
+          <div className="bg-[#1A1AE] p-5 rounded-xl text-gray-300">
             <p className="font-semibold mb-1">02 · Your product</p>
             <p className="text-sm">
               What you&apos;re selling, who it&apos;s for, and your current

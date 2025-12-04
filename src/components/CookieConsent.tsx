@@ -1,9 +1,10 @@
-// CookieConsent.tsx
+// components/CookieConsent.tsx
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import Script from 'next/script'
 import { usePathname } from 'next/navigation'
+import type React from 'react'
 
 /** Brand + storage */
 const BRAND = '#9000ff'
@@ -26,24 +27,39 @@ const toMaxAge = (days: number | string = MAX_AGE_DAYS) => {
   const d = Number.isFinite(n) ? n : MAX_AGE_DAYS
   return Math.floor(d * 86400)
 }
+
 function getCookie(name: string) {
   if (typeof document === 'undefined') return null
   const m = document.cookie.match(new RegExp('(?:^|; )' + escapeRe(name) + '=([^;]*)'))
   return m ? decodeURIComponent(m[1]) : null
 }
+
+/**
+ * Set cookie for root domain (so consent works on m44.io, www.m44.io, etc.)
+ */
 function setCookie(name: string, value: string, days: number | string = MAX_AGE_DAYS) {
   if (typeof document === 'undefined') return
   const maxAge = toMaxAge(days)
   const secure = location.protocol === 'https:' ? '; Secure' : ''
-  document.cookie = `${name}=${encodeURIComponent(value)}; Max-Age=${maxAge}; Path=/; SameSite=Lax${secure}`
+
+  const bareHost = location.hostname.replace(/^www\./, '')
+  const domainPart = bareHost === 'localhost' ? '' : `; Domain=.${bareHost}`
+
+  document.cookie = `${name}=${encodeURIComponent(
+    value
+  )}; Max-Age=${maxAge}; Path=/; SameSite=Lax${secure}${domainPart}`
 }
 
 /** Tiny pub/sub for consent changes (with unsubscribe returning void) */
 const listeners = new Set<Listener>()
-function notify(c: Consent) { listeners.forEach(fn => fn(c)) }
+function notify(c: Consent) {
+  listeners.forEach(fn => fn(c))
+}
 export function onConsentChange(fn: Listener): () => void {
   listeners.add(fn)
-  return () => { listeners.delete(fn) } // return void, not boolean
+  return () => {
+    listeners.delete(fn)
+  }
 }
 
 export function getConsentClient(): Consent {
@@ -64,7 +80,9 @@ export function ConsentGate({ category, children }: { category: Category; childr
     setC(getConsentClient())
     const off = onConsentChange(setC)
     setReady(true)
-    return () => { off() } // cleanup returns void
+    return () => {
+      off()
+    }
   }, [])
   if (!ready) return null
   if (!c[category]) return null
@@ -92,7 +110,6 @@ export default function CookieConsent() {
     setHasChoice(madeChoice)
     setPrefs(stored)
 
-    // leading semicolon prevents ASI issues if previous line ends without ;
     ;(window as CookieManagerWindow).openCookieManager = () => {
       setShowCustomize(true)
       setOpen(true)
@@ -106,7 +123,10 @@ export default function CookieConsent() {
   // route-aware behavior: if no choice yet, suppress blocking modal on /privacy; restore elsewhere
   useEffect(() => {
     if (!mounted) return
-    if (hasChoice) { setOpen(false); return }
+    if (hasChoice) {
+      setOpen(false)
+      return
+    }
     setOpen(!suppressOnThisRoute)
   }, [mounted, hasChoice, suppressOnThisRoute])
 
@@ -154,13 +174,27 @@ export default function CookieConsent() {
   if (!mounted) return null
 
   const cardStyle: React.CSSProperties = {
-    background: '#111', color: '#fff', borderRadius: 16, border: '1px solid #222', boxShadow: '0 10px 30px rgba(0,0,0,.45)'
+    background: '#111',
+    color: '#fff',
+    borderRadius: 16,
+    border: '1px solid #222',
+    boxShadow: '0 10px 30px rgba(0,0,0,.45)',
   }
   const btnPrimary: React.CSSProperties = {
-    background: BRAND, color: '#fff', borderRadius: 12, padding: '10px 14px', fontWeight: 700, border: `1px solid ${BRAND}`
+    background: BRAND,
+    color: '#fff',
+    borderRadius: 12,
+    padding: '10px 14px',
+    fontWeight: 700,
+    border: `1px solid ${BRAND}`,
   }
   const btnGhost: React.CSSProperties = {
-    background: 'transparent', color: 'inherit', borderRadius: 12, padding: '10px 14px', fontWeight: 600, border: '1px solid rgba(255,255,255,0.2)'
+    background: 'transparent',
+    color: 'inherit',
+    borderRadius: 12,
+    padding: '10px 14px',
+    fontWeight: 600,
+    border: '1px solid rgba(255,255,255,0.2)',
   }
 
   return (
@@ -177,17 +211,28 @@ export default function CookieConsent() {
           >
             <p className="text-sm text-neutral-800">
               We use cookies to keep M44 fast and relevant. Read our{' '}
-              <a href="/privacy" className="underline" style={{ color: BRAND }}>Privacy & Cookies</a>.
+              <a href="/privacy" className="underline" style={{ color: BRAND }}>
+                Privacy & Cookies
+              </a>
+              .
             </p>
             <div className="flex flex-wrap gap-2">
               <button onClick={acceptAll} className="text-sm font-semibold" style={{ ...btnPrimary, color: '#fff' }}>
                 Accept all
               </button>
-              <button onClick={rejectAll} className="text-sm" style={{ ...btnGhost, color: '#111', border: '1px solid rgba(0,0,0,0.15)' }}>
+              <button
+                onClick={rejectAll}
+                className="text-sm"
+                style={{ ...btnGhost, color: '#111', border: '1px solid rgba(0,0,0,0.15)' }}
+              >
                 Essentials only
               </button>
               <button
-                onClick={() => { setShowCustomize(true); setOpen(true); setTimeout(() => firstButtonRef.current?.focus(), 0) }}
+                onClick={() => {
+                  setShowCustomize(true)
+                  setOpen(true)
+                  setTimeout(() => firstButtonRef.current?.focus(), 0)
+                }}
                 className="text-sm"
                 style={{ ...btnGhost, color: '#111', border: '1px solid rgba(0,0,0,0.15)' }}
               >
@@ -204,7 +249,7 @@ export default function CookieConsent() {
           role="dialog"
           aria-modal="true"
           aria-label="Cookie consent"
-          className="fixed inset-0 z-[9999] flex items-end md:items-center justify-center p-3"
+          className="fixed inset-0 z-[9999] flex items.end md:items-center justify-center p-3"
           style={{ backdropFilter: 'blur(3px)', background: 'rgba(0,0,0,.45)' }}
         >
           <div className="w-[min(720px,100%)]" style={cardStyle}>
@@ -212,30 +257,74 @@ export default function CookieConsent() {
               <h2 className="text-lg md:text-xl font-extrabold tracking-tight">We value your privacy</h2>
               <p className="mt-2 text-sm opacity-90">
                 Cookies help improve speed, security, and relevance on m44. Learn more in{' '}
-                <a href="/privacy" className="underline" style={{ color: BRAND }}>Privacy & Cookies</a>.
+                <a href="/privacy" className="underline" style={{ color: BRAND }}>
+                  Privacy & Cookies
+                </a>
+                .
               </p>
 
               {!showCustomize && (
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <button ref={firstButtonRef} onClick={acceptAll} style={btnPrimary}>Accept all</button>
-                  <button onClick={rejectAll} style={btnGhost}>Essentials only</button>
-                  <button onClick={() => { setShowCustomize(true); setTimeout(() => firstButtonRef.current?.focus(), 0) }} style={btnGhost}>Customize</button>
+                  <button ref={firstButtonRef} onClick={acceptAll} style={btnPrimary}>
+                    Accept all
+                  </button>
+                  <button onClick={rejectAll} style={btnGhost}>
+                    Essentials only
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowCustomize(true)
+                      setTimeout(() => firstButtonRef.current?.focus(), 0)
+                    }}
+                    style={btnGhost}
+                  >
+                    Customize
+                  </button>
                 </div>
               )}
 
               {showCustomize && (
                 <div className="mt-4 border-t border-white/10 pt-4">
                   <fieldset className="space-y-2 text-sm">
-                    <label className="flex items-center gap-3"><input type="checkbox" checked disabled /> <span>Essentials (always on)</span></label>
-                    <label className="flex items-center gap-3"><input type="checkbox" checked={prefs.analytics} onChange={() => toggle('analytics')} /> <span>Analytics (GA4, etc.)</span></label>
-                    <label className="flex items-center gap-3"><input type="checkbox" checked={prefs.marketing} onChange={() => toggle('marketing')} /> <span>Marketing pixels (Meta, TikTok)</span></label>
-                    <label className="flex items-center gap-3"><input type="checkbox" checked={prefs.functional} onChange={() => toggle('functional')} /> <span>Functional embeds (calendars/forms)</span></label>
+                    <label className="flex items.center gap-3">
+                      <input type="checkbox" checked disabled /> <span>Essentials (always on)</span>
+                    </label>
+                    <label className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={prefs.analytics}
+                        onChange={() => toggle('analytics')}
+                      />{' '}
+                      <span>Analytics (GA4, etc.)</span>
+                    </label>
+                    <label className="flex items.center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={prefs.marketing}
+                        onChange={() => toggle('marketing')}
+                      />{' '}
+                      <span>Marketing pixels (Meta, TikTok)</span>
+                    </label>
+                    <label className="flex items.center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={prefs.functional}
+                        onChange={() => toggle('functional')}
+                      />{' '}
+                      <span>Functional embeds (calendars/forms)</span>
+                    </label>
                   </fieldset>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {/* Order: Accept all, Essential only, Save preferences */}
-                    <button onClick={acceptAll} style={btnGhost}>Accept all</button>
-                    <button onClick={rejectAll} style={btnGhost}>Essentials only</button>
-                    <button onClick={() => save(prefs)} style={btnPrimary}>Save preferences</button>
+                    <button onClick={acceptAll} style={btnGhost}>
+                      Accept all
+                    </button>
+                    <button onClick={rejectAll} style={btnGhost}>
+                      Essentials only
+                    </button>
+                    <button onClick={() => save(prefs)} style={btnPrimary}>
+                      Save preferences
+                    </button>
                   </div>
                 </div>
               )}
@@ -247,13 +336,28 @@ export default function CookieConsent() {
   )
 }
 
-/** GA4 + Meta only after consent */
+/** GA4 + GTM + Meta only after consent */
 export function AnalyticsScripts() {
   return (
     <>
-      {/* GA4 */}
+      {/* GTM + GA4 – only if Analytics consent is given */}
       <ConsentGate category="analytics">
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-2GBKK2RGWC" strategy="afterInteractive" />
+        {/* Google Tag Manager */}
+        <Script id="gtm-base" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-MD3KC8GW');
+          `}
+        </Script>
+
+        {/* GA4 (your existing setup) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-2GBKK2RGWC"
+          strategy="afterInteractive"
+        />
         <Script id="ga4" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -264,7 +368,7 @@ export function AnalyticsScripts() {
         </Script>
       </ConsentGate>
 
-      {/* Meta Pixel */}
+      {/* Meta Pixel – only if Marketing consent is given */}
       <ConsentGate category="marketing">
         <Script id="fb-pixel" strategy="afterInteractive">
           {`
