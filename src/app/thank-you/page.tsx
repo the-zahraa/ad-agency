@@ -53,7 +53,8 @@ export default function ThankYouPage() {
         style={{ boxShadow: "0 0 60px rgba(144, 0, 255, 0.35)" }}
       >
         {/* Header with responsive text + tick right next to it */}
-        <h2 className="text-2xl md:text-3xl font-bold text.white mb-6 inline-flex items-center gap-2 whitespace-nowrap">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 inline-flex items-center gap-2 whitespace-nowrap">
+
           {/* Shorter text on mobile so it fits with the icon */}
           <span className="inline md:hidden">Session confirmed.</span>
           {/* Full sentence on tablet/desktop */}
