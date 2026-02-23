@@ -340,7 +340,7 @@ export default function Header() {
                 </motion.div>
               ))}
               <Link
-                href="https://wa.me/6583444444"
+                href="https://wa.me/6584444498"
                 className={`${styles.whatsappButton} flex justify-center items-center`}
                 aria-label="WhatsApp"
                 onClick={handleWhatsAppClick}
@@ -403,7 +403,7 @@ export default function Header() {
             transition={{ duration: 0.3, delay: 0.5 }}
           >
             <Link
-              href="https://wa.me/6583444444"
+              href="https://wa.me/6584444498"
               onClick={() => {
                 handleWhatsAppClick();
                 setIsMobileMenuOpen(false);
